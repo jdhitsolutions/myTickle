@@ -243,6 +243,59 @@ Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
 
 } #Get-TickleEvent
 
+Function Set-TickleEvent  {
+    [cmdletbinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(Position = 0,ValueFromPipelineByPropertyName,Mandatory)]
+        [int32]$ID,
+        [string]$Event,
+        [datetime]$Date,
+        [string]$Comment,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [switch]$Passthru
+    )
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+        $update = @"
+UPDATE EventData
+SET {0} Where EventID='{1}'
+"@
+    } #begin
+
+    Process {
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Updating Event ID $ID "
+        $cols = @()
+        if ($Event) {
+            $cols+="EventName='$Event'"
+        }
+        if ($Comment) {
+            $cols+="EventComment='$Comment'"
+        }
+        if ($Date) {
+            $cols+="EventDate='$Date'"
+        }
+        $data = $cols -join ","
+
+        $query = $update -f $data,$ID
+        if ($PSCmdlet.ShouldProcess($query)) {
+            Invoke-Sqlcmd -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop
+            if ($Passthru) {
+                Get-TickleEvent -id $ID
+            }
+        }
+
+    } #process
+
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+
+    } #end 
+
+} #close Update-MyTickleEvent 
+
+
 Function Show-TickleEvent {
     [cmdletbinding()]
     Param(
