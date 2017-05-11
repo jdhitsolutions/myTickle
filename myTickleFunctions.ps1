@@ -22,8 +22,8 @@ CREATE DATABASE $DatabaseName
 ON PRIMARY
     (FILENAME = '$dbpath',
     NAME = TickleEvents,
-    SIZE = 100mb,
-    MAXSIZE = 200,
+    SIZE = 10mb,
+    MAXSIZE = 100,
     FILEGROWTH = 20
     )
 "@
