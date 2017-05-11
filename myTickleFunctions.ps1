@@ -295,6 +295,44 @@ SET {0} Where EventID='{1}'
 
 } #close Update-MyTickleEvent 
 
+Function Remove-TickleEvent {
+    [cmdletbinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(Position = 0, Mandatory,ValueFromPipelineByPropertyName)]
+        [int32]$ID,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+    )
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+        $invokeParams = @{
+            Query = $null
+            ServerInstance = $ServerInstance
+            Database = $tickleDB
+            ErrorAction = "Stop"
+        }
+    } #begin
+
+    Process {
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Deleting tickle event $ID "
+        $invokeParams.query = "DELETE From EventData where EventID='$ID'"
+        if ($PSCmdlet.ShouldProcess("Event ID $ID")) {
+            Try {
+                Invoke-Sqlcmd @invokeParams
+            }
+            Catch {
+                Throw $_
+            }
+        } #should process
+    } #process
+
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+
+    } #end 
+
+} #close Remove-TickleEvent
 
 Function Show-TickleEvent {
     [cmdletbinding()]
