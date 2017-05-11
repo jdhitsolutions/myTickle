@@ -1,1 +1,10 @@
 #Changelog for MyTickle
+
+v2.0.0
+Modified module so that tickle data is stored in a SQL database.
+Added functions to create database and table.
+Moved functions to separate file
+Added class definition
+Updated documentation
+set required PowerShell version to 5.0
+
