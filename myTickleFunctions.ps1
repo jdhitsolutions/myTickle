@@ -244,37 +244,50 @@ Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
 } #Get-TickleEvent
 
 Function Set-TickleEvent  {
-    [cmdletbinding(SupportsShouldProcess)]
+    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetname = "column")]
     Param(
         [Parameter(Position = 0,ValueFromPipelineByPropertyName,Mandatory)]
         [int32]$ID,
+        [Parameter(ParameterSetName = "column")]
         [string]$Event,
+        [Parameter(ParameterSetName = "column")]
         [datetime]$Date,
+        [Parameter(ParameterSetName = "column")]
         [string]$Comment,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
-        [switch]$Passthru
+        [switch]$Passthru,
+        [Parameter(ParameterSetName = "archive")]
+        [switch]$Archive
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+
         $update = @"
 UPDATE EventData
 SET {0} Where EventID='{1}'
 "@
+
     } #begin
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Updating Event ID $ID "
         $cols = @()
-        if ($Event) {
-            $cols+="EventName='$Event'"
+        if ($pscmdlet.ParameterSetName -eq 'column') {
+            if ($Event) {
+                $cols+="EventName='$Event'"
+            }
+            if ($Comment) {
+                $cols+="EventComment='$Comment'"
+            }
+            if ($Date) {
+                $cols+="EventDate='$Date'"
+            }
         }
-        if ($Comment) {
-            $cols+="EventComment='$Comment'"
-        }
-        if ($Date) {
-            $cols+="EventDate='$Date'"
+    else {
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Archiving"
+            $cols+="Archived='True'"
         }
         $data = $cols -join ","
 

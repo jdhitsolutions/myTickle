@@ -70,7 +70,6 @@ Set-Alias -name ate -Value Add-TickleEvent
 Set-Alias -name rte -Value Remove-TickleEvent
 Set-Alias -name ste -Value Set-TickleEvent
 Set-Alias -name shte -Value Show-TickleEvent
-Set-Alias -name btf -Value Backup-Ticklefile
 
 #endregion
 
