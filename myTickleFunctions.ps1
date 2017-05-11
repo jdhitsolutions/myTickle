@@ -159,6 +159,8 @@ Param(
 [int[]]$Id,
 [Parameter(Position=0,ParameterSetName="Name")]
 [string]$Name,
+[Parameter(Position=0,ParameterSetName="Days")]
+[int32]$Days,
 [Parameter(Position=0,ParameterSetName="All")]
 [switch]$All,
 [Parameter(Position=0,ParameterSetName="Expired")]
@@ -188,6 +190,11 @@ Switch ($pscmdlet.ParameterSetName) {
  "Name"    { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
             $filter = "Select * from EventData where EventName='$Name'"
+ }
+ "Days"  {
+            Write-Verbose "[$((Get-Date).TimeofDay)] for the next $Days days"
+            $target = (Get-Date).Date.AddDays($Days).toString()
+            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' ORDER by EventDate Asc"
  }
  "Expired" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
@@ -225,6 +232,9 @@ if ($Next) {
     Write-Verbose "[$((Get-Date).TimeofDay)] Displaying next $next events"
     $data | Select-Object -first $Next
 }
+elseif ($Days) {
+    $data | Where {$_.countdown.totaldays -ge 0 -AND $_.countdown.totaldays -le $Days}
+}
 else {
     $data 
 }
@@ -233,248 +243,115 @@ Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
 
 } #Get-TickleEvent
 
-Function Set-TickleEvent {
-
-[cmdletbinding(SupportsShouldProcess,DefaultParameterSetName="Inputobject")]
-Param(
-[Parameter(Position=0,Mandatory,HelpMessage="Enter the tickle event id",ParameterSetName="ID")]
-[int]$Id,
-[Parameter(Position=1,ValueFromPipeline,ParameterSetname="Inputobject")]
-[object]$Inputobject,
-[datetime]$Date,
-[string]$Event,
-[string]$Comment,
-[ValidateScript({Test-Path $_} )]
-[string]$Path=$TicklePath,
-[switch]$Passthru
-)
-Begin {
-    Write-Verbose "Using $($PSCmdlet.ParameterSetName) parameter set"
-}
-Process {
-
-#if ID only then get event from CSV
-Switch ($pscmdlet.ParameterSetName) {
- "ID" {
-    Write-Verbose "Getting tickle event id $ID"
-    $myevent = Get-TickleEvent -id $id
-   }
- "Inputobject" {
-    Write-Verbose "Modifying inputobject"
-    $myevent = $Inputobject
- }
-} #switch
-
-#verify we have an event to work with
-if ($myevent) {
-    #modify the tickle event object
-    Write-Verbose ($myevent | out-string)
-    
-    if ($Date) {
-      Write-Verbose "Setting date to $date"
-      $myevent.date = $Date
-    }
-    if ($Event) {
-      Write-Verbose "Setting event to $event"
-      $myevent.event = $Event
-    }
-    if ($comment) {
-      Write-verbose "Setting comment to $comment"
-      $myevent.comment = $comment
-    }
-    Write-Verbose "Revised: $($myevent | out-string)"
-
-    #find all lines in the CSV except the matching event
-    $otherevents = Get-Content -path $Path | where {$_ -notmatch "^""$($myevent.id)"} 
-    #remove it
-    $otherevents | Out-File -FilePath $Path -Encoding ascii 
-   
-    #append the revised event to the csv file
-    $myevent | Export-Csv -Path $Path -Encoding ASCII -Append -NoTypeInformation
-
-    if ($passthru) {
-        $myevent
-    }
-}
-else {
-    Write-Warning "Failed to find a valid tickle event"
-}
-
-} #process
-
-} #Set-TickleEvent
-
-Function Remove-TickleEvent {
-
-[cmdletbinding(SupportsShouldProcess,DefaultParameterSetName="Inputobject")]
-Param(
-[Parameter(Position=0,Mandatory,HelpMessage="Enter the tickle event id",ParameterSetName="ID")]
-[int]$Id,
-[Parameter(Position=1,ValueFromPipeline,ParameterSetname="Inputobject")]
-[object]$Inputobject,
-[ValidateScript({Test-Path $_} )]
-[string]$Path=$TicklePath
-)
-
-Process {
-    #if ID only then get event from CSV
-    Switch ($pscmdlet.ParameterSetName) {
-     "ID" {
-        Write-Verbose "Getting tickle event id $ID"
-        $myevent = Get-TickleEvent -id $id
-       }
-     "Inputobject" {
-        Write-Verbose "Identifying inputobject"
-        $myevent = $Inputobject
-     }
-    } #switch
-
-    #verify we have an event to work with
-    if ($myevent) {
-        Write-Verbose "Removing event"
-        Write-Verbose ($myEvent | Out-String)
-        if ($pscmdlet.ShouldProcess(($myEvent | Out-String))) {
-        #find all lines in the CSV except the matching event
-        $otherevents = Import-CSV -Path $path | Where {$_.id -ne $myevent.id}
-        #Get-Content -path $Path | where {$_ -notmatch "^$($myevent.id),"} 
-        #remove it
-        $otherevents | Export-CSV -Path $Path -Encoding ASCII -NoTypeInformation
-        #Out-File -FilePath $Path -Encoding ascii 
-        }
-    } #if myevent
-
-} #process
-
-} #Remove-TickleEvent
-
 Function Show-TickleEvent {
+    [cmdletbinding()]
+    Param(
+    [ValidateScript({$_ -ge 1})]
+    #the next number of days to get
+    [int]$Days = $TickleDefaultDays,
+    #Enter the name of the SQL Server instance
+    [ValidateNotNullOrEmpty()]
+    [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+    )
 
-[cmdletbinding()]
-Param(
-[Parameter(Position=0)]
-[ValidateScript({Test-Path $_})]
-[string]$Path = $TicklePath,
-[Parameter(Position=1)]
-[ValidateScript({$_ -ge 1})]
-[int]$Days = $TickleDefaultDays
-)
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+        
+    } #begin
 
-#import events from CSV file
-$events = Import-Csv -Path $Path
+    Process {
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Getting events for the next $Days days."
+        Try {
+            $upcoming = Get-TickleEvent -Days $Days -ServerInstance $ServerInstance -ErrorAction Stop
+        }
+        Catch {
+            Throw $_
+        }
+        if ($upcoming) {         
+        #how wide should the box be?
+        #get the length of the longest line
+        $l = 0
+        foreach ($item in $upcoming) {
+            #turn countdown into a string without the milliseconds
+            $count = $item.countdown.ToString()
+            $time = $count.Substring(0,$count.lastindexof("."))
+            #add the time as a new property
+            $item | Add-Member -MemberType Noteproperty -name Time -Value $time
+            $a = "$($item.event) $($item.Date) [$time]".length
+            if ($a -gt $l) {$l = $a}
+            $b = $item.comment.Length
+        
+           if ($b -gt $l) {$l = $b}
+        }
 
-#get upcoming events within the value for $Days sorted by date
-$upcoming = $events | 
-where {
- #get the timespan between today and the event date
- $ts = (New-TimeSpan -Start (Get-Date) -end $_.Date).TotalHours 
- #find events less than the default days value and greater than 0
- Write-Verbose $ts
- $ts -le ($Days*24) -AND $ts -gt 0
- } |
-Add-Member -MemberType ScriptProperty -Name Countdown -value {New-TimeSpan -start (Get-Date) -end $this.date} -PassThru -force |
-sort CountDown
+        [int]$width = $l+5
 
-if ($upcoming) {
-#how wide should the box be?
-#get the length of the longest line
-$l = 0
-foreach ($item in $upcoming) {
- #turn countdown into a string without the milliseconds
-  $count = $item.countdown.ToString()
-  $time = $count.Substring(0,$count.lastindexof("."))
-  #add the time as a new property
-  $item | Add-Member -MemberType Noteproperty -name Time -Value $time
-  $a = "$($item.event) $($item.Date) [$time]".length
-  if ($a -gt $l) {$l = $a}
-  $b = $item.comment.Length
-  if ($b -gt $l) {$l = $b}
-}
+        $header="* Reminders $((Get-Date).ToShortDateString()) "
 
-[int]$width = $l+5
+        #display events
+        Write-Host "`r"
+        Write-host "$($header.padright($width,"*"))" -ForegroundColor Cyan
+        Write-Host "*$(' '*($width-2))*" -ForegroundColor Cyan
 
-$header="* Reminders $((Get-Date).ToShortDateString()) "
-
-#display events
-Write-Host "`r"
-Write-host "$($header.padright($width,"*"))" -ForegroundColor Cyan
-Write-Host "*$(' '*($width-2))*" -ForegroundColor Cyan
-
-foreach ($event in $upcoming) {
-     
-  if ($event.countdown.totalhours -le 24) {
-    $color = "Red"
-  }
-  elseif ($event.countdown.totalhours -le 48) {
-    $color = "Yellow"
-  }
-  else {
-    $color = "Green"
-  }
-     
-  #define the message string
-  $line1 = "* $($event.event) $($event.Date) [$($event.time)]"
-  if ($event.comment -match "\w+") {
-   $line2 = "* $($event.Comment)"
-   $line3 = "*"
-  }
-  else {
-   $line2 = "*"
-   $line3 = $null
-  }
- 
-$msg = @"
+    foreach ($event in $upcoming) {
+        
+        if ($event.countdown.totalhours -le 24) {
+            $color = "Red"
+        }
+        elseif ($event.countdown.totalhours -le 48) {
+            $color = "Yellow"
+        }
+        else {
+            $color = "Green"
+        }
+        
+        #define the message string
+        $line1 = "* $($event.event) $($event.Date) [$($event.time)]"
+        if ($event.comment -match "\w+") {
+            $line2 = "* $($event.Comment)"
+            $line3 = "*"
+        }
+        else {
+            $line2 = "*"
+            $line3 = $null
+        }
+    
+    $msg = @"
 $($line1.padRight($width-1))*
 $($line2.padright($width-1))*
 "@
 
-if ($line3) {
-    #if there was a comment add a third line that is blank
-    $msg+="`n$($line3.padright($width-1))*"
-}
+    if ($line3) {
+        #if there was a comment add a third line that is blank
+        $msg+="`n$($line3.padright($width-1))*"
+    }
 
-  Write-Host $msg -ForegroundColor $color
+    Write-Host $msg -ForegroundColor $color
 
-} #foreach
+    } #foreach
 
-Write-Host ("*"*$width) -ForegroundColor Cyan
-Write-Host "`r"
-} #if upcoming events found
-else {
-  $msg = @"
+    Write-Host ("*"*$width) -ForegroundColor Cyan
+    Write-Host "`r"
+    } #if upcoming events found
+    else {
+    $msg = @"
 
-**********************
-* No event reminders *
-**********************
+    **********************
+    * No event reminders *
+    **********************
 
 "@
-  Write-Host $msg -foregroundcolor Green
-}
+    Write-Host $msg -foregroundcolor Green
+    }
+        
+    } #process
 
-} #Show-TickleEvent
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
 
-Function Backup-TickleFile {
+    } #end 
 
-[cmdletbinding(SupportsShouldProcess)]
-Param(
-[ValidateScript({Test-Path $_} )]
-[string]$Path=$TicklePath,
-[ValidateScript({Test-Path $_} )]
-[string]$Destination = (Split-Path $TicklePath),
-[switch]$Passthru
-)
-
-Try {
-    $ticklefile = Get-Item -Path $path
-    $backup = Join-Path -path $Destination -ChildPath "$($ticklefile.basename).bak"
-    Write-Verbose "Copying $path to $backup"
-    $ticklefile | Copy-Item  -Destination $backup -ErrorAction Stop -PassThru:$Passthru
-}
-Catch {
-    Write-Warning "Failed to backup file"
-    Write-Warning $_.exception.message
-}
-
-} #Backup-TickleFile
+} #close Show-TickleEvent
 
 #endregion
 

@@ -44,6 +44,7 @@ Class myTickle {
 [string]$Comment
 [int32]$ID
 [boolean]$Expired = $False
+hidden [timespan]$Countdown
 
 #constructor
 myTickle([int32]$ID,[string]$Event,[datetime]$Date,[string]$Comment) {
@@ -54,6 +55,7 @@ myTickle([int32]$ID,[string]$Event,[datetime]$Date,[string]$Comment) {
     if ($Date -lt (Get-Date)) {
         $this.Expired = $True
     }
+    $this.Countdown = $this.Date - (Get-Date)
 }
 } #close class
 
