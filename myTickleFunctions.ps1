@@ -1,5 +1,10 @@
 #requires -version 5.0
 
+<#
+TODO
+Add function to archive events
+#>
+
 #region Define module functions
 
 Function Initialize-TickleDatabase {
@@ -27,7 +32,6 @@ ON PRIMARY
     FILEGROWTH = 20
     )
 "@
-
     $newTable = @"
 SET ANSI_NULLS ON
 GO
@@ -60,7 +64,8 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         if ($PSCmdlet.ShouldProcess($dbpath)) {
             #create the database
             Try {
-                Invoke-Sqlcmd -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
+                #Invoke-Sqlcmd -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
+                _InvokeSqlQuery -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
             }
         Catch {
             Throw $_
@@ -69,7 +74,8 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         #create the table
         Try {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
-            Invoke-Sqlcmd -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
+            #Invoke-Sqlcmd -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
+            _InvokeSqlQuery -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
         }
         Catch {
             Throw $_
@@ -89,6 +95,7 @@ Function Add-TickleEvent {
     [cmdletbinding(SupportsShouldProcess)]
     Param(
         [Parameter(Position=0,ValueFromPipelineByPropertyName,Mandatory,HelpMessage="Enter the name of the event")]
+        [Alias("Name")]
         [string]$Event,
         [Parameter(Position=1,ValueFromPipelineByPropertyName,Mandatory,HelpMessage="Enter the datetime for the event")]
         [ValidateScript({
@@ -127,17 +134,17 @@ Function Add-TickleEvent {
         if ($PSCmdlet.ShouldProcess($short)) {
             Try {
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"
-                Invoke-Sqlcmd @invokeParams
+                #Invoke-Sqlcmd @invokeParams
+                _InvokeSqlQuery @invokeParams | Out-Null
             }
             Catch {
                 throw $_
             }
 
             if ($passthru) {
-                #TODO - change this to use the Get-TickleEvent function when completed
                 $query = "Select Top 1 * from EventData Order by EventID Desc"
-                Invoke-Sqlcmd -query $query -ServerInstance $ServerInstance -Database $tickleDB -ErrorAction stop | _NewMyTickle
-
+                #Invoke-Sqlcmd -query $query -ServerInstance $ServerInstance -Database $tickleDB -ErrorAction stop | _NewMyTickle
+                _InvokeSqlQuery -query $query -ServerInstance $ServerInstance -Database $tickleDB | _NewMyTickle
             } #if passthru
         } #if should process
 
@@ -155,16 +162,18 @@ Function Get-TickleEvent {
 [cmdletbinding(DefaultParameterSetname="Default")]
 
 Param(
-[Parameter(Position=0,ParameterSetName="ID")]
+[Parameter(ParameterSetName="ID")]
 [int[]]$Id,
-[Parameter(Position=0,ParameterSetName="Name")]
+[Parameter(ParameterSetName="Name")]
 [string]$Name,
-[Parameter(Position=0,ParameterSetName="Days")]
+[Parameter(ParameterSetName="Days")]
 [int32]$Days,
-[Parameter(Position=0,ParameterSetName="All")]
+[Parameter(ParameterSetName="All")]
 [switch]$All,
-[Parameter(Position=0,ParameterSetName="Expired")]
+[Parameter(ParameterSetName="Expired")]
 [switch]$Expired,
+[Parameter(ParameterSetName="Archived")]
+[switch]$Archived,
 [ValidateScript({$_ -gt 0})]
 [Parameter(ParameterSetName="Default")]
 [int]$Next,
@@ -189,7 +198,8 @@ Switch ($pscmdlet.ParameterSetName) {
             }
  "Name"    { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
-            $filter = "Select * from EventData where EventName='$Name'"
+            #get events that haven't expired or been archived by name
+            $filter = "Select * from EventData where EventName='$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
  }
  "Days"  {
             Write-Verbose "[$((Get-Date).TimeofDay)] for the next $Days days"
@@ -198,14 +208,21 @@ Switch ($pscmdlet.ParameterSetName) {
  }
  "Expired" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
-            $filter = "Select * from EventData where EventDate<'$(Get-Date)' ORDER by EventDate Asc"
+            #get expired events that have not been archived
+            $filter = "Select * from EventData where Archived='False' AND EventDate<'$(Get-Date)' ORDER by EventDate Asc"
  }
+  "Archived" { 
+            Write-Verbose "[$((Get-Date).TimeofDay)] by Archive"
+            $filter = "Select * from EventData where Archived='True' ORDER by EventDate Asc"
+ }      
  "All"     { 
             Write-Verbose "[$((Get-Date).TimeofDay)] All"
+            #get all non archived events
             $filter = "Select * from EventData where Archived='False' ORDER by EventDate Asc"
  }
   Default {
             Write-Verbose "[$((Get-Date).TimeofDay)] Default"
+            #get events that haven't been archived
             $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"
           }
 } #switch
@@ -215,12 +232,10 @@ Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
 $invokeParams.query = $filter
 
 Try {
-    $events = Invoke-SqlCmd @invokeParams
+    $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
     #convert the data into mytickle objects
     $data = $events | _NewMyTickle
-    # foreach {
-    #    New-object -TypeName mytickle -ArgumentList @($_.eventID,$_.eventname,$_.eventDate,$_.comment)
-    #}
+
 }
 Catch {
     Throw $_
@@ -249,6 +264,7 @@ Function Set-TickleEvent  {
         [Parameter(Position = 0,ValueFromPipelineByPropertyName,Mandatory)]
         [int32]$ID,
         [Parameter(ParameterSetName = "column")]
+        [alias("Name")]
         [string]$Event,
         [Parameter(ParameterSetName = "column")]
         [datetime]$Date,
@@ -293,7 +309,8 @@ SET {0} Where EventID='{1}'
 
         $query = $update -f $data,$ID
         if ($PSCmdlet.ShouldProcess($query)) {
-            Invoke-Sqlcmd -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop
+            #Invoke-Sqlcmd -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop
+            _InvokeSqlQuery -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop | Out-Null
             if ($Passthru) {
                 Get-TickleEvent -id $ID
             }
@@ -332,7 +349,8 @@ Function Remove-TickleEvent {
         $invokeParams.query = "DELETE From EventData where EventID='$ID'"
         if ($PSCmdlet.ShouldProcess("Event ID $ID")) {
             Try {
-                Invoke-Sqlcmd @invokeParams
+                #Invoke-Sqlcmd @invokeParams
+                _InvokeSqlQuery @invokeParams | Out-Null
             }
             Catch {
                 Throw $_
@@ -347,6 +365,96 @@ Function Remove-TickleEvent {
 
 } #close Remove-TickleEvent
 
+Function Export-TickleDatabase {
+    [cmdletbinding()]
+    Param(
+        [Parameter(Position = 0, Mandatory,HelpMessage = "The path and filename for the export xml file.")]
+        [String]$Path,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+    )
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+         $invokeParams = @{
+            Query = "Select * from $tickleTable"
+            ServerInstance = $ServerInstance
+            Database = $tickleDB
+            ErrorAction = "Stop"
+        }
+
+    } #begin
+
+    Process {
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Exporting database to $Path "
+        Try {
+            _InvokeSqlQuery @invokeParams | Export-clixml -Path $Path
+        }
+        Catch {
+        throw $_
+    }
+    } #process
+
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+
+    } #end 
+
+} #close Export-TickleEventDatabase
+
+Function Import-TickleDatabase {
+    [cmdletbinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(Position = 0, Mandatory,HelpMessage = "The path and filename for the export xml file.")]
+        [ValidateScript({Test-Path $_})]
+        [String]$Path,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+    )
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+         $invokeParams = @{
+            Query = ""
+            ServerInstance = $ServerInstance
+            Database = $tickleDB
+            ErrorAction = "Stop"
+        }
+        #turn off identity_insert
+        $invokeParams.query = "Set identity_insert EventData On"
+        _InvokeSqlQuery @invokeParams | out-null
+    } #begin
+
+    Process {
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Importing database data from $Path "
+        Try {
+            Import-clixml -Path $path | foreach-object {
+                $query = @"
+Set identity_insert EventData On
+INSERT INTO EventData (EventID,EventDate,EventName,EventComment,Archived) VALUES ('$($_.EventID)','$($_.EventDate)','$($_.EventName)','$($_.EventComment)','$($_.Archived)')
+Set identity_insert EventData Off
+"@            
+                $invokeparams.query = $query
+                
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"
+                
+                if ($pscmdlet.ShouldProcess("VALUES ('$($_.EventID)','$($_.EventDate)','$($_.EventName)','$($_.EventComment)','$($_.Archived)'")) {
+                _InvokeSqlQuery @invokeParams
+                }
+            }
+             
+        }
+        Catch {
+        throw $_
+    }
+    } #process
+
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+
+    } #end 
+
+} #close Import-TickleEventDatabase
 Function Show-TickleEvent {
     [cmdletbinding()]
     Param(
@@ -476,6 +584,88 @@ Param(
 Process {
     New-Object -TypeName mytickle -ArgumentList @($eventID,$Eventname,$EventDate,$EventComment)
 }
+} #close _NewMyTickle
+
+Function _InvokeSqlQuery {
+[cmdletbinding(SupportsShouldProcess)]
+Param(
+[Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
+[ValidateNotNullorEmpty()]
+[string]$Query,
+[Parameter(Mandatory, HelpMessage = "The name of the database")]
+[ValidateNotNullorEmpty()]
+[string]$Database,
+#The server instance name
+[ValidateNotNullorEmpty()]
+[string]$ServerInstance = "$env:computername\SqlExpress"
+)
+
+Begin {
+    Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"  
+
+    Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
+    $connection = New-Object system.data.sqlclient.sqlconnection
+    
+    Write-Verbose "[BEGIN  ] Creating the SQL Command object"
+    $cmd = New-Object system.Data.SqlClient.SqlCommand
+ 
+} #begin
+
+Process {
+    Write-Verbose "[PROCESS] Opening the connection to $ServerInstance"
+    Write-Verbose "[PROCESS] Using database $Database"
+    #The Sql connection will be made with Windows authentication
+    $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
+    $connection.open()
+
+    #join the connection to the command object
+    $cmd.connection = $connection
+    $cmd.CommandText = $query
+    
+    Write-Verbose "[PROCESS] Invoking $query"
+    if ($PSCmdlet.ShouldProcess($Query)) {
+        
+        #determine what method to invoke based on the query
+        Switch -regex ($query) {
+         "^Select (\w+|\*)|(@@\w+ AS)" { 
+         
+                $reader = $cmd.executereader()
+                $out=@()
+                #convert datarows to a custom object
+                while ($reader.read()) {
+                
+                $h = [ordered]@{}
+                for ($i=0;$i -lt $reader.FieldCount;$i++) {
+                  $col = $reader.getname($i)
+                  
+                  $h.add($col,$reader.getvalue($i))
+                } #for
+                  $out+=new-object -TypeName psobject -Property $h 
+                } #while
+
+                $out
+                $reader.close()
+                Break
+         }
+         "@@" { 
+                $cmd.ExecuteScalar()
+                Break
+         }
+         Default {
+            $cmd.ExecuteNonQuery()
+         }
+        }
+    } #should process
+
 }
+
+End {
+    Write-Verbose "[END    ] Closing the connection"
+    $connection.close()
+
+    Write-Verbose "[END    ] Ending: $($MyInvocation.Mycommand)"
+} #end
+
+} #close _InvokeSqlQuery
 
 #endregion

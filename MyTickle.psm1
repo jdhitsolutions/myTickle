@@ -1,5 +1,8 @@
 ﻿#requires -version 5.0
 
+#TODO: find a better way to persist server instance information
+#TODO: Custom views
+
 <#
 originally published at:
 http://jdhitsolutions.com/blog/2013/05/friday-fun-a-powershell-tickler/
@@ -15,21 +18,15 @@ http://jdhitsolutions.com/blog/essential-powershell-resources/
   ****************************************************************
 #>
 
-#dot source functions
+#dot source module functions
 . $PSScriptRoot\mytickleFunctions.ps1
 
 #region Define module variables
-#This should be the WindowsPowerShell folder under your Documents folder
-#$profileDir = Split-Path $profile
-
-#the path to the tickle csv file
-#$TicklePath = Join-Path -Path $profileDir -ChildPath "mytickler.csv"
 
 #the default number of days to display for Show-TickleEvents
 $TickleDefaultDays = 7 
 
 #database defaults
-
 $TickleDB = 'TickleEventDB'
 $TickleTable = 'EventData'
 
