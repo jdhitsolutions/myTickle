@@ -1,10 +1,5 @@
 #requires -version 5.0
 
-<#
-TODO
-Add function to archive events
-#>
-
 #region Define module functions
 
 Function Initialize-TickleDatabase {
@@ -67,8 +62,6 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
             #create the database
             $PSBoundParameters.Add("Query",$newDB)
             Try {
-                #Invoke-Sqlcmd -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
-                #_InvokeSqlQuery -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
                 _InvokeSqlQuery @PSBoundParameters
             }
         Catch {
@@ -78,9 +71,7 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         #create the table
         Try {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
-            $PSBoundParameters.Query = $newTable
-            #Invoke-Sqlcmd -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
-            #_InvokeSqlQuery -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
+            $PSBoundParameters.Query = $newTable            
             _InvokeSqlQuery @PSBoundParameters
         }
         Catch {
@@ -143,8 +134,7 @@ Function Add-TickleEvent {
         $short= "[$Date] $Event"
         if ($PSCmdlet.ShouldProcess($short)) {
             Try {
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"
-                #Invoke-Sqlcmd @invokeParams
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"                
                 _InvokeSqlQuery @invokeParams | Out-Null
             }
             Catch {
@@ -154,8 +144,6 @@ Function Add-TickleEvent {
             if ($passthru) {
                 $query = "Select Top 1 * from EventData Order by EventID Desc"
                 $invokeParams.query = $query
-                #Invoke-Sqlcmd -query $query -ServerInstance $ServerInstance -Database $tickleDB -ErrorAction stop | _NewMyTickle
-                #_InvokeSqlQuery -query $query -ServerInstance $ServerInstance -Database $tickleDB | _NewMyTickle
                 _InvokeSqlQuery @invokeParams | _NewMyTickle
             } #if passthru
         } #if should process
@@ -338,8 +326,6 @@ SET {0} Where EventID='{1}'
         $query = $update -f $data,$ID
         $invokeParams.query = $query
         if ($PSCmdlet.ShouldProcess($query)) {
-            #Invoke-Sqlcmd -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop
-            #_InvokeSqlQuery -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop | Out-Null
             _InvokeSqlQuery @invokeParams | Out-Null
             if ($Passthru) {
                 Get-TickleEvent -id $ID
@@ -384,7 +370,6 @@ Function Remove-TickleEvent {
         $invokeParams.query = "DELETE From EventData where EventID='$ID'"
         if ($PSCmdlet.ShouldProcess("Event ID $ID")) {
             Try {
-                #Invoke-Sqlcmd @invokeParams
                 _InvokeSqlQuery @invokeParams | Out-Null
             }
             Catch {
@@ -484,7 +469,7 @@ Set identity_insert EventData Off
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"
                 
                 if ($pscmdlet.ShouldProcess("VALUES ('$($_.EventID)','$($_.EventDate)','$($_.EventName)','$($_.EventComment)','$($_.Archived)'")) {
-                _InvokeSqlQuery @invokeParams
+                    _InvokeSqlQuery @invokeParams
                 }
             }
              
@@ -527,8 +512,7 @@ Function Show-TickleEvent {
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Getting events for the next $Days days."
         Try {
-            $upcoming = Get-TickleEvent @invokeParams
-            #Get-TickleEvent -Days $Days -ServerInstance $ServerInstance -ErrorAction Stop
+            $upcoming = Get-TickleEvent @invokeParams            
         }
         Catch {
             Throw $_
