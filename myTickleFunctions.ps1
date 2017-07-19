@@ -8,13 +8,15 @@ Add function to archive events
 #region Define module functions
 
 Function Initialize-TickleDatabase {
-    [cmdletbinding(SupportsShouldProcess)]
+    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName='default')]
     Param(
         [Parameter(Position = 0)]
         #Enter the folder path for the database file.
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [Parameter(Mandatory,ParameterSetName='credential')]
+        [pscredential]$Credential
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
@@ -63,9 +65,11 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Connect to $ServerInstance"
         if ($PSCmdlet.ShouldProcess($dbpath)) {
             #create the database
+            $PSBoundParameters.Add("Query",$newDB)
             Try {
                 #Invoke-Sqlcmd -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
-                _InvokeSqlQuery -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
+                #_InvokeSqlQuery -query $newDB -ServerInstance $ServerInstance -ErrorAction stop
+                _InvokeSqlQuery @PSBoundParameters
             }
         Catch {
             Throw $_
@@ -74,8 +78,10 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         #create the table
         Try {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
+            $PSBoundParameters.Query = $newTable
             #Invoke-Sqlcmd -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
-            _InvokeSqlQuery -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
+            #_InvokeSqlQuery -query $newTable -ServerInstance $ServerInstance -Database $DatabaseName -ErrorAction Stop
+            _InvokeSqlQuery @PSBoundParameters
         }
         Catch {
             Throw $_
@@ -112,6 +118,7 @@ Function Add-TickleEvent {
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [pscredential]$Credential,
         [switch]$Passthru
     )
     Begin {
@@ -121,6 +128,9 @@ Function Add-TickleEvent {
             ServerInstance = $ServerInstance
             Database = $TickleDB
             ErrorAction = 'Stop'
+        }
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential",$Credential)
         }
     } #begin
 
@@ -143,8 +153,10 @@ Function Add-TickleEvent {
 
             if ($passthru) {
                 $query = "Select Top 1 * from EventData Order by EventID Desc"
+                $invokeParams.query = $query
                 #Invoke-Sqlcmd -query $query -ServerInstance $ServerInstance -Database $tickleDB -ErrorAction stop | _NewMyTickle
-                _InvokeSqlQuery -query $query -ServerInstance $ServerInstance -Database $tickleDB | _NewMyTickle
+                #_InvokeSqlQuery -query $query -ServerInstance $ServerInstance -Database $tickleDB | _NewMyTickle
+                _InvokeSqlQuery @invokeParams | _NewMyTickle
             } #if passthru
         } #if should process
 
@@ -179,7 +191,8 @@ Param(
 [int]$Next,
 #Enter the name of the SQL Server instance
 [ValidateNotNullOrEmpty()]
-[string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+[string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+[pscredential]$Credential
 )
 
 Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
@@ -191,6 +204,10 @@ $invokeParams = @{
     ServerInstance = $ServerInstance
     ErrorAction = "Stop"
 }
+if ($PSBoundParameters.ContainsKey('credential')) {
+    $invokeParams.Add("credential",$Credential)
+}
+
 Switch ($pscmdlet.ParameterSetName) {
  "ID"      {
             Write-Verbose "[$((Get-Date).TimeofDay)] by ID" 
@@ -273,6 +290,7 @@ Function Set-TickleEvent  {
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [pscredential]$Credential,
         [switch]$Passthru,
         [Parameter(ParameterSetName = "archive")]
         [switch]$Archive
@@ -284,6 +302,16 @@ Function Set-TickleEvent  {
 UPDATE EventData
 SET {0} Where EventID='{1}'
 "@
+
+    $invokeParams = @{
+        Query = $null
+        Database = $TickleDB
+        ServerInstance = $ServerInstance
+        ErrorAction = "Stop"
+    }
+    if ($PSBoundParameters.ContainsKey('credential')) {
+        $invokeParams.Add("credential",$Credential)
+    }
 
     } #begin
 
@@ -308,9 +336,11 @@ SET {0} Where EventID='{1}'
         $data = $cols -join ","
 
         $query = $update -f $data,$ID
+        $invokeParams.query = $query
         if ($PSCmdlet.ShouldProcess($query)) {
             #Invoke-Sqlcmd -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop
-            _InvokeSqlQuery -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop | Out-Null
+            #_InvokeSqlQuery -query $query -Database $TickleDB -ServerInstance $ServerInstance -ErrorAction stop | Out-Null
+            _InvokeSqlQuery @invokeParams | Out-Null
             if ($Passthru) {
                 Get-TickleEvent -id $ID
             }
@@ -332,7 +362,8 @@ Function Remove-TickleEvent {
         [int32]$ID,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [pscredential]$Credential
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
@@ -341,6 +372,10 @@ Function Remove-TickleEvent {
             ServerInstance = $ServerInstance
             Database = $tickleDB
             ErrorAction = "Stop"
+        }
+
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential",$Credential)
         }
     } #begin
 
@@ -372,7 +407,8 @@ Function Export-TickleDatabase {
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [pscredential]$Credential
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
@@ -383,6 +419,9 @@ Function Export-TickleDatabase {
             ErrorAction = "Stop"
         }
 
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential",$Credential)
+        }
     } #begin
 
     Process {
@@ -410,7 +449,8 @@ Function Import-TickleDatabase {
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [pscredential]$Credential
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
@@ -420,6 +460,11 @@ Function Import-TickleDatabase {
             Database = $tickleDB
             ErrorAction = "Stop"
         }
+        
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential",$Credential)
+        }
+
         #turn off identity_insert
         $invokeParams.query = "Set identity_insert EventData On"
         _InvokeSqlQuery @invokeParams | out-null
@@ -463,18 +508,27 @@ Function Show-TickleEvent {
     [int]$Days = $TickleDefaultDays,
     #Enter the name of the SQL Server instance
     [ValidateNotNullOrEmpty()]
-    [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+    [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+    [pscredential]$Credential
     )
 
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
         
+        $invokeParams = @{
+            Days = $Days
+            ServerInstance = $ServerInstance
+        }
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential",$Credential)
+        }
     } #begin
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Getting events for the next $Days days."
         Try {
-            $upcoming = Get-TickleEvent -Days $Days -ServerInstance $ServerInstance -ErrorAction Stop
+            $upcoming = Get-TickleEvent @invokeParams
+            #Get-TickleEvent -Days $Days -ServerInstance $ServerInstance -ErrorAction Stop
         }
         Catch {
             Throw $_
@@ -587,7 +641,7 @@ Process {
 } #close _NewMyTickle
 
 Function _InvokeSqlQuery {
-[cmdletbinding(SupportsShouldProcess)]
+[cmdletbinding(SupportsShouldProcess,DefaultParameterSetName="Default")]
 Param(
 [Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
 [ValidateNotNullorEmpty()]
@@ -595,6 +649,8 @@ Param(
 [Parameter(Mandatory, HelpMessage = "The name of the database")]
 [ValidateNotNullorEmpty()]
 [string]$Database,
+[Parameter(Mandatory,ParameterSetName='credential')]
+[pscredential]$Credential,
 #The server instance name
 [ValidateNotNullorEmpty()]
 [string]$ServerInstance = "$env:computername\SqlExpress"
@@ -602,6 +658,11 @@ Param(
 
 Begin {
     Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"  
+
+     if ($PSCmdlet.ParameterSetName -eq 'credential') {
+        $username = $Credential.UserName
+        $password = $Credential.GetNetworkCredential().Password
+    }
 
     Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
     $connection = New-Object system.data.sqlclient.sqlconnection
@@ -614,8 +675,14 @@ Begin {
 Process {
     Write-Verbose "[PROCESS] Opening the connection to $ServerInstance"
     Write-Verbose "[PROCESS] Using database $Database"
-    #The Sql connection will be made with Windows authentication
-    $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
+    if ($Username -AND $password) {
+        Write-Verbose "[PROCESS] Using credential"
+        $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
+    }
+    else {
+        Write-Verbose "[PROCESS] Using Windows authentication"
+        $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
+    }
     $connection.open()
 
     #join the connection to the command object

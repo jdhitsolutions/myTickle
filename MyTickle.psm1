@@ -19,7 +19,7 @@ http://jdhitsolutions.com/blog/essential-powershell-resources/
 #>
 
 #dot source module functions
-. $PSScriptRoot\mytickleFunctions.ps1
+. $PSScriptRoot\myTickleFunctions.ps1
 
 #region Define module variables
 

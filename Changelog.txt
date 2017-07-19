@@ -8,6 +8,7 @@ searching by event name.
 Modified Get-TickleEvent to retrieve archived entries
 Added Export-TickleDatabase command
 Added Import-TickleDatabase command
+Modified commands to accept a user credential for SQL authentication
 
 v2.0.0
 Modified module so that tickle data is stored in a SQL database.
