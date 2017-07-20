@@ -9,7 +9,7 @@ Function Initialize-TickleDatabase {
         #Enter the folder path for the database file.
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [Parameter(Mandatory,ParameterSetName='credential')]
         [pscredential]$Credential
     )
@@ -108,7 +108,7 @@ Function Add-TickleEvent {
         [string]$Comment,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [pscredential]$Credential,
         [switch]$Passthru
     )
@@ -179,7 +179,7 @@ Param(
 [int]$Next,
 #Enter the name of the SQL Server instance
 [ValidateNotNullOrEmpty()]
-[string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+[string]$ServerInstance = $TickleServerInstance,
 [pscredential]$Credential
 )
 
@@ -277,7 +277,7 @@ Function Set-TickleEvent  {
         [string]$Comment,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [pscredential]$Credential,
         [switch]$Passthru,
         [Parameter(ParameterSetName = "archive")]
@@ -348,7 +348,7 @@ Function Remove-TickleEvent {
         [int32]$ID,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [pscredential]$Credential
     )
     Begin {
@@ -392,7 +392,7 @@ Function Export-TickleDatabase {
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [pscredential]$Credential
     )
     Begin {
@@ -434,7 +434,7 @@ Function Import-TickleDatabase {
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
-        [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+        [string]$ServerInstance = $TickleServerInstance,
         [pscredential]$Credential
     )
     Begin {
@@ -493,7 +493,7 @@ Function Show-TickleEvent {
     [int]$Days = $TickleDefaultDays,
     #Enter the name of the SQL Server instance
     [ValidateNotNullOrEmpty()]
-    [string]$ServerInstance = "$($env:COMPUTERNAME)\SqlExpress",
+    [string]$ServerInstance = $TickleServerInstance,
     [pscredential]$Credential
     )
 

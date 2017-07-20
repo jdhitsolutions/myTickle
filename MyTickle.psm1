@@ -1,6 +1,5 @@
 ﻿#requires -version 5.0
 
-#TODO: find a better way to persist server instance information
 #TODO: Custom views
 
 <#
@@ -29,6 +28,7 @@ $TickleDefaultDays = 7
 #database defaults
 $TickleDB = 'TickleEventDB'
 $TickleTable = 'EventData'
+$TickleServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
 
 #endregion
 
@@ -62,7 +62,7 @@ Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID,Date,Event,Comm
 
 #region Define module aliases
 
-Set-Alias -Name gte -value Get-TickleEvent
+Set-Alias -Name gte -Value Get-TickleEvent
 Set-Alias -name ate -Value Add-TickleEvent
 Set-Alias -name rte -Value Remove-TickleEvent
 Set-Alias -name ste -Value Set-TickleEvent
@@ -70,3 +70,4 @@ Set-Alias -name shte -Value Show-TickleEvent
 
 #endregion
 
+Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' -Alias 'gte','ate','rte','shte','ste'

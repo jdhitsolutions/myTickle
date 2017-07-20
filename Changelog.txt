@@ -1,5 +1,9 @@
 #Changelog for MyTickle
 
+v2.2.0
+fixed problem with variables not exporting.
+Changed default server instance to an exported tickle variable
+
 v2.1.0
 modified code to use .NET SQL classes and not rely on the SQLPS module
 Added "name" alias to Event parameter in Add-TickleEvent and Set-TickleEvent
