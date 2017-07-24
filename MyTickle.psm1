@@ -1,6 +1,6 @@
 ﻿#requires -version 5.0
 
-#TODO: Custom views
+#TODO: Custom view with countdown? Grouped by month?
 
 <#
 originally published at:
@@ -70,4 +70,6 @@ Set-Alias -name shte -Value Show-TickleEvent
 
 #endregion
 
-Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' -Alias 'gte','ate','rte','shte','ste'
+Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' -Alias 'gte','ate','rte','shte','ste' -function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
+'Remove-TickleEvent','Show-TickleEvent','Backup-TickleDatabase',
+'Initialize-TickleDatabase','Export-TickleDatabase','Import-TickleDatabase'
