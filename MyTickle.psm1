@@ -1,7 +1,5 @@
 ﻿#requires -version 5.0
 
-#TODO: Custom view with countdown? Grouped by month?
-
 <#
 originally published at:
 http://jdhitsolutions.com/blog/2013/05/friday-fun-a-powershell-tickler/

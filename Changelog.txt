@@ -1,5 +1,9 @@
 #Changelog for MyTickle
 
+v2.2.1
+updated manifest
+made github repo public
+
 v2.2.0
 fixed problem with variables not exporting.
 Changed default server instance to an exported tickle variable
