@@ -1,5 +1,10 @@
 #Changelog for MyTickle
 
+v2.2.2
+Modified to support database setup on a remote SQL server
+Remote setup is still under development
+Added custom format extension (Issue #1)
+
 v2.2.1
 updated manifest
 made github repo public

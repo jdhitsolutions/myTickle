@@ -6,7 +6,7 @@ Function Initialize-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName='default')]
     Param(
         [Parameter(Position = 0)]
-        #Enter the folder path for the database file.
+        #Enter the folder path for the database file. If specifying a remote server the path is relative to the server.
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
         [string]$ServerInstance = $TickleServerInstance,
@@ -36,7 +36,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[EventData](
+CREATE TABLE [$databasename].[dbo].[EventData](
 	[EventID] [int] IDENTITY(100,1) NOT NULL,
 	[EventDate] [datetime2](7) NOT NULL,
 	[EventName] [nvarchar](50) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE [dbo].[EventData](
 	[Archived] [bit] NULL
 ) ON [PRIMARY]
 
-ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N'0') FOR [Archived]
+ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N'0') FOR [Archived]
 
 "@
 
@@ -57,11 +57,18 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
             return
         }
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating Database file $dbpath"
+        Write-Verbose $newDB
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Connect to $ServerInstance"
+        if ($PSBoundParameters.ContainsKey('Databasepath')) {
+            $PSBoundParameters.Remove('Databasepath')
+        }
+        #need to connect to a database
+        $PSBoundParameters.add("Database",'Master')
+        $PSBoundParameters.Add("Query",$newDB)
+        Write-Verbose ($PSBoundParameters | Out-String)
         if ($PSCmdlet.ShouldProcess($dbpath)) {
-            #create the database
-            $PSBoundParameters.Add("Query",$newDB)
-            Try {
+            #create the database            
+            Try {               
                 _InvokeSqlQuery @PSBoundParameters
             }
         Catch {
@@ -71,7 +78,10 @@ ALTER TABLE [dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N
         #create the table
         Try {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
-            $PSBoundParameters.Query = $newTable            
+            Write-Verbose $newTable
+            $PSBoundParameters.Query = $newTable  
+            $PSBoundParameters.Database = $DatabaseName      
+            Write-Verbose ($PSBoundParameters | Out-String)    
             _InvokeSqlQuery @PSBoundParameters
         }
         Catch {
@@ -679,7 +689,7 @@ Process {
         #determine what method to invoke based on the query
         Switch -regex ($query) {
          "^Select (\w+|\*)|(@@\w+ AS)" { 
-         
+                Write-Verbose "ExecuteReader"
                 $reader = $cmd.executereader()
                 $out=@()
                 #convert datarows to a custom object
@@ -699,10 +709,12 @@ Process {
                 Break
          }
          "@@" { 
+                Write-Verbose "ExecuteScalar"
                 $cmd.ExecuteScalar()
                 Break
          }
          Default {
+            Write-Verbose "ExecuteNonQuery"
             $cmd.ExecuteNonQuery()
          }
         }
