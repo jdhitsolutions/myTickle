@@ -1,5 +1,11 @@
 #Changelog for MyTickle
 
+v2.3.0
+Updated README.md
+adjustments to format.ps1xml file
+Fixed bug in Initialize-TickleDatabase when creating a remote database and table
+initial beta
+
 v2.2.2
 Modified to support database setup on a remote SQL server
 Remote setup is still under development

@@ -31,10 +31,8 @@ ON PRIMARY
 "@
     $newTable = @"
 SET ANSI_NULLS ON
-GO
 
 SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [$databasename].[dbo].[EventData](
 	[EventID] [int] IDENTITY(100,1) NOT NULL,
@@ -60,7 +58,7 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
         Write-Verbose $newDB
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Connect to $ServerInstance"
         if ($PSBoundParameters.ContainsKey('Databasepath')) {
-            $PSBoundParameters.Remove('Databasepath')
+            $PSBoundParameters.Remove('Databasepath') | Out-Null
         }
         #need to connect to a database
         $PSBoundParameters.add("Database",'Master')
@@ -69,12 +67,13 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
         if ($PSCmdlet.ShouldProcess($dbpath)) {
             #create the database            
             Try {               
-                _InvokeSqlQuery @PSBoundParameters
+                _InvokeSqlQuery @PSBoundParameters | Out-Null
             }
         Catch {
             Throw $_
         }
-        
+        #give SQL a chance to comnplete the action
+        Start-Sleep -Seconds 2
         #create the table
         Try {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"

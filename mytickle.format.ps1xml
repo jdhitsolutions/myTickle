@@ -15,12 +15,12 @@
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Event</Label>
-            <Width>35</Width>
+            <Width>25</Width>
             <Alignment>Left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Comment</Label>
-            <Width>25</Width>
+            <Width>18</Width>
             <Alignment>Left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>

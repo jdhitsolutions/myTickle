@@ -12,4 +12,4 @@ CREATE TABLE [tickleeventdb].[dbo].[EventData](
 	[Archived] [bit] NULL
 ) ON [PRIMARY]
 
-ALTER TABLE tickleeventdb].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N'0') FOR [Archived]
+ALTER TABLE [tickleeventdb].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archived]  DEFAULT (N'0') FOR [Archived]
