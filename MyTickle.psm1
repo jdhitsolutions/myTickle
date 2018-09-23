@@ -68,8 +68,12 @@ Set-Alias -name shte -Value Show-TickleEvent
 
 #endregion
 
-Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
+$export = @{
+    Variable = 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
+    Alias = 'gte','ate','rte','shte','ste' 
+}
+Export-ModuleMember @export
 
-#-Alias 'gte','ate','rte','shte','ste' -function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
+#-function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
 #'Remove-TickleEvent','Show-TickleEvent','Backup-TickleDatabase',
 #'Initialize-TickleDatabase','Export-TickleDatabase','Import-TickleDatabase','_Invokesqlquery','New-MyTickle'
