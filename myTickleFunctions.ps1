@@ -2,6 +2,8 @@
 
 #region Define module functions
 
+
+
 Function Initialize-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName='default')]
     Param(
@@ -494,6 +496,7 @@ Set identity_insert EventData Off
     } #end 
 
 } #close Import-TickleEventDatabase
+
 Function Show-TickleEvent {
     [cmdletbinding()]
     Param(
@@ -620,12 +623,16 @@ function _NewMyTickle {
 [cmdletbinding()]
 Param(
     [Parameter(ValueFromPipelineByPropertyName)]
+    [alias("ID")]
     [int32]$EventID,
     [Parameter(ValueFromPipelineByPropertyName)]
+    [alias("Event","Name")]
     [string]$EventName,
     [Parameter(ValueFromPipelineByPropertyName)]
+    [alias("Date")]
     [datetime]$EventDate,
     [Parameter(ValueFromPipelineByPropertyName)]
+    [Alias("Comment")]
     [string]$EventComment
 )
 Process {
@@ -646,7 +653,7 @@ Param(
 [pscredential]$Credential,
 #The server instance name
 [ValidateNotNullorEmpty()]
-[string]$ServerInstance = "$env:computername\SqlExpress"
+[string]$ServerInstance = "$(hostname)\SqlExpress"
 )
 
 Begin {
@@ -676,7 +683,16 @@ Process {
         Write-Verbose "[PROCESS] Using Windows authentication"
         $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
     }
-    $connection.open()
+    Write-Verbose "[PROCESS] Opening Connection"
+    Write-Verbose "[PROCESS] $($connection.ConnectionString)"
+    Try {
+        $connection.open()
+    }
+    Catch {
+        Throw $_
+        #bail out
+        Return
+    }
 
     #join the connection to the command object
     $cmd.connection = $connection

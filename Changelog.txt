@@ -1,5 +1,8 @@
 #Changelog for MyTickle
 
+v2.3.1
+modified default instance name to not include a computername (Issue #8)
+
 v2.3.0
 Updated README.md
 adjustments to format.ps1xml file

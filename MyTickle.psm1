@@ -26,7 +26,7 @@ $TickleDefaultDays = 7
 #database defaults
 $TickleDB = 'TickleEventDB'
 $TickleTable = 'EventData'
-$TickleServerInstance = "$($env:COMPUTERNAME)\SqlExpress"
+$TickleServerInstance = ".\SqlExpress"
 
 #endregion
 
@@ -68,6 +68,8 @@ Set-Alias -name shte -Value Show-TickleEvent
 
 #endregion
 
-Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' -Alias 'gte','ate','rte','shte','ste' -function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
-'Remove-TickleEvent','Show-TickleEvent','Backup-TickleDatabase',
-'Initialize-TickleDatabase','Export-TickleDatabase','Import-TickleDatabase'
+Export-ModuleMember -Variable 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
+
+#-Alias 'gte','ate','rte','shte','ste' -function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
+#'Remove-TickleEvent','Show-TickleEvent','Backup-TickleDatabase',
+#'Initialize-TickleDatabase','Export-TickleDatabase','Import-TickleDatabase','_Invokesqlquery','New-MyTickle'
