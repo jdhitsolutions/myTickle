@@ -2,17 +2,27 @@
 
 #region Define module functions
 
-
+Function Get-TickleEventOffline {
+    [cmdletbinding()]
+    Param(
+        [Parameter(Position = 0)]
+        [ValidateScript( {Test-path $_})]
+        [string]$Path = "c:\users\jeff\dropbox\work\tickle.csv"
+    )
+       
+    import-csv -Path $path | _NewMyTickle
+    
+}
 
 Function Initialize-TickleDatabase {
-    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName='default')]
+    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = 'default')]
     Param(
         [Parameter(Position = 0)]
         #Enter the folder path for the database file. If specifying a remote server the path is relative to the server.
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
         [string]$ServerInstance = $TickleServerInstance,
-        [Parameter(Mandatory,ParameterSetName='credential')]
+        [Parameter(Mandatory, ParameterSetName = 'credential')]
         [pscredential]$Credential
     )
     Begin {
@@ -31,7 +41,7 @@ ON PRIMARY
     FILEGROWTH = 20
     )
 "@
-    $newTable = @"
+        $newTable = @"
 SET ANSI_NULLS ON
 
 SET QUOTED_IDENTIFIER ON
@@ -63,32 +73,32 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
             $PSBoundParameters.Remove('Databasepath') | Out-Null
         }
         #need to connect to a database
-        $PSBoundParameters.add("Database",'Master')
-        $PSBoundParameters.Add("Query",$newDB)
+        $PSBoundParameters.add("Database", 'Master')
+        $PSBoundParameters.Add("Query", $newDB)
         Write-Verbose ($PSBoundParameters | Out-String)
         if ($PSCmdlet.ShouldProcess($dbpath)) {
             #create the database            
             Try {               
                 _InvokeSqlQuery @PSBoundParameters | Out-Null
             }
-        Catch {
-            Throw $_
-        }
-        #give SQL a chance to comnplete the action
-        Start-Sleep -Seconds 2
-        #create the table
-        Try {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
-            Write-Verbose $newTable
-            $PSBoundParameters.Query = $newTable  
-            $PSBoundParameters.Database = $DatabaseName      
-            Write-Verbose ($PSBoundParameters | Out-String)    
-            _InvokeSqlQuery @PSBoundParameters
-        }
-        Catch {
-            Throw $_
-        }
-        Write-Host "Database inialization complete." -ForegroundColor Green
+            Catch {
+                Throw $_
+            }
+            #give SQL a chance to comnplete the action
+            Start-Sleep -Seconds 2
+            #create the table
+            Try {
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating table EventData"
+                Write-Verbose $newTable
+                $PSBoundParameters.Query = $newTable  
+                $PSBoundParameters.Database = $DatabaseName      
+                Write-Verbose ($PSBoundParameters | Out-String)    
+                _InvokeSqlQuery @PSBoundParameters
+            }
+            Catch {
+                Throw $_
+            }
+            Write-Host "Database inialization complete." -ForegroundColor Green
         } #if should process
     } #process
 
@@ -102,20 +112,20 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
 Function Add-TickleEvent {
     [cmdletbinding(SupportsShouldProcess)]
     Param(
-        [Parameter(Position=0,ValueFromPipelineByPropertyName,Mandatory,HelpMessage="Enter the name of the event")]
+        [Parameter(Position = 0, ValueFromPipelineByPropertyName, Mandatory, HelpMessage = "Enter the name of the event")]
         [Alias("Name")]
         [string]$Event,
-        [Parameter(Position=1,ValueFromPipelineByPropertyName,Mandatory,HelpMessage="Enter the datetime for the event")]
-        [ValidateScript({
-        If ($_ -gt (Get-Date)) {
-            $True
-        }
-        else {
-            Throw "You must enter a future date and time."
-        }
-        })]
+        [Parameter(Position = 1, ValueFromPipelineByPropertyName, Mandatory, HelpMessage = "Enter the datetime for the event")]
+        [ValidateScript( {
+                If ($_ -gt (Get-Date)) {
+                    $True
+                }
+                else {
+                    Throw "You must enter a future date and time."
+                }
+            })]
         [datetime]$Date,
-        [Parameter(Position=2,ValueFromPipelineByPropertyName)]
+        [Parameter(Position = 2, ValueFromPipelineByPropertyName)]
         [string]$Comment,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
@@ -126,23 +136,23 @@ Function Add-TickleEvent {
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
         $invokeParams = @{
-            Query = $null
+            Query          = $null
             ServerInstance = $ServerInstance
-            Database = $TickleDB
-            ErrorAction = 'Stop'
+            Database       = $TickleDB
+            ErrorAction    = 'Stop'
         }
         if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential",$Credential)
+            $invokeParams.Add("credential", $Credential)
         }
     } #begin
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Adding event '$event'"
         #events with apostrophes will have them stripped off
-        $theEvent = $Event.replace("'",'')
+        $theEvent = $Event.replace("'", '')
         $InvokeParams.query = "INSERT INTO EventData (EventDate,EventName,EventComment) VALUES ('$Date','$theEvent','$Comment')"
         
-        $short= "[$Date] $Event"
+        $short = "[$Date] $Event"
         if ($PSCmdlet.ShouldProcess($short)) {
             Try {
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"                
@@ -170,114 +180,114 @@ Function Add-TickleEvent {
 
 Function Get-TickleEvent {
 
-[cmdletbinding(DefaultParameterSetname="Default")]
+    [cmdletbinding(DefaultParameterSetname = "Default")]
 
-Param(
-[Parameter(ParameterSetName="ID")]
-[int[]]$Id,
-[Parameter(ParameterSetName="Name")]
-[string]$Name,
-[Parameter(ParameterSetName="Days")]
-[int32]$Days,
-[Parameter(ParameterSetName="All")]
-[switch]$All,
-[Parameter(ParameterSetName="Expired")]
-[switch]$Expired,
-[Parameter(ParameterSetName="Archived")]
-[switch]$Archived,
-[ValidateScript({$_ -gt 0})]
-[Parameter(ParameterSetName="Default")]
-[int]$Next,
-#Enter the name of the SQL Server instance
-[ValidateNotNullOrEmpty()]
-[string]$ServerInstance = $TickleServerInstance,
-[pscredential]$Credential
-)
+    Param(
+        [Parameter(ParameterSetName = "ID")]
+        [int[]]$Id,
+        [Parameter(ParameterSetName = "Name")]
+        [string]$Name,
+        [Parameter(ParameterSetName = "Days")]
+        [int32]$Days,
+        [Parameter(ParameterSetName = "All")]
+        [switch]$All,
+        [Parameter(ParameterSetName = "Expired")]
+        [switch]$Expired,
+        [Parameter(ParameterSetName = "Archived")]
+        [switch]$Archived,
+        [ValidateScript( {$_ -gt 0})]
+        [Parameter(ParameterSetName = "Default")]
+        [int]$Next,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = $TickleServerInstance,
+        [pscredential]$Credential
+    )
 
-Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
-Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
+    Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
+    Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
 
-$invokeParams = @{
-    Query = $null
-    Database = $TickleDB
-    ServerInstance = $ServerInstance
-    ErrorAction = "Stop"
-}
-if ($PSBoundParameters.ContainsKey('credential')) {
-    $invokeParams.Add("credential",$Credential)
-}
+    $invokeParams = @{
+        Query          = $null
+        Database       = $TickleDB
+        ServerInstance = $ServerInstance
+        ErrorAction    = "Stop"
+    }
+    if ($PSBoundParameters.ContainsKey('credential')) {
+        $invokeParams.Add("credential", $Credential)
+    }
 
-Switch ($pscmdlet.ParameterSetName) {
- "ID"      {
+    Switch ($pscmdlet.ParameterSetName) {
+        "ID" {
             Write-Verbose "[$((Get-Date).TimeofDay)] by ID" 
             $filter = "Select * from EventData where EventID='$ID'"
-            }
- "Name"    { 
+        }
+        "Name" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
             #get events that haven't expired or been archived by name
             $filter = "Select * from EventData where EventName='$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
- }
- "Days"  {
+        }
+        "Days" {
             Write-Verbose "[$((Get-Date).TimeofDay)] for the next $Days days"
             $target = (Get-Date).Date.AddDays($Days).toString()
             $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' ORDER by EventDate Asc"
- }
- "Expired" { 
+        }
+        "Expired" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
             #get expired events that have not been archived
             $filter = "Select * from EventData where Archived='False' AND EventDate<'$(Get-Date)' ORDER by EventDate Asc"
- }
-  "Archived" { 
+        }
+        "Archived" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Archive"
             $filter = "Select * from EventData where Archived='True' ORDER by EventDate Asc"
- }      
- "All"     { 
+        }      
+        "All" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] All"
             #get all non archived events
             $filter = "Select * from EventData where Archived='False' ORDER by EventDate Asc"
- }
-  Default {
+        }
+        Default {
             Write-Verbose "[$((Get-Date).TimeofDay)] Default"
             #get events that haven't been archived
             $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"
-          }
-} #switch
+        }
+    } #switch
 
-#Query database for matching events
-Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
-$invokeParams.query = $filter
+    #Query database for matching events
+    Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
+    $invokeParams.query = $filter
 
-Try {
-    $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
-    #convert the data into mytickle objects
-    $data = $events | _NewMyTickle
+    Try {
+        $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
+        #convert the data into mytickle objects
+        $data = $events | _NewMyTickle
 
-}
-Catch {
-    Throw $_
-}
+    }
+    Catch {
+        Throw $_
+    }
 
-Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
+    Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
 
-if ($Next) {
-    Write-Verbose "[$((Get-Date).TimeofDay)] Displaying next $next events"
-    $data | Select-Object -first $Next
-}
-elseif ($Days) {
-    $data | Where {$_.countdown.totaldays -ge 0 -AND $_.countdown.totaldays -le $Days}
-}
-else {
-    $data 
-}
+    if ($Next) {
+        Write-Verbose "[$((Get-Date).TimeofDay)] Displaying next $next events"
+        $data | Select-Object -first $Next
+    }
+    elseif ($Days) {
+        $data | Where {$_.countdown.totaldays -ge 0 -AND $_.countdown.totaldays -le $Days}
+    }
+    else {
+        $data 
+    }
 
-Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
+    Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
 
 } #Get-TickleEvent
 
-Function Set-TickleEvent  {
-    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetname = "column")]
+Function Set-TickleEvent {
+    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetname = "column")]
     Param(
-        [Parameter(Position = 0,ValueFromPipelineByPropertyName,Mandatory)]
+        [Parameter(Position = 0, ValueFromPipelineByPropertyName, Mandatory)]
         [int32]$ID,
         [Parameter(ParameterSetName = "column")]
         [alias("Name")]
@@ -302,15 +312,15 @@ UPDATE EventData
 SET {0} Where EventID='{1}'
 "@
 
-    $invokeParams = @{
-        Query = $null
-        Database = $TickleDB
-        ServerInstance = $ServerInstance
-        ErrorAction = "Stop"
-    }
-    if ($PSBoundParameters.ContainsKey('credential')) {
-        $invokeParams.Add("credential",$Credential)
-    }
+        $invokeParams = @{
+            Query          = $null
+            Database       = $TickleDB
+            ServerInstance = $ServerInstance
+            ErrorAction    = "Stop"
+        }
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential", $Credential)
+        }
 
     } #begin
 
@@ -319,22 +329,22 @@ SET {0} Where EventID='{1}'
         $cols = @()
         if ($pscmdlet.ParameterSetName -eq 'column') {
             if ($Event) {
-                $cols+="EventName='$Event'"
+                $cols += "EventName='$Event'"
             }
             if ($Comment) {
-                $cols+="EventComment='$Comment'"
+                $cols += "EventComment='$Comment'"
             }
             if ($Date) {
-                $cols+="EventDate='$Date'"
+                $cols += "EventDate='$Date'"
             }
         }
-    else {
+        else {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Archiving"
-            $cols+="Archived='True'"
+            $cols += "Archived='True'"
         }
         $data = $cols -join ","
 
-        $query = $update -f $data,$ID
+        $query = $update -f $data, $ID
         $invokeParams.query = $query
         if ($PSCmdlet.ShouldProcess($query)) {
             _InvokeSqlQuery @invokeParams | Out-Null
@@ -355,7 +365,7 @@ SET {0} Where EventID='{1}'
 Function Remove-TickleEvent {
     [cmdletbinding(SupportsShouldProcess)]
     Param(
-        [Parameter(Position = 0, Mandatory,ValueFromPipelineByPropertyName)]
+        [Parameter(Position = 0, Mandatory, ValueFromPipelineByPropertyName)]
         [int32]$ID,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
@@ -365,14 +375,14 @@ Function Remove-TickleEvent {
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
         $invokeParams = @{
-            Query = $null
+            Query          = $null
             ServerInstance = $ServerInstance
-            Database = $tickleDB
-            ErrorAction = "Stop"
+            Database       = $tickleDB
+            ErrorAction    = "Stop"
         }
 
         if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential",$Credential)
+            $invokeParams.Add("credential", $Credential)
         }
     } #begin
 
@@ -399,7 +409,7 @@ Function Remove-TickleEvent {
 Function Export-TickleDatabase {
     [cmdletbinding()]
     Param(
-        [Parameter(Position = 0, Mandatory,HelpMessage = "The path and filename for the export xml file.")]
+        [Parameter(Position = 0, Mandatory, HelpMessage = "The path and filename for the export xml file.")]
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
@@ -408,15 +418,15 @@ Function Export-TickleDatabase {
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
-         $invokeParams = @{
-            Query = "Select * from $tickleTable"
+        $invokeParams = @{
+            Query          = "Select * from $tickleTable"
             ServerInstance = $ServerInstance
-            Database = $tickleDB
-            ErrorAction = "Stop"
+            Database       = $tickleDB
+            ErrorAction    = "Stop"
         }
 
         if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential",$Credential)
+            $invokeParams.Add("credential", $Credential)
         }
     } #begin
 
@@ -426,8 +436,8 @@ Function Export-TickleDatabase {
             _InvokeSqlQuery @invokeParams | Export-clixml -Path $Path
         }
         Catch {
-        throw $_
-    }
+            throw $_
+        }
     } #process
 
     End {
@@ -440,8 +450,8 @@ Function Export-TickleDatabase {
 Function Import-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess)]
     Param(
-        [Parameter(Position = 0, Mandatory,HelpMessage = "The path and filename for the export xml file.")]
-        [ValidateScript({Test-Path $_})]
+        [Parameter(Position = 0, Mandatory, HelpMessage = "The path and filename for the export xml file.")]
+        [ValidateScript( {Test-Path $_})]
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
@@ -450,15 +460,15 @@ Function Import-TickleDatabase {
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
-         $invokeParams = @{
-            Query = ""
+        $invokeParams = @{
+            Query          = ""
             ServerInstance = $ServerInstance
-            Database = $tickleDB
-            ErrorAction = "Stop"
+            Database       = $tickleDB
+            ErrorAction    = "Stop"
         }
         
         if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential",$Credential)
+            $invokeParams.Add("credential", $Credential)
         }
 
         #turn off identity_insert
@@ -486,8 +496,8 @@ Set identity_insert EventData Off
              
         }
         Catch {
-        throw $_
-    }
+            throw $_
+        }
     } #process
 
     End {
@@ -500,24 +510,24 @@ Set identity_insert EventData Off
 Function Show-TickleEvent {
     [cmdletbinding()]
     Param(
-    [ValidateScript({$_ -ge 1})]
-    #the next number of days to get
-    [int]$Days = $TickleDefaultDays,
-    #Enter the name of the SQL Server instance
-    [ValidateNotNullOrEmpty()]
-    [string]$ServerInstance = $TickleServerInstance,
-    [pscredential]$Credential
+        [ValidateScript( {$_ -ge 1})]
+        #the next number of days to get
+        [int]$Days = $TickleDefaultDays,
+        #Enter the name of the SQL Server instance
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = $TickleServerInstance,
+        [pscredential]$Credential
     )
 
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
         
         $invokeParams = @{
-            Days = $Days
+            Days           = $Days
             ServerInstance = $ServerInstance
         }
         if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential",$Credential)
+            $invokeParams.Add("credential", $Credential)
         }
     } #begin
 
@@ -530,81 +540,81 @@ Function Show-TickleEvent {
             Throw $_
         }
         if ($upcoming) {         
-        #how wide should the box be?
-        #get the length of the longest line
-        $l = 0
-        foreach ($item in $upcoming) {
-            #turn countdown into a string without the milliseconds
-            $count = $item.countdown.ToString()
-            $time = $count.Substring(0,$count.lastindexof("."))
-            #add the time as a new property
-            $item | Add-Member -MemberType Noteproperty -name Time -Value $time
-            $a = "$($item.event) $($item.Date) [$time]".length
-            if ($a -gt $l) {$l = $a}
-            $b = $item.comment.Length
+            #how wide should the box be?
+            #get the length of the longest line
+            $l = 0
+            foreach ($item in $upcoming) {
+                #turn countdown into a string without the milliseconds
+                $count = $item.countdown.ToString()
+                $time = $count.Substring(0, $count.lastindexof("."))
+                #add the time as a new property
+                $item | Add-Member -MemberType Noteproperty -name Time -Value $time
+                $a = "$($item.event) $($item.Date) [$time]".length
+                if ($a -gt $l) {$l = $a}
+                $b = $item.comment.Length
         
-           if ($b -gt $l) {$l = $b}
-        }
+                if ($b -gt $l) {$l = $b}
+            }
 
-        [int]$width = $l+5
+            [int]$width = $l + 5
 
-        $header="* Reminders $((Get-Date).ToShortDateString()) "
+            $header = "* Reminders $((Get-Date).ToShortDateString()) "
 
-        #display events
-        Write-Host "`r"
-        Write-host "$($header.padright($width,"*"))" -ForegroundColor Cyan
-        Write-Host "*$(' '*($width-2))*" -ForegroundColor Cyan
+            #display events
+            Write-Host "`r"
+            Write-host "$($header.padright($width,"*"))" -ForegroundColor Cyan
+            Write-Host "*$(' '*($width-2))*" -ForegroundColor Cyan
 
-    foreach ($event in $upcoming) {
+            foreach ($event in $upcoming) {
         
-        if ($event.countdown.totalhours -le 24) {
-            $color = "Red"
-        }
-        elseif ($event.countdown.totalhours -le 48) {
-            $color = "Yellow"
-        }
-        else {
-            $color = "Green"
-        }
+                if ($event.countdown.totalhours -le 24) {
+                    $color = "Red"
+                }
+                elseif ($event.countdown.totalhours -le 48) {
+                    $color = "Yellow"
+                }
+                else {
+                    $color = "Green"
+                }
         
-        #define the message string
-        $line1 = "* $($event.event) $($event.Date) [$($event.time)]"
-        if ($event.comment -match "\w+") {
-            $line2 = "* $($event.Comment)"
-            $line3 = "*"
-        }
-        else {
-            $line2 = "*"
-            $line3 = $null
-        }
+                #define the message string
+                $line1 = "* $($event.event) $($event.Date) [$($event.time)]"
+                if ($event.comment -match "\w+") {
+                    $line2 = "* $($event.Comment)"
+                    $line3 = "*"
+                }
+                else {
+                    $line2 = "*"
+                    $line3 = $null
+                }
     
-    $msg = @"
+                $msg = @"
 $($line1.padRight($width-1))*
 $($line2.padright($width-1))*
 "@
 
-    if ($line3) {
-        #if there was a comment add a third line that is blank
-        $msg+="`n$($line3.padright($width-1))*"
-    }
+                if ($line3) {
+                    #if there was a comment add a third line that is blank
+                    $msg += "`n$($line3.padright($width-1))*"
+                }
 
-    Write-Host $msg -ForegroundColor $color
+                Write-Host $msg -ForegroundColor $color
 
-    } #foreach
+            } #foreach
 
-    Write-Host ("*"*$width) -ForegroundColor Cyan
-    Write-Host "`r"
-    } #if upcoming events found
-    else {
-    $msg = @"
+            Write-Host ("*" * $width) -ForegroundColor Cyan
+            Write-Host "`r"
+        } #if upcoming events found
+        else {
+            $msg = @"
 
     **********************
     * No event reminders *
     **********************
 
 "@
-    Write-Host $msg -foregroundcolor Green
-    }
+            Write-Host $msg -foregroundcolor Green
+        }
         
     } #process
 
@@ -620,129 +630,129 @@ $($line2.padright($width-1))*
 #region private functions
 
 function _NewMyTickle {
-[cmdletbinding()]
-Param(
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [alias("ID")]
-    [int32]$EventID,
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [alias("Event","Name")]
-    [string]$EventName,
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [alias("Date")]
-    [datetime]$EventDate,
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [Alias("Comment")]
-    [string]$EventComment
-)
-Process {
-    New-Object -TypeName mytickle -ArgumentList @($eventID,$Eventname,$EventDate,$EventComment)
-}
+    [cmdletbinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [alias("ID")]
+        [int32]$EventID,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [alias("Event", "Name")]
+        [string]$EventName,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [alias("Date")]
+        [datetime]$EventDate,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [Alias("Comment")]
+        [string]$EventComment
+    )
+    Process {
+        New-Object -TypeName mytickle -ArgumentList @($eventID, $Eventname, $EventDate, $EventComment)
+    }
 } #close _NewMyTickle
 
 Function _InvokeSqlQuery {
-[cmdletbinding(SupportsShouldProcess,DefaultParameterSetName="Default")]
-Param(
-[Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
-[ValidateNotNullorEmpty()]
-[string]$Query,
-[Parameter(Mandatory, HelpMessage = "The name of the database")]
-[ValidateNotNullorEmpty()]
-[string]$Database,
-[Parameter(Mandatory,ParameterSetName='credential')]
-[pscredential]$Credential,
-#The server instance name
-[ValidateNotNullorEmpty()]
-[string]$ServerInstance = "$(hostname)\SqlExpress"
-)
+    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = "Default")]
+    Param(
+        [Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
+        [ValidateNotNullorEmpty()]
+        [string]$Query,
+        [Parameter(Mandatory, HelpMessage = "The name of the database")]
+        [ValidateNotNullorEmpty()]
+        [string]$Database,
+        [Parameter(Mandatory, ParameterSetName = 'credential')]
+        [pscredential]$Credential,
+        #The server instance name
+        [ValidateNotNullorEmpty()]
+        [string]$ServerInstance = "$(hostname)\SqlExpress"
+    )
 
-Begin {
-    Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"  
+    Begin {
+        Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"  
 
-     if ($PSCmdlet.ParameterSetName -eq 'credential') {
-        $username = $Credential.UserName
-        $password = $Credential.GetNetworkCredential().Password
-    }
-
-    Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
-    $connection = New-Object system.data.sqlclient.sqlconnection
-    
-    Write-Verbose "[BEGIN  ] Creating the SQL Command object"
-    $cmd = New-Object system.Data.SqlClient.SqlCommand
- 
-} #begin
-
-Process {
-    Write-Verbose "[PROCESS] Opening the connection to $ServerInstance"
-    Write-Verbose "[PROCESS] Using database $Database"
-    if ($Username -AND $password) {
-        Write-Verbose "[PROCESS] Using credential"
-        $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
-    }
-    else {
-        Write-Verbose "[PROCESS] Using Windows authentication"
-        $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
-    }
-    Write-Verbose "[PROCESS] Opening Connection"
-    Write-Verbose "[PROCESS] $($connection.ConnectionString)"
-    Try {
-        $connection.open()
-    }
-    Catch {
-        Throw $_
-        #bail out
-        Return
-    }
-
-    #join the connection to the command object
-    $cmd.connection = $connection
-    $cmd.CommandText = $query
-    
-    Write-Verbose "[PROCESS] Invoking $query"
-    if ($PSCmdlet.ShouldProcess($Query)) {
-        
-        #determine what method to invoke based on the query
-        Switch -regex ($query) {
-         "^Select (\w+|\*)|(@@\w+ AS)" { 
-                Write-Verbose "ExecuteReader"
-                $reader = $cmd.executereader()
-                $out=@()
-                #convert datarows to a custom object
-                while ($reader.read()) {
-                
-                $h = [ordered]@{}
-                for ($i=0;$i -lt $reader.FieldCount;$i++) {
-                  $col = $reader.getname($i)
-                  
-                  $h.add($col,$reader.getvalue($i))
-                } #for
-                  $out+=new-object -TypeName psobject -Property $h 
-                } #while
-
-                $out
-                $reader.close()
-                Break
-         }
-         "@@" { 
-                Write-Verbose "ExecuteScalar"
-                $cmd.ExecuteScalar()
-                Break
-         }
-         Default {
-            Write-Verbose "ExecuteNonQuery"
-            $cmd.ExecuteNonQuery()
-         }
+        if ($PSCmdlet.ParameterSetName -eq 'credential') {
+            $username = $Credential.UserName
+            $password = $Credential.GetNetworkCredential().Password
         }
-    } #should process
 
-}
+        Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
+        $connection = New-Object system.data.sqlclient.sqlconnection
+    
+        Write-Verbose "[BEGIN  ] Creating the SQL Command object"
+        $cmd = New-Object system.Data.SqlClient.SqlCommand
+ 
+    } #begin
 
-End {
-    Write-Verbose "[END    ] Closing the connection"
-    $connection.close()
+    Process {
+        Write-Verbose "[PROCESS] Opening the connection to $ServerInstance"
+        Write-Verbose "[PROCESS] Using database $Database"
+        if ($Username -AND $password) {
+            Write-Verbose "[PROCESS] Using credential"
+            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
+        }
+        else {
+            Write-Verbose "[PROCESS] Using Windows authentication"
+            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
+        }
+        Write-Verbose "[PROCESS] Opening Connection"
+        Write-Verbose "[PROCESS] $($connection.ConnectionString)"
+        Try {
+            $connection.open()
+        }
+        Catch {
+            Throw $_
+            #bail out
+            Return
+        }
 
-    Write-Verbose "[END    ] Ending: $($MyInvocation.Mycommand)"
-} #end
+        #join the connection to the command object
+        $cmd.connection = $connection
+        $cmd.CommandText = $query
+    
+        Write-Verbose "[PROCESS] Invoking $query"
+        if ($PSCmdlet.ShouldProcess($Query)) {
+        
+            #determine what method to invoke based on the query
+            Switch -regex ($query) {
+                "^Select (\w+|\*)|(@@\w+ AS)" { 
+                    Write-Verbose "ExecuteReader"
+                    $reader = $cmd.executereader()
+                    $out = @()
+                    #convert datarows to a custom object
+                    while ($reader.read()) {
+                
+                        $h = [ordered]@{}
+                        for ($i = 0; $i -lt $reader.FieldCount; $i++) {
+                            $col = $reader.getname($i)
+                  
+                            $h.add($col, $reader.getvalue($i))
+                        } #for
+                        $out += new-object -TypeName psobject -Property $h 
+                    } #while
+
+                    $out
+                    $reader.close()
+                    Break
+                }
+                "@@" { 
+                    Write-Verbose "ExecuteScalar"
+                    $cmd.ExecuteScalar()
+                    Break
+                }
+                Default {
+                    Write-Verbose "ExecuteNonQuery"
+                    $cmd.ExecuteNonQuery()
+                }
+            }
+        } #should process
+
+    }
+
+    End {
+        Write-Verbose "[END    ] Closing the connection"
+        $connection.close()
+
+        Write-Verbose "[END    ] Ending: $($MyInvocation.Mycommand)"
+    } #end
 
 } #close _InvokeSqlQuery
 

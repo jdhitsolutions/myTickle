@@ -72,8 +72,10 @@ $export = @{
     Variable = 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
     Alias = 'gte','ate','rte','shte','ste' 
 }
-Export-ModuleMember @export
+#Export-ModuleMember @export
 
-#-function 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
-#'Remove-TickleEvent','Show-TickleEvent','Backup-TickleDatabase',
-#'Initialize-TickleDatabase','Export-TickleDatabase','Import-TickleDatabase','_Invokesqlquery','New-MyTickle'
+<#
+function = 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
+'Remove-TickleEvent','Show-TickleEvent','Initialize-TickleDatabase',
+'Export-TickleDatabase','Import-TickleDatabase','Get-TickleEventOffline'
+#>
