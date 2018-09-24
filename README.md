@@ -2,6 +2,13 @@
 
 This PowerShell module is designed as a tickle or reminder system. You can add and edit reminders of upcoming events. Use the module commands to display upcoming events. If you are interested, the core object of the module is based on a PowerShell class.
 
+You can install the latest version from the PowerShell Gallery.
+
+```powershell
+Install-Module MyTickle
+```
+This module requires a SQL Server installation but it should work cross platform.
+
 This module stores event information in a SQL database. Ideally, you will be running a version of SQL Server Express on your desktop. You can use the `Initialize-TickleDatabase` command to create the database and table. It is possible to store the database on a separate server (not tested). The module includes T-SQL files you can give to a database administrator to run and create the database for you.
 
 The module uses a set of global variables to define the SQL connection. The default installation assumes a local SQL Server Express instance.
