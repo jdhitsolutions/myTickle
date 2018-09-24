@@ -1,20 +1,5 @@
 ﻿#requires -version 5.0
 
-<#
-originally published at:
-http://jdhitsolutions.com/blog/2013/05/friday-fun-a-powershell-tickler/
-
-Learn more about PowerShell:
-http://jdhitsolutions.com/blog/essential-powershell-resources/
-
-  ****************************************************************
-  * DO NOT USE IN A PRODUCTION ENVIRONMENT UNTIL YOU HAVE TESTED *
-  * THOROUGHLY IN A LAB ENVIRONMENT. USE AT YOUR OWN RISK.  IF   *
-  * YOU DO NOT UNDERSTAND WHAT THIS SCRIPT DOES OR HOW IT WORKS, *
-  * DO NOT USE IT OUTSIDE OF A SECURE, TEST SETTING.             *
-  ****************************************************************
-#>
-
 #dot source module functions
 . $PSScriptRoot\myTickleFunctions.ps1
 
@@ -72,10 +57,10 @@ $export = @{
     Variable = 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
     Alias = 'gte','ate','rte','shte','ste' 
 }
-#Export-ModuleMember @export
+Export-ModuleMember @export
 
 <#
 function = 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
 'Remove-TickleEvent','Show-TickleEvent','Initialize-TickleDatabase',
-'Export-TickleDatabase','Import-TickleDatabase','Get-TickleEventOffline'
+'Export-TickleDatabase','Import-TickleDatabase'
 #>

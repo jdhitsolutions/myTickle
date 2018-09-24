@@ -2,23 +2,11 @@
 
 #region Define module functions
 
-Function Get-TickleEventOffline {
-    [cmdletbinding()]
-    Param(
-        [Parameter(Position = 0)]
-        [ValidateScript( {Test-path $_})]
-        [string]$Path = "c:\users\jeff\dropbox\work\tickle.csv"
-    )
-       
-    import-csv -Path $path | _NewMyTickle
-    
-}
-
 Function Initialize-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = 'default')]
     Param(
-        [Parameter(Position = 0)]
-        #Enter the folder path for the database file. If specifying a remote server the path is relative to the server.
+        [Parameter(Position = 0,Mandatory,HelpMessage = "Enter the folder path for the database file. If specifying a remote server the path is relative to the server." )]
+        [ValidateScript({Test-Path $_})]
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
         [string]$ServerInstance = $TickleServerInstance,
@@ -111,6 +99,9 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
 
 Function Add-TickleEvent {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None","MyTickle")]
+    [Alias("ate")]
+
     Param(
         [Parameter(Position = 0, ValueFromPipelineByPropertyName, Mandatory, HelpMessage = "Enter the name of the event")]
         [Alias("Name")]
@@ -180,15 +171,15 @@ Function Add-TickleEvent {
 
 Function Get-TickleEvent {
 
-    [cmdletbinding(DefaultParameterSetname = "Default")]
+    [cmdletbinding(DefaultParameterSetname = "Days")]
+    [OutputType("MyTickle")]
+    [Alias("gte")]
 
     Param(
         [Parameter(ParameterSetName = "ID")]
         [int[]]$Id,
         [Parameter(ParameterSetName = "Name")]
         [string]$Name,
-        [Parameter(ParameterSetName = "Days")]
-        [int32]$Days,
         [Parameter(ParameterSetName = "All")]
         [switch]$All,
         [Parameter(ParameterSetName = "Expired")]
@@ -196,12 +187,30 @@ Function Get-TickleEvent {
         [Parameter(ParameterSetName = "Archived")]
         [switch]$Archived,
         [ValidateScript( {$_ -gt 0})]
-        [Parameter(ParameterSetName = "Default")]
-        [int]$Next,
+        [Parameter(ParameterSetName = "Days")]
+        [Alias("days")]
+        [int]$Next = $TickleDefaultDays,
+        [Parameter(ParameterSetName = "ID")]
+        [Parameter(ParameterSetName = "Archived")]
+        [Parameter(ParameterSetName = "Expired")]
+        [Parameter(ParameterSetName = "All")]
+        [Parameter(ParameterSetName = "Days")]
+        [Parameter(ParameterSetName = "Name")]
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = $TickleServerInstance,
-        [pscredential]$Credential
+        [Parameter(ParameterSetName = "ID")]
+        [Parameter(ParameterSetName = "Archived")]
+        [Parameter(ParameterSetName = "Expired")]
+        [Parameter(ParameterSetName = "All")]
+        [Parameter(ParameterSetName = "Days")]
+        [Parameter(ParameterSetName = "Name")]
+        [pscredential]$Credential,
+        [Parameter(ParameterSetName = "Offline")]
+        #Enter the path to an offline CSV file
+        [ValidatePattern('\.csv$')]
+        [ValidateScript( {Test-Path $_})]
+        [string]$Offline
     )
 
     Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
@@ -228,8 +237,8 @@ Function Get-TickleEvent {
             $filter = "Select * from EventData where EventName='$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
         }
         "Days" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] for the next $Days days"
-            $target = (Get-Date).Date.AddDays($Days).toString()
+            Write-Verbose "[$((Get-Date).TimeofDay)] for the next $next days"
+            $target = (Get-Date).Date.AddDays($next).toString()
             $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' ORDER by EventDate Asc"
         }
         "Expired" { 
@@ -246,6 +255,11 @@ Function Get-TickleEvent {
             #get all non archived events
             $filter = "Select * from EventData where Archived='False' ORDER by EventDate Asc"
         }
+        "Offline" {
+            Write-Verbose "[$((Get-Date).TimeofDay)] Offline"
+            Write-Verbose "[$((Get-Date).TimeOfDay)] Getting offline data from $Offline"
+            $data = import-csv -Path $Offline | _NewMyTickle
+        }
         Default {
             Write-Verbose "[$((Get-Date).TimeofDay)] Default"
             #get events that haven't been archived
@@ -253,32 +267,30 @@ Function Get-TickleEvent {
         }
     } #switch
 
-    #Query database for matching events
-    Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
-    $invokeParams.query = $filter
-
-    Try {
-        $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
-        #convert the data into mytickle objects
-        $data = $events | _NewMyTickle
-
-    }
-    Catch {
-        Throw $_
-    }
-
-    Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
-
-    if ($Next) {
-        Write-Verbose "[$((Get-Date).TimeofDay)] Displaying next $next events"
-        $data | Select-Object -first $Next
-    }
-    elseif ($Days) {
-        $data | Where {$_.countdown.totaldays -ge 0 -AND $_.countdown.totaldays -le $Days}
-    }
+    #if using offline data, display the results
+    if ($Offline -AND $data) {
+        $Data
+    } 
     else {
-        $data 
-    }
+        #Query database for matching events
+        Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
+        $invokeParams.query = $filter
+
+        Try {
+            $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
+            #convert the data into mytickle objects
+            $data = $events | _NewMyTickle
+
+        }
+        Catch {
+            Throw $_
+        }
+
+        Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
+        #write event data to the pipeline
+        $data
+
+    } #else query for data
 
     Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
 
@@ -286,6 +298,9 @@ Function Get-TickleEvent {
 
 Function Set-TickleEvent {
     [cmdletbinding(SupportsShouldProcess, DefaultParameterSetname = "column")]
+    [OutputType("None","MyTickle")]
+    [Alias("ste")]
+
     Param(
         [Parameter(Position = 0, ValueFromPipelineByPropertyName, Mandatory)]
         [int32]$ID,
@@ -364,6 +379,9 @@ SET {0} Where EventID='{1}'
 
 Function Remove-TickleEvent {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None")]
+    [Alias("rte")]
+
     Param(
         [Parameter(Position = 0, Mandatory, ValueFromPipelineByPropertyName)]
         [int32]$ID,
@@ -408,6 +426,8 @@ Function Remove-TickleEvent {
 
 Function Export-TickleDatabase {
     [cmdletbinding()]
+    [OutputType("None")]
+
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "The path and filename for the export xml file.")]
         [String]$Path,
@@ -449,6 +469,8 @@ Function Export-TickleDatabase {
 
 Function Import-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None")]
+
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "The path and filename for the export xml file.")]
         [ValidateScript( {Test-Path $_})]
@@ -482,7 +504,7 @@ Function Import-TickleDatabase {
             Import-clixml -Path $path | foreach-object {
                 $query = @"
 Set identity_insert EventData On
-INSERT INTO EventData (EventID,EventDate,EventName,EventComment,Archived) VALUES ('$($_.EventID)','$($_.EventDate)','$($_.EventName)','$($_.EventComment)','$($_.Archived)')
+INSERT INTO EventData (EventID,EventDate,EventName,EventComment,Archived) VALUES ('$($_.EventID)','$($_.EventDate)','$(($_.EventName).replace("'",""))','$($_.EventComment)','$($_.Archived)')
 Set identity_insert EventData Off
 "@            
                 $invokeparams.query = $query
@@ -490,7 +512,7 @@ Set identity_insert EventData Off
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($invokeparams.query)"
                 
                 if ($pscmdlet.ShouldProcess("VALUES ('$($_.EventID)','$($_.EventDate)','$($_.EventName)','$($_.EventComment)','$($_.Archived)'")) {
-                    _InvokeSqlQuery @invokeParams
+                    _InvokeSqlQuery @invokeParams | Out-Null
                 }
             }
              
@@ -508,36 +530,61 @@ Set identity_insert EventData Off
 } #close Import-TickleEventDatabase
 
 Function Show-TickleEvent {
-    [cmdletbinding()]
+    [cmdletbinding(DefaultParameterSetName = "instance")]
+    [OutputType("None")]
+    [Alias("shte")]
+
     Param(
         [ValidateScript( {$_ -ge 1})]
         #the next number of days to get
         [int]$Days = $TickleDefaultDays,
+
+        [Parameter(ParameterSetName = "instance")]
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = $TickleServerInstance,
-        [pscredential]$Credential
+
+        [Parameter(ParameterSetName = "instance")]
+        [pscredential]$Credential,
+
+        [Parameter(ParameterSetName = "offline")]
+        #Enter the path to an offline CSV file
+        [ValidatePattern('\.csv$')]
+        [ValidateScript( {Test-Path $_})]
+        [string]$Offline
     )
 
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
         
-        $invokeParams = @{
-            Days           = $Days
-            ServerInstance = $ServerInstance
+        if ($PSCmdlet.ParameterSetName -eq 'instance') {
+            $invokeParams = @{
+                Days           = $Days
+                ServerInstance = $ServerInstance
+            }
+            if ($PSBoundParameters.ContainsKey('credential')) {
+                $invokeParams.Add("credential", $Credential)
+            }
         }
-        if ($PSBoundParameters.ContainsKey('credential')) {
-            $invokeParams.Add("credential", $Credential)
+        else {
+            $invokeParams = @{Offline = $Offline}
         }
     } #begin
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Getting events for the next $Days days."
-        Try {
-            $upcoming = Get-TickleEvent @invokeParams            
+
+        if ($offline) {
+            $target = (Get-Date).Date.AddDays($Days)
+            $upcoming = Get-TickleEvent @invokeParams | Where-Object {$_.Date -le $Target}
         }
-        Catch {
-            Throw $_
+        else {
+            Try {
+                $upcoming = Get-TickleEvent @invokeParams            
+            }
+            Catch {
+                Throw $_
+            }
         }
         if ($upcoming) {         
             #how wide should the box be?
@@ -631,6 +678,8 @@ $($line2.padright($width-1))*
 
 function _NewMyTickle {
     [cmdletbinding()]
+    [OutputType("MyTickle")]
+
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [alias("ID")]
@@ -652,6 +701,8 @@ function _NewMyTickle {
 
 Function _InvokeSqlQuery {
     [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = "Default")]
+    [OutputType([PSObject])]
+
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
         [ValidateNotNullorEmpty()]

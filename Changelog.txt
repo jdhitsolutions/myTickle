@@ -1,7 +1,17 @@
-#Changelog for MyTickle
+# Changelog for MyTickle
+
+v2.4.0
+Added support for offline use (read-only)
+Made DatabasePath mandatory for Initialize-TickleDatabase
+Updated Import-TickleDatabase to suppress SQL output
+Updated Import-TickleDatabase to remove apostrophe's in event names
+Revised parameters for Get-TickleEvent
+Added OutputType definitions
+Added help documentation
+Updated README
 
 v2.3.1
-modified default instance name to not include a computername (Issue #8)
+modified default instance name to not include a computer name (Issue #8)
 
 v2.3.0
 Updated README.md
@@ -10,13 +20,13 @@ Fixed bug in Initialize-TickleDatabase when creating a remote database and table
 initial beta
 
 v2.2.2
-Modified to support database setup on a remote SQL server
+Modified to support database setup on a remote SQL server (Issue #7)
 Remote setup is still under development
 Added custom format extension (Issue #1)
 
 v2.2.1
 updated manifest
-made github repo public
+made github repository public
 
 v2.2.0
 fixed problem with variables not exporting.

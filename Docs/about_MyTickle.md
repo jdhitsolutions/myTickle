@@ -1,57 +1,150 @@
 ﻿# MyTickle
+
 ## about_MyTickle
 
-```
-ABOUT TOPIC NOTE:
-The first header of the about topic should be the topic name.
-The second header contains the lookup name used by the help system.
+## SHORT DESCRIPTION
 
-IE:
-# Some Help Topic Name
-## SomeHelpTopicFileName
+The MyTickle module is designed to provide a reminder system of upcoming events.
+All events are stored in a SQL database. You will need to setup or provide a
+SQL Server instance in order to use this module. Since this module is designed
+for personal use, SQL Server Express should be sufficient.
 
-This will be transformed into the text file
-as `about_SomeHelpTopicFileName`.
-Do not include file extensions.
-The second header should have no spaces.
-```              
+Once the database is initialized, you can easily add and display
+tickle events. The module also includes commands for managing the database
+itself.
 
-# SHORT DESCRIPTION
-{{ Short Description Placeholder }}
+## LONG DESCRIPTION
 
-```
-ABOUT TOPIC NOTE:
-About topics can be no longer than 80 characters wide when rendered to text.
-Any topics greater than 80 characters will be automatically wrapped.
-The generated about topic will be encoded UTF-8.
-```
+The module consists of these commands:
 
-# LONG DESCRIPTION
-{{ Long Description Placeholder }}
+    Add-TickleEvent
+    Export-TickleDatabase
+    Get-TickleEvent
+    Import-TickleDatabase
+    Initialize-TickleDatabase
+    Remove-TickleEvent
+    Set-TickleEvent
+    Show-TickleEvent
 
-## Optional Subtopics
-{{ Optional Subtopic Placeholder }}
+## Initialization
 
-# EXAMPLES
-{{ Code or descriptive examples of how to leverage the functions described. }}
+You will need access to a SQL Server instance. A local installation of SQL
+Server Express edition will be ideal. Installation and configuration of SQL
+Server is outside the scope of this module and is pre-requisite you will need
+to handle on your own. The module does *not* rely on any commands from the
+SQLPS PowerShell module.
 
-# NOTE
-{{ Note Placeholder - Additional information that a user needs to know.}}
+To initialize your tickle database all you need to do is specify a location
+for the database file. The location must already exist.
 
-# TROUBLESHOOTING NOTE
-{{ Troubleshooting Placeholder - Warns users of bugs}}
+    Initialize-TickleDatabase -databasepath D:\db\myTickle
 
-{{ Explains behavior that is likely to change with fixes }}
+The command will default to a server instance of .\SQLExpress so if you have a
+different instance name, or using a remote computer you will need to include a
+value for the ServerInstance parameter. You might also want to change the global
+variable, $TickleServerInstance.
 
-# SEE ALSO
-{{ See also placeholder }}
+The module directory also contains a few .sql files that you or a database
+administrator can use to set up the database.
 
-{{ You can also list related articles, blogs, and video URLs. }}
+## Variables
 
-# KEYWORDS
-{{List alternate names or titles for this topic that readers might use.}}
+The module uses several global variables with these default values:
 
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}    
+    Name                           Value
+    ----                           -----
+    TickleDB                       TickleEventDB
+    TickleDefaultDays              7
+    TickleServerInstance           .\SqlExpress
+    TickleTable                    EventData
+
+It is recommended that you leave the TickleTable variable alone unless you have
+database experience. If you change any values, you should include new variable
+assignments in your PowerShell profile script.
+
+## Adding Events
+
+To add an event all you need to do is specify an event name and a datetime.
+
+    Add-TickleEvent "Azure exam" -date "2/3/2019 9:00AM"
+
+You also have the option of adding a comment.
+
+## Displaying Events
+
+To display events you can either use `Get-TickleEvent` or `Show-TickleEvent`.
+The former provides a number of options for limiting what is displayed. The
+default behavior of `Get-TickleEvent` is to display all future events that
+have not been archived.
+
+`Show-TickleEvent` will use `Write-Host` to display a code coded list of events
+set to occur within the next number of days specified by the $TickleDefaultDays
+variable, although you can certainly specify a different number of days. Events
+due in 24 hours or less will displayed in red. Events due in 48 hours or less
+will be displayed in yellow. Otherwise, the event is displayed in green.
+
+## Managing Events
+
+When an event's datetime has passed, it will be marked as expired. Expired
+events can still be accessed with `Get-TickleEvent`. You also have the option
+of archiving events. Currently, all events are stored in a single database
+table but this might change in a future release. To mark an event as archived
+you will typically run a command like this:
+
+    Get-TickleEvent -expired | Set-TickleEvent -Archive
+
+You can also completely delete an event from the database:
+
+    Remove-TickleEvent -ID 123
+
+The module does not include any SQL-related management tasks like backing up a
+database. You can use whatever means you wish. Although there is a command to
+export the database. The database table contents will be exported to a cliXML
+formatted file.
+
+    Export-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+
+You could then import the database file:
+
+    Import-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+
+## Offline Use
+
+The commands in this module are intended to be used with a SQL Server instance.
+However, a few commands have the ability to act in an offline-mode by reading
+events from a CSV file. You might want to do this if you want to access your
+tickle database on laptop that doesn't have a copy of the database. You will
+need to export the database to a CSV file.
+
+    Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
+
+On the "disconnected" system, you can still access the tickle events in what
+is essentially read-only mode.
+
+    Get-TickleEvent -Offline C:\users\jeff\dropbox\work\tickledb.csv
+
+There are no provisions for adding or modifying event from an offline state.
+Although you can always pipe a data source to `Add-TickleEvent`.
+
+## NOTE
+
+Limited testing of this module has been done on PowerShell Core running on non-
+Windows platforms.
+
+## TROUBLESHOOTING NOTE
+
+Avoid using any special characters, especially apostrophes, in event names.
+
+Please report any bugs, problems, questions or feature requests to the module's
+GitHub repository at https://github.com/jdhitsolutions/myTickle/issues.
+
+## SEE ALSO
+
+This module was first described and originally published at:
+http://jdhitsolutions.com/blog/2013/05/friday-fun-a-powershell-tickler/
+
+## KEYWORDS
+
+- Reminder
+
+- Tickle
