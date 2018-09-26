@@ -171,18 +171,18 @@ Accept wildcard characters: False
 
 ### -Name
 
-Display an event by its name.
+Display an event by its name. You can use wildcards.
 
 ```yaml
 Type: String
 Parameter Sets: Name
-Aliases:
+Aliases: Event
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -Next

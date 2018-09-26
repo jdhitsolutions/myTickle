@@ -179,6 +179,7 @@ Function Get-TickleEvent {
         [Parameter(ParameterSetName = "ID")]
         [int[]]$Id,
         [Parameter(ParameterSetName = "Name")]
+        [Alias("event")]
         [string]$Name,
         [Parameter(ParameterSetName = "All")]
         [switch]$All,
@@ -234,12 +235,15 @@ Function Get-TickleEvent {
         "Name" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
             #get events that haven't expired or been archived by name
-            $filter = "Select * from EventData where EventName='$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
+            if ($name -match "\*") {
+               $name = $name.replace("*","%")
+            }
+            $filter = "Select * from EventData where EventName LIKE '$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
         }
         "Days" {
             Write-Verbose "[$((Get-Date).TimeofDay)] for the next $next days"
             $target = (Get-Date).Date.AddDays($next).toString()
-            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' ORDER by EventDate Asc"
+            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' AND eventdate > '$((Get-date).ToString())' ORDER by EventDate Asc"
         }
         "Expired" { 
             Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
@@ -261,6 +265,7 @@ Function Get-TickleEvent {
             $data = import-csv -Path $Offline | _NewMyTickle
         }
         Default {
+            #this should never get called
             Write-Verbose "[$((Get-Date).TimeofDay)] Default"
             #get events that haven't been archived
             $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"

@@ -52,7 +52,12 @@
               <TableColumnItem>
                 <Scriptblock>
                 $count= $_.countdown.toString()
+                  if ($count.lastIndexOf('.') -gt 0) { 
                 $count.substring(0,$count.lastIndexOf('.'))
+                }
+                else {
+                  $count
+                }
                 </Scriptblock>
               </TableColumnItem>
             </TableColumnItems>

@@ -128,8 +128,8 @@ Although you can always pipe a data source to `Add-TickleEvent`.
 
 ## NOTE
 
-Limited testing of this module has been done on PowerShell Core running on non-
-Windows platforms.
+Limited testing of this module has been done on PowerShell Core running on 
+non-Windows platforms.
 
 ## TROUBLESHOOTING NOTE
 

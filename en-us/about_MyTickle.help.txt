@@ -118,7 +118,7 @@ Offline Use
 
 NOTE
     Limited testing of this module has been done on PowerShell Core running on
-    non- Windows platforms.
+    non-Windows platforms.
 
 TROUBLESHOOTING NOTE
     Avoid using any special characters, especially apostrophes, in event names.

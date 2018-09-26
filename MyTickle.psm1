@@ -35,7 +35,11 @@ myTickle([int32]$ID,[string]$Event,[datetime]$Date,[string]$Comment) {
     if ($Date -lt (Get-Date)) {
         $this.Expired = $True
     }
-    $this.Countdown = $this.Date - (Get-Date)
+    $ts = $this.Date - (Get-Date)
+    if ($ts.totalminutes -lt 0) {
+        $ts = New-Timespan -Minutes 0
+    }
+    $this.Countdown = $ts
 }
 } #close class
 
