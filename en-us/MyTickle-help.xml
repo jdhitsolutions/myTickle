@@ -583,7 +583,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="Event">
+        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="event">
           <maml:name>Name</maml:name>
           <maml:Description>
             <maml:para>Display an event by its name. You can use wildcards.</maml:para>
@@ -648,10 +648,23 @@
       </command:syntaxItem>
       <command:syntaxItem>
         <maml:name>Get-TickleEvent</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="days">
+          <maml:name>Next</maml:name>
+          <maml:Description>
+            <maml:para>Get events in the next number of days.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$TickleDefaultDays</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Offline</maml:name>
           <maml:Description>
             <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
+            <maml:para>Offline mode will not include any past events.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -723,7 +736,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="Event">
+      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="event">
         <maml:name>Name</maml:name>
         <maml:Description>
           <maml:para>Display an event by its name. You can use wildcards.</maml:para>
@@ -751,6 +764,7 @@
         <maml:name>Offline</maml:name>
         <maml:Description>
           <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
+          <maml:para>Offline mode will not include any past events.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -816,7 +830,7 @@
         <maml:title>-------------------------- Example 3 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv</dev:code>
         <dev:remarks>
-          <maml:para>Display all non-expired and non-archived events scheduled for the next 14 days.</maml:para>
+          <maml:para>Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

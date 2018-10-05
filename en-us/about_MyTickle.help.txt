@@ -1,5 +1,5 @@
 ﻿TOPIC
-    about_mytickle
+    about_MyTickle
 
 SHORT DESCRIPTION
     The MyTickle module is designed to provide a reminder system of upcoming
@@ -10,15 +10,15 @@ SHORT DESCRIPTION
     events. The module also includes commands for managing the database itself.
 
 LONG DESCRIPTION
-    The module consists of these commands:    
-    
-    Add-TickleEvent    
-    Export-TickleDatabase     
-    Get-TickleEvent     
-    Import-TickleDatabase    
-    Initialize-TickleDatabase     
-    Remove-TickleEvent     
-    Set-TickleEvent    
+    The module consists of these commands:
+
+    Add-TickleEvent
+    Export-TickleDatabase
+    Get-TickleEvent
+    Import-TickleDatabase
+    Initialize-TickleDatabase
+    Remove-TickleEvent
+    Set-TickleEvent
     Show-TickleEvent
 
 Initialization
@@ -27,46 +27,45 @@ Initialization
     Server is outside the scope of this module and is pre-requisite you will
     need to handle on your own. The module does not rely on any commands from 
     the SQLPS PowerShell module.
-    
+
     To initialize your tickle database all you need to do is specify a location
-    for the database file. The location must already exist.   
-    
-        Initialize-TickleDatabase -databasepath D:\db\myTickle
-    
+    for the database file. The location must already exist.
+
+    Initialize-TickleDatabase -databasepath D:\db\myTickle
+
     The command will default to a server instance of .\SQLExpress so if you have
     a different instance name, or using a remote computer you will need to
     include a value for the ServerInstance parameter. You might also want to
     change the global variable, $TickleServerInstance.
-    
     The module directory also contains a few .sql files that you or a database
     administrator can use to set up the database.
 
 Variables
-    The module uses several global variables with these default values:    
-    
-    Name                           Value
-    ----                           -----
-    TickleDB                       TickleEventDB
-    TickleDefaultDays              7
-    TickleServerInstance           .\SqlExpress
-    TickleTable                    EventData
+    The module uses several global variables with these default values:
+
+        Name                           Value
+        ----                           -----
+        TickleDB                       TickleEventDB
+        TickleDefaultDays              7
+        TickleServerInstance           .\SqlExpress
+        TickleTable                    EventData
 
     It is recommended that you leave the TickleTable variable alone unless you
     have database experience. If you change any values, you should include new
     variable assignments in your PowerShell profile script.
 
 Adding Events
-    To add an event all you need to do is specify an event name and a datetime. 
+    To add an event all you need to do is specify an event name and a datetime.
 
-        Add-TickleEvent "Azure exam" -date "2/3/2019 9:00AM"
-    
+    Add-TickleEvent "Azure exam" -date "2/3/2019 9:00AM"
+
     You also have the option of adding a comment.
 
 Displaying Events
-    To display events you can either use Get-TickleEvent or Show-TickleEvent. 
-    The former provides a number of options for limiting what is displayed. 
-    The default behavior of Get-TickleEvent is to display all future events 
-    that have not been archived.
+    To display events you can either use Get-TickleEvent or 
+    Show-TickleEvent. The former provides a number of options for limiting
+    what is displayed. The default behavior of Get-TickleEvent is to display
+    all future events that have not been archived.
     
     Show-TickleEvent will use Write-Host to display a code coded list of
     events set to occur within the next number of days specified by the
@@ -80,39 +79,41 @@ Managing Events
     events can still be accessed with Get-TickleEvent. You also have the
     option of archiving events. Currently, all events are stored in a single
     database table but this might change in a future release. To mark an event
-    as archived you will typically run a command like this:    
-    
-        Get-TickleEvent -expired | Set-TickleEvent -Archive
+    as archived you will typically run a command like this:
 
-    You can also completely delete an event from the database:   
-    
-        Remove-TickleEvent -ID 123
-    T
-    he module does not include any SQL-related management tasks like backing up
+    Get-TickleEvent -expired | Set-TickleEvent -Archive
+
+    You can also completely delete an event from the database:
+
+    Remove-TickleEvent -ID 123
+
+    The module does not include any SQL-related management tasks like backing up
     a database. You can use whatever means you wish. Although there is a command
     to export the database. The database table contents will be exported to a
-    cliXML formatted file.    
-    
-        Export-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
-    
-    You could then import the database file:    
-    
-        Import-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+    cliXML formatted file.
+
+    Export-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+
+    You could then import the database file:
+
+    Import-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
 
 Offline Use
     The commands in this module are intended to be used with a SQL Server
     instance. However, a few commands have the ability to act in an offline-mode
     by reading events from a CSV file. You might want to do this if you want to
     access your tickle database on laptop that doesn't have a copy of the
-    database. You will need to export the database to a CSV file. 
+    database. You will need to export the database to a CSV file.
 
-        Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tkl.csv
-    
+    Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
+
     On the "disconnected" system, you can still access the tickle events in what
-    is essentially read-only mode.    
-    
-        Get-TickleEvent -Offline C:\users\jeff\dropbox\work\tkl.csv
+    is essentially read-only mode.
 
+    Get-TickleEvent -Offline C:\users\jeff\dropbox\work\tickledb.csv
+
+    The offline mode will only display events that have not expired and will use
+    the value of $TickleDefaultDays.
     There are no provisions for adding or modifying event from an offline state.
     Although you can always pipe a data source to Add-TickleEvent.
 
@@ -124,6 +125,7 @@ TROUBLESHOOTING NOTE
     Avoid using any special characters, especially apostrophes, in event names.
     Please report any bugs, problems, questions or feature requests to the
     module's GitHub repository at
+    
     https://github.com/jdhitsolutions/myTickle/issues.
 
 SEE ALSO

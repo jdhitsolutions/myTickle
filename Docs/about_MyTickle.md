@@ -9,14 +9,14 @@ All events are stored in a SQL database. You will need to setup or provide a
 SQL Server instance in order to use this module. Since this module is designed
 for personal use, SQL Server Express should be sufficient.
 
-Once the database is initialized, you can easily add and display
-tickle events. The module also includes commands for managing the database
-itself.
+Once the database is initialized, you can easily add and display tickle events.
+The module also includes commands for managing the database itself.
 
 ## LONG DESCRIPTION
 
 The module consists of these commands:
 
+```powershell
     Add-TickleEvent
     Export-TickleDatabase
     Get-TickleEvent
@@ -25,6 +25,7 @@ The module consists of these commands:
     Remove-TickleEvent
     Set-TickleEvent
     Show-TickleEvent
+```
 
 ## Initialization
 
@@ -37,12 +38,14 @@ SQLPS PowerShell module.
 To initialize your tickle database all you need to do is specify a location
 for the database file. The location must already exist.
 
+```powershell
     Initialize-TickleDatabase -databasepath D:\db\myTickle
+```
 
 The command will default to a server instance of .\SQLExpress so if you have a
 different instance name, or using a remote computer you will need to include a
 value for the ServerInstance parameter. You might also want to change the global
-variable, $TickleServerInstance.
+variable, `$TickleServerInstance`.
 
 The module directory also contains a few .sql files that you or a database
 administrator can use to set up the database.
@@ -51,12 +54,14 @@ administrator can use to set up the database.
 
 The module uses several global variables with these default values:
 
+```powershell
     Name                           Value
     ----                           -----
     TickleDB                       TickleEventDB
     TickleDefaultDays              7
     TickleServerInstance           .\SqlExpress
     TickleTable                    EventData
+```
 
 It is recommended that you leave the TickleTable variable alone unless you have
 database experience. If you change any values, you should include new variable
@@ -66,7 +71,9 @@ assignments in your PowerShell profile script.
 
 To add an event all you need to do is specify an event name and a datetime.
 
+```powershell
     Add-TickleEvent "Azure exam" -date "2/3/2019 9:00AM"
+```
 
 You also have the option of adding a comment.
 
@@ -91,22 +98,30 @@ of archiving events. Currently, all events are stored in a single database
 table but this might change in a future release. To mark an event as archived
 you will typically run a command like this:
 
+```powershell
     Get-TickleEvent -expired | Set-TickleEvent -Archive
+```
 
 You can also completely delete an event from the database:
 
+```powershell
     Remove-TickleEvent -ID 123
+```
 
 The module does not include any SQL-related management tasks like backing up a
 database. You can use whatever means you wish. Although there is a command to
 export the database. The database table contents will be exported to a cliXML
 formatted file.
 
+```powershell
     Export-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+```
 
 You could then import the database file:
 
+```powershell
     Import-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
+```
 
 ## Offline Use
 
@@ -116,19 +131,26 @@ events from a CSV file. You might want to do this if you want to access your
 tickle database on laptop that doesn't have a copy of the database. You will
 need to export the database to a CSV file.
 
+```powershell
     Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
+```
 
 On the "disconnected" system, you can still access the tickle events in what
 is essentially read-only mode.
 
+```powershell
     Get-TickleEvent -Offline C:\users\jeff\dropbox\work\tickledb.csv
+```
+
+The offline mode will only display events that have not expired and will use
+the value of `$TickleDefaultDays`.
 
 There are no provisions for adding or modifying event from an offline state.
 Although you can always pipe a data source to `Add-TickleEvent`.
 
 ## NOTE
 
-Limited testing of this module has been done on PowerShell Core running on 
+Limited testing of this module has been done on PowerShell Core running on
 non-Windows platforms.
 
 ## TROUBLESHOOTING NOTE

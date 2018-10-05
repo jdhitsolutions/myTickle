@@ -1,4 +1,8 @@
-# Changelog for MyTickle
+# Change Log for MyTickle
+
+## v2.6.0
+
++ Updated the offline process to not import past events and to default to using the $TickleDefaultDays
 
 ## v2.5.0
 

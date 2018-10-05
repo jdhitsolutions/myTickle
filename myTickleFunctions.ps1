@@ -189,6 +189,7 @@ Function Get-TickleEvent {
         [switch]$Archived,
         [ValidateScript( {$_ -gt 0})]
         [Parameter(ParameterSetName = "Days")]
+        [Parameter(ParameterSetName = "Offline")]
         [Alias("days")]
         [int]$Next = $TickleDefaultDays,
         [Parameter(ParameterSetName = "ID")]
@@ -215,8 +216,7 @@ Function Get-TickleEvent {
     )
 
     Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
-    Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
-
+    
     $invokeParams = @{
         Query          = $null
         Database       = $TickleDB
@@ -226,7 +226,7 @@ Function Get-TickleEvent {
     if ($PSBoundParameters.ContainsKey('credential')) {
         $invokeParams.Add("credential", $Credential)
     }
-
+    
     Switch ($pscmdlet.ParameterSetName) {
         "ID" {
             Write-Verbose "[$((Get-Date).TimeofDay)] by ID" 
@@ -236,7 +236,7 @@ Function Get-TickleEvent {
             Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
             #get events that haven't expired or been archived by name
             if ($name -match "\*") {
-               $name = $name.replace("*","%")
+                $name = $name.replace("*","%")
             }
             $filter = "Select * from EventData where EventName LIKE '$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
         }
@@ -262,7 +262,8 @@ Function Get-TickleEvent {
         "Offline" {
             Write-Verbose "[$((Get-Date).TimeofDay)] Offline"
             Write-Verbose "[$((Get-Date).TimeOfDay)] Getting offline data from $Offline"
-            $data = import-csv -Path $Offline | _NewMyTickle
+            #skip any expired entries when working offline
+            $data = import-csv -Path $Offline | where-object {[datetime]$_.Date -ge (Get-Date).Date} | _NewMyTickle
         }
         Default {
             #this should never get called
@@ -271,12 +272,14 @@ Function Get-TickleEvent {
             $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"
         }
     } #switch
-
+    
     #if using offline data, display the results
     if ($Offline -AND $data) {
-        $Data
+        Write-Verbose "[$((Get-Date).TimeofDay)] Getting events for the next $Next days."
+        $Data | Where-Object {$_.Date -le (Get-Date).Date.addDays($Next) }
     } 
     else {
+        Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
         #Query database for matching events
         Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
         $invokeParams.query = $filter

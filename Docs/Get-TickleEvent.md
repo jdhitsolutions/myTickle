@@ -1,6 +1,6 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
+Module Name: MyTickle
 online version:
 schema: 2.0.0
 ---
@@ -52,7 +52,7 @@ Get-TickleEvent [-Archived] [-ServerInstance <String>] [-Credential <PSCredentia
 ### Offline
 
 ```yaml
-Get-TickleEvent [-Offline <String>] [<CommonParameters>]
+Get-TickleEvent [-Next <Int32>] [-Offline <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -85,7 +85,7 @@ Display all non-expired and non-archived events scheduled for the next 14 days.
 PS C:\> Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv
 ```
 
-Display all non-expired and non-archived events scheduled for the next 14 days.
+Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
 
 ## PARAMETERS
 
@@ -176,7 +176,7 @@ Display an event by its name. You can use wildcards.
 ```yaml
 Type: String
 Parameter Sets: Name
-Aliases: Event
+Aliases: event
 
 Required: False
 Position: Named
@@ -191,7 +191,7 @@ Get events in the next number of days.
 
 ```yaml
 Type: Int32
-Parameter Sets: Days
+Parameter Sets: Days, Offline
 Aliases: days
 
 Required: False
@@ -204,6 +204,8 @@ Accept wildcard characters: False
 ### -Offline
 
 Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv
+
+Offline mode will not include any past events.
 
 ```yaml
 Type: String
