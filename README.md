@@ -44,4 +44,4 @@ Events due in the next 24 hours will be displayed in red. Events due in 48 hours
 
 For more information, please read the [About](./docs/about_MyTickle.md) help topic.
 
-_last updated 5 October 2018_
+_last updated 22 October 2018_

@@ -1,5 +1,9 @@
 # Change Log for MyTickle
 
+## v2.6.1
+
++ file cleanup for the published module in the PowerShell Gallery
+
 ## v2.6.0
 
 + Updated the offline process to not import past events and to default to using the $TickleDefaultDays
