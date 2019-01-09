@@ -1,5 +1,10 @@
 # Change Log for MyTickle
 
+## v2.8.0
+
++ raised minimum PowerShell version to 5.1
++ updated manifest to support both desktop and core
+
 ## v2.7.0
 
 + Explicitly exporting functions for PowerShell Core.
