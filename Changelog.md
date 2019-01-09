@@ -1,5 +1,11 @@
 # Change Log for MyTickle
 
+## v2.7.0
+
++ Explicitly exporting functions for PowerShell Core.
++ Help updates
++ minor file formatting
+
 ## v2.6.1
 
 + file cleanup for the published module in the PowerShell Gallery
@@ -34,8 +40,8 @@
 
 ## v2.3.0
 
-+ Updated README.md
-+ adjustments to format.ps1xml file
++ Updated `README.md`
++ adjustments to `mytickle.format.ps1xml` file
 + Fixed bug in `Initialize-TickleDatabase` when creating a remote database and table
 + initial beta
 

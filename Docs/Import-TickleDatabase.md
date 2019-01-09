@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Import event data from a cliXML file
+Import event data from a Clixml file
 
 ## SYNTAX
 

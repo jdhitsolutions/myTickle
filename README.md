@@ -8,7 +8,7 @@ You can install the latest version from the PowerShell Gallery.
 Install-Module MyTickle
 ```
 
-This module requires a SQL Server installation but it should work cross platform.
+This module requires a SQL Server installation but it should work cross platform and in PowerShell Core.
 
 This module stores event information in a SQL database. Ideally, you will be running a version of SQL Server Express on your desktop. You can use the `Initialize-TickleDatabase` command to create the database and table. It is possible to store the database on a separate server (not tested). The module includes T-SQL files you can give to a database administrator to run and create the database for you.
 
@@ -34,14 +34,14 @@ The module should work cross-platform even on Linux, although in that situation 
 
 Once initialized and with entries added, you can easily get a look at upcoming events.
 
-![get-tickleevent](/assets/get-tickleevent.png)
+![get-tickleevent](assets/get-tickleevent.png)
 
 Or display upcoming events in a color-coded format. The default is events in the next 7 days, but you can specify a different value.
 
-![show-tickleevent](/assets/show-tickleevent.png)
+![show-tickleevent](assets/show-tickleevent.png)
 
 Events due in the next 24 hours will be displayed in red. Events due in 48 hours or less will be shown in yellow.
 
-For more information, please read the [About](./docs/about_MyTickle.md) help topic.
+For more information, please read the [About](docs/about_MyTickle.md) help topic.
 
-_last updated 22 October 2018_
+_last updated 9 January 2019_

@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Export a tickle database to a cliXML file
+Export a tickle database to a Clixml file
 
 ## SYNTAX
 

@@ -8,7 +8,7 @@
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
-         <TableColumnHeader>
+          <TableColumnHeader>
             <Label>ID</Label>
             <Width>4</Width>
             <Alignment>Left</Alignment>
@@ -37,7 +37,7 @@
         <TableRowEntries>
           <TableRowEntry>
             <TableColumnItems>
-            <TableColumnItem>
+              <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
@@ -50,9 +50,8 @@
                 <PropertyName>date</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <Scriptblock>
-                $count= $_.countdown.toString()
-                  if ($count.lastIndexOf('.') -gt 0) { 
+                <Scriptblock> $count= $_.countdown.toString()
+                  if ($count.lastIndexOf('.') -gt 0) {
                 $count.substring(0,$count.lastIndexOf('.'))
                 }
                 else {

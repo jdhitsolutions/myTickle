@@ -85,7 +85,20 @@ Display all non-expired and non-archived events scheduled for the next 14 days.
 PS C:\> Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv
 ```
 
-Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
+Display all non-expired from an offline source.
+By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
+
+### Example 4
+
+```powershell
+PS C:\> get-tickleevent -name 'mvp summit'
+
+ID   Event                     Comment            Date                       Countdown
+--   -----                     -------            ----                       ---------
+282  MVP Summit                through 3/22       3/17/2019 12:00:00 AM    66.11:35:09
+```
+
+Get an event by its name.
 
 ## PARAMETERS
 
@@ -100,7 +113,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -116,7 +129,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -148,7 +161,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -203,7 +216,9 @@ Accept wildcard characters: False
 
 ### -Offline
 
-Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv
+Access an offline, CSV version. It is assumed you have previously run a command like:
+
+Get-TickleEvent | Export-CSV tickleexport.csv
 
 Offline mode will not include any past events.
 
@@ -237,7 +252,8 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -256,3 +272,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Set-TickleEvent]()
 
 [Add-TickleEvent]()
+

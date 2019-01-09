@@ -18,7 +18,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
           <maml:name>Event</maml:name>
           <maml:Description>
-            <maml:para>Enter the name of the event.</maml:para>
+            <maml:para>Enter the name of the event or reminder.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -30,7 +30,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Date</maml:name>
           <maml:Description>
-            <maml:para>Enter the datetime for the event</maml:para>
+            <maml:para>Enter the date and time for the event</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
@@ -150,7 +150,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Date</maml:name>
         <maml:Description>
-          <maml:para>Enter the datetime for the event</maml:para>
+          <maml:para>Enter the date and time for the event</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
@@ -162,7 +162,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
         <maml:name>Event</maml:name>
         <maml:Description>
-          <maml:para>Enter the name of the event.</maml:para>
+          <maml:para>Enter the name of the event or reminder.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -275,7 +275,7 @@
       <command:verb>Export</command:verb>
       <command:noun>TickleDatabase</command:noun>
       <maml:description>
-        <maml:para>Export a tickle database to a cliXML file</maml:para>
+        <maml:para>Export a tickle database to a Clixml file</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -663,7 +663,8 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Offline</maml:name>
           <maml:Description>
-            <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
+            <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like:</maml:para>
+            <maml:para>Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
             <maml:para>Offline mode will not include any past events.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -763,7 +764,8 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Offline</maml:name>
         <maml:Description>
-          <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
+          <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like:</maml:para>
+          <maml:para>Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
           <maml:para>Offline mode will not include any past events.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -833,6 +835,17 @@
           <maml:para>Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; get-tickleevent -name 'mvp summit'
+
+ID   Event                     Comment            Date                       Countdown
+--   -----                     -------            ----                       ---------
+282  MVP Summit                through 3/22       3/17/2019 12:00:00 AM    66.11:35:09</dev:code>
+        <dev:remarks>
+          <maml:para>Get an event by its name.</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
@@ -851,7 +864,7 @@
       <command:verb>Import</command:verb>
       <command:noun>TickleDatabase</command:noun>
       <maml:description>
-        <maml:para>Import event data from a cliXML file</maml:para>
+        <maml:para>Import event data from a Clixml file</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -1923,7 +1936,7 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>None</maml:name>
+          <maml:name>None. This command writes to the PowerShell host.</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -1948,7 +1961,7 @@
 *                                                     *
 *******************************************************</dev:code>
         <dev:remarks>
-          <maml:para>The actual output would be colorized.</maml:para>
+          <maml:para>The actual console output will be colorized.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

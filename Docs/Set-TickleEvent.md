@@ -47,7 +47,7 @@ Set a new date for tickle event ID 100.
 PS C:\> Get-TickleEvent -expired | Set-TickleEvent -archived
 ```
 
-Get all expired events and mark them as archived. 
+Get all expired events and mark them as archived.
 
 ## PARAMETERS
 

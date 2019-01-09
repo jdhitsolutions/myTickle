@@ -45,7 +45,7 @@ PS C:\> Show-TickleEvent
 *******************************************************
 ```
 
-The actual output would be colorized.
+The actual console output will be colorized.
 
 ## PARAMETERS
 
@@ -123,7 +123,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### None
+### None. This command writes to the PowerShell host.
 
 ## NOTES
 

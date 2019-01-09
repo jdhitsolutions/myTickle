@@ -84,7 +84,7 @@ Accept wildcard characters: False
 
 ### -Date
 
-Enter the datetime for the event
+Enter the date and time for the event
 
 ```yaml
 Type: DateTime
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 
 ### -Event
 
-Enter the name of the event.
+Enter the name of the event or reminder.
 
 ```yaml
 Type: String
@@ -148,8 +148,7 @@ Accept wildcard characters: False
 
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

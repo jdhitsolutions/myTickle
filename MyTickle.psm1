@@ -1,4 +1,4 @@
-﻿#requires -version 5.0
+﻿
 
 #dot source module functions
 . $PSScriptRoot\myTickleFunctions.ps1
@@ -6,7 +6,7 @@
 #region Define module variables
 
 #the default number of days to display for Show-TickleEvents
-$TickleDefaultDays = 7 
+$TickleDefaultDays = 7
 
 #database defaults
 $TickleDB = 'TickleEventDB'
@@ -19,31 +19,31 @@ $TickleServerInstance = ".\SqlExpress"
 
 Class myTickle {
 
-[string]$Event
-[datetime]$Date
-[string]$Comment
-[int32]$ID
-[boolean]$Expired = $False
-hidden [timespan]$Countdown
+    [string]$Event
+    [datetime]$Date
+    [string]$Comment
+    [int32]$ID
+    [boolean]$Expired = $False
+    hidden [timespan]$Countdown
 
-#constructor
-myTickle([int32]$ID,[string]$Event,[datetime]$Date,[string]$Comment) {
-    $this.ID = $ID
-    $this.Event = $Event
-    $this.Date = $Date
-    $this.Comment = $Comment
-    if ($Date -lt (Get-Date)) {
-        $this.Expired = $True
+    #constructor
+    myTickle([int32]$ID, [string]$Event, [datetime]$Date, [string]$Comment) {
+        $this.ID = $ID
+        $this.Event = $Event
+        $this.Date = $Date
+        $this.Comment = $Comment
+        if ($Date -lt (Get-Date)) {
+            $this.Expired = $True
+        }
+        $ts = $this.Date - (Get-Date)
+        if ($ts.totalminutes -lt 0) {
+            $ts = New-Timespan -Minutes 0
+        }
+        $this.Countdown = $ts
     }
-    $ts = $this.Date - (Get-Date)
-    if ($ts.totalminutes -lt 0) {
-        $ts = New-Timespan -Minutes 0
-    }
-    $this.Countdown = $ts
-}
 } #close class
 
-Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID,Date,Event,Comment -force
+Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID, Date, Event, Comment -force
 
 #endregion
 
@@ -58,13 +58,10 @@ Set-Alias -name shte -Value Show-TickleEvent
 #endregion
 
 $export = @{
-    Variable = 'TickleDefaultDays','TickleDB','TickleTable','TickleServerInstance' 
-    Alias = 'gte','ate','rte','shte','ste' 
+    Variable = 'TickleDefaultDays', 'TickleDB', 'TickleTable', 'TickleServerInstance'
+    Alias    = 'gte', 'ate', 'rte', 'shte', 'ste'
+    function = 'Get-TickleEvent', 'Set-TickleEvent', 'Add-TickleEvent',
+    'Remove-TickleEvent', 'Show-TickleEvent', 'Initialize-TickleDatabase',
+    'Export-TickleDatabase', 'Import-TickleDatabase'
 }
 Export-ModuleMember @export
-
-<#
-function = 'Get-TickleEvent','Set-TickleEvent','Add-TickleEvent',
-'Remove-TickleEvent','Show-TickleEvent','Initialize-TickleDatabase',
-'Export-TickleDatabase','Import-TickleDatabase'
-#>
