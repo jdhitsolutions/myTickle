@@ -1,5 +1,7 @@
 # MyTickle
 
+[![PSGallery Version](https://img.shields.io/powershellgallery/v/MyTickle.png?style=for-the-badge&logo=powershell&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/MyTickle/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/MyTickle.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/MyTickle/)
+
 This PowerShell module is designed as a tickle or reminder system. You can add and edit reminders of upcoming events. Use the module commands to display upcoming events. If you are interested, the core objective of the module is based on a PowerShell class.
 
 You can install the latest version from the PowerShell Gallery.
