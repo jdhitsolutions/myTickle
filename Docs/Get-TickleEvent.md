@@ -85,17 +85,16 @@ Display all non-expired and non-archived events scheduled for the next 14 days.
 PS C:\> Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv
 ```
 
-Display all non-expired from an offline source.
-By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
+Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
 
 ### Example 4
 
 ```powershell
-PS C:\> get-tickleevent -name 'mvp summit'
+PS C:\> Get-TickleEvent -name 'mvp summit'
 
 ID   Event                     Comment            Date                       Countdown
 --   -----                     -------            ----                       ---------
-282  MVP Summit                through 3/22       3/17/2019 12:00:00 AM    66.11:35:09
+282  MVP Summit                through 3/22       3/17/2020 12:00:00 AM    66.11:35:09
 ```
 
 Get an event by its name.

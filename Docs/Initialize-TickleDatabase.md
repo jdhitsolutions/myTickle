@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Initialize a new tickle event database
+Initialize a new tickle event database.
 
 ## SYNTAX
 
@@ -29,17 +29,17 @@ Initialize-TickleDatabase [-DatabasePath] <String> [-ServerInstance <String>] -C
 
 ## DESCRIPTION
 
-Use this command to initialize a new tickle event database and table. You need to specify the path for the new database file. The command will use the built in Tickle variables so update them if necessary prior to running this command.
+Use this command to initialize a new tickle event database and table. You need to specify the path for the new database file. The command will use the built-in Tickle variables so update them if necessary before running this command.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> Initialize-Tickledatabase -databasepath c:\db\mytickle
+PS C:\> Initialize-TickleDatabase -databasepath c:\db\mytickle
 ```
 
-Initialize and empty database and create the files at c:\db\mytickle. The folder must exist before running this command.
+Initialize an empty database and create the files at c:\db\mytickle. The folder must exist before running this command.
 
 ## PARAMETERS
 
@@ -139,3 +139,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Import-TickleDatabase](Import-TickleDatabase.md)

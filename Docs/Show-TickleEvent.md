@@ -27,7 +27,7 @@ Show-TickleEvent [-Days <Int32>] [-Offline <String>] [<CommonParameters>]
 
 ## DESCRIPTION
 
-This is a specialized version of Get-TickleEvent that uses Write-Host to display a formatted and colorized display of upcoming events. Events due in 24 hours or less will be displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise the event is displayed in green. It is not possible to modify these colors at this time. The default behavior is to show events due in the next number of days as specified by $TickleDefaultDays.
+This is a specialized version of Get-TickleEvent that uses ANSI-escape sequences to display a formatted and colorized display of upcoming events. Events due in 24 hours or less will be displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise, the event is displayed in green. It is not possible to modify these colors at this time. The default behavior is to show events due in the next number of days as specified by the $TickleDefaultDays variable.
 
 ## EXAMPLES
 
@@ -36,16 +36,16 @@ This is a specialized version of Get-TickleEvent that uses Write-Host to display
 ```powershell
 PS C:\> Show-TickleEvent
 
-* Reminders 9/23/2018 *********************************
+* Reminders 9/23/2020 *********************************
 *                                                     *
-* Project Review 09/25/2018 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2020 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2018 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2020 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************
 ```
 
-The actual console output will be colorized.
+The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk chartacters.
 
 ## PARAMETERS
 
@@ -131,4 +131,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Get-TickleEvent]()
+[Get-TickleEvent](Get-TickleEvent.md)

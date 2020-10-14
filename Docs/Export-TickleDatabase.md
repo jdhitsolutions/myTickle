@@ -20,7 +20,7 @@ Export-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <
 
 ## DESCRIPTION
 
-Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The xml file is created with Export-CliXML.
+Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XNL file is created with Export-CliXML.
 
 ## EXAMPLES
 
@@ -100,4 +100,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Import-TickleDatabase]()
+[Import-TickleDatabase](Import-TickleDatabase.md)

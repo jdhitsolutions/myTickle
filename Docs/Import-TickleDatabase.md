@@ -30,7 +30,7 @@ If you export a tickle database with the Export-TickleDatabase command, you can 
 PS C:\> Import-TickleDatabase c:\backup\exportdb.xml
 ```
 
-It is assumed you created the xml file with Export-TickleDatabase.
+It is assumed you created the XML file with Export-TickleDatabase.
 
 ## PARAMETERS
 
@@ -134,4 +134,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Export-TickleDatabase]()
+[Export-TickleDatabase](Export-TickleDatabase.md)

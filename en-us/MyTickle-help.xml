@@ -252,7 +252,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2019 12:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2020 12:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Add an event to the database.</maml:para>
         </dev:remarks>
@@ -279,7 +279,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The xml file is created with Export-CliXML.</maml:para>
+      <maml:para>Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XNL file is created with Export-CliXML.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -837,11 +837,11 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 4 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; get-tickleevent -name 'mvp summit'
+        <dev:code>PS C:\&gt; Get-TickleEvent -name 'mvp summit'
 
 ID   Event                     Comment            Date                       Countdown
 --   -----                     -------            ----                       ---------
-282  MVP Summit                through 3/22       3/17/2019 12:00:00 AM    66.11:35:09</dev:code>
+282  MVP Summit                through 3/22       3/17/2020 12:00:00 AM    66.11:35:09</dev:code>
         <dev:remarks>
           <maml:para>Get an event by its name.</maml:para>
         </dev:remarks>
@@ -1033,7 +1033,7 @@ ID   Event                     Comment            Date                       Cou
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Import-TickleDatabase c:\backup\exportdb.xml</dev:code>
         <dev:remarks>
-          <maml:para>It is assumed you created the xml file with Export-TickleDatabase.</maml:para>
+          <maml:para>It is assumed you created the XML file with Export-TickleDatabase.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1050,11 +1050,11 @@ ID   Event                     Comment            Date                       Cou
       <command:verb>Initialize</command:verb>
       <command:noun>TickleDatabase</command:noun>
       <maml:description>
-        <maml:para>Initialize a new tickle event database</maml:para>
+        <maml:para>Initialize a new tickle event database.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Use this command to initialize a new tickle event database and table. You need to specify the path for the new database file. The command will use the built in Tickle variables so update them if necessary prior to running this command.</maml:para>
+      <maml:para>Use this command to initialize a new tickle event database and table. You need to specify the path for the new database file. The command will use the built-in Tickle variables so update them if necessary before running this command.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1209,13 +1209,18 @@ ID   Event                     Comment            Date                       Cou
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Initialize-Tickledatabase -databasepath c:\db\mytickle</dev:code>
+        <dev:code>PS C:\&gt; Initialize-TickleDatabase -databasepath c:\db\mytickle</dev:code>
         <dev:remarks>
-          <maml:para>Initialize and empty database and create the files at c:\db\mytickle. The folder must exist before running this command.</maml:para>
+          <maml:para>Initialize an empty database and create the files at c:\db\mytickle. The folder must exist before running this command.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Import-TickleDatabase</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -1769,7 +1774,7 @@ ID   Event                     Comment            Date                       Cou
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2019 5:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2020 5:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Set a new date for tickle event ID 100.</maml:para>
         </dev:remarks>
@@ -1803,7 +1808,7 @@ ID   Event                     Comment            Date                       Cou
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>This is a specialized version of Get-TickleEvent that uses Write-Host to display a formatted and colorized display of upcoming events. Events due in 24 hours or less will be displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise the event is displayed in green. It is not possible to modify these colors at this time. The default behavior is to show events due in the next number of days as specified by $TickleDefaultDays.</maml:para>
+      <maml:para>This is a specialized version of Get-TickleEvent that uses ANSI-escape sequences to display a formatted and colorized display of upcoming events. Events due in 24 hours or less will be displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise, the event is displayed in green. It is not possible to modify these colors at this time. The default behavior is to show events due in the next number of days as specified by the $TickleDefaultDays variable.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1953,15 +1958,15 @@ ID   Event                     Comment            Date                       Cou
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Show-TickleEvent
 
-* Reminders 9/23/2018 *********************************
+* Reminders 9/23/2020 *********************************
 *                                                     *
-* Project Review 09/25/2018 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2020 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2018 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2020 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************</dev:code>
         <dev:remarks>
-          <maml:para>The actual console output will be colorized.</maml:para>
+          <maml:para>The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk chartacters.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

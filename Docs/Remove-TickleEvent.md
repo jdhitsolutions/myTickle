@@ -140,6 +140,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Set-TickleEvent]()
+[Set-TickleEvent](Set-TickleEvent.md)
 
-[Add-TickleEvent]()
+[Add-TickleEvent](Add-TickleEvent.md)

@@ -27,7 +27,7 @@ Add a tickle event to the database. The command will use the Tickle variables fo
 ### Example 1
 
 ```powershell
-PS C:\> Add-TickleEvent -event "company picnic" -date "7/1/2019 12:00PM"
+PS C:\> Add-TickleEvent -event "company picnic" -date "7/1/2020 12:00PM"
 ```
 
 Add an event to the database.
@@ -184,6 +184,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Get-TickleEvent]()
+[Get-TickleEvent](Get-TickleEvent.md)
 
-[Set-TickleEvent]()
+[Set-TickleEvent](Set-TickleEvent.md)

@@ -36,7 +36,7 @@ Use this command to update or modify an existing tickle event. This command will
 ### Example 1
 
 ```powershell
-PS C:\> Set-TickleEvent -id 100 -date "8/1/2019 5:00PM"
+PS C:\> Set-TickleEvent -id 100 -date "8/1/2020 5:00PM"
 ```
 
 Set a new date for tickle event ID 100.
@@ -231,6 +231,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Add-TickleEvent]()
+[Add-TickleEvent](Add-TickleEvent.md)
 
-[Get-TickleEvent]()
+[Get-TickleEvent](Get-TickleEvent.md)

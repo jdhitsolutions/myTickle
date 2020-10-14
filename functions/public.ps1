@@ -5,7 +5,7 @@ Function Initialize-TickleDatabase {
     [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = 'default')]
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "Enter the folder path for the database file. If specifying a remote server the path is relative to the server." )]
-        [ValidateScript( {Test-Path $_})]
+        [ValidateScript( { Test-Path $_ })]
         [string]$DatabasePath,
         #Enter the name of the SQL Server instance
         [string]$ServerInstance = $TickleServerInstance,
@@ -48,7 +48,7 @@ ALTER TABLE [$databasename].[dbo].[EventData] ADD CONSTRAINT [DF_EventData_Archi
     } #begin
 
     Process {
-        if (Test-Path -path $dbpath) {
+        if (Test-Path -Path $dbpath) {
             Write-Warning "A file was already found at $dbpath. Initialization aborted."
             #bail out if the database file already exists
             return
@@ -186,7 +186,7 @@ Function Get-TickleEvent {
         [switch]$Expired,
         [Parameter(ParameterSetName = "Archived")]
         [switch]$Archived,
-        [ValidateScript( {$_ -gt 0})]
+        [ValidateScript( { $_ -gt 0 })]
         [Parameter(ParameterSetName = "Days")]
         [Parameter(ParameterSetName = "Offline")]
         [Alias("days")]
@@ -210,7 +210,7 @@ Function Get-TickleEvent {
         [Parameter(ParameterSetName = "Offline")]
         #Enter the path to an offline CSV file
         [ValidatePattern('\.csv$')]
-        [ValidateScript( {Test-Path $_})]
+        [ValidateScript( { Test-Path $_ })]
         [string]$Offline
     )
 
@@ -242,7 +242,7 @@ Function Get-TickleEvent {
         "Days" {
             Write-Verbose "[$((Get-Date).TimeofDay)] for the next $next days"
             $target = (Get-Date).Date.AddDays($next).toString()
-            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' AND eventdate > '$((Get-date).ToString())' ORDER by EventDate Asc"
+            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' AND eventdate > '$((Get-Date).ToString())' ORDER by EventDate Asc"
         }
         "Expired" {
             Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
@@ -262,7 +262,7 @@ Function Get-TickleEvent {
             Write-Verbose "[$((Get-Date).TimeofDay)] Offline"
             Write-Verbose "[$((Get-Date).TimeOfDay)] Getting offline data from $Offline"
             #skip any expired entries when working offline
-            $data = import-csv -Path $Offline | where-object {[datetime]$_.Date -ge (Get-Date).Date} | _NewMyTickle
+            $data = Import-Csv -Path $Offline | Where-Object { [datetime]$_.Date -ge (Get-Date).Date } | _NewMyTickle
         }
         Default {
             #this should never get called
@@ -275,7 +275,7 @@ Function Get-TickleEvent {
     #if using offline data, display the results
     if ($Offline -AND $data) {
         Write-Verbose "[$((Get-Date).TimeofDay)] Getting events for the next $Next days."
-        $Data | Where-Object {$_.Date -le (Get-Date).Date.addDays($Next) }
+        $Data | Where-Object { $_.Date -le (Get-Date).Date.addDays($Next) }
     }
     else {
         Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
@@ -371,7 +371,7 @@ SET {0} Where EventID='{1}'
         if ($PSCmdlet.ShouldProcess($query)) {
             _InvokeSqlQuery @invokeParams | Out-Null
             if ($Passthru) {
-                Get-TickleEvent -id $ID
+                Get-TickleEvent -Id $ID
             }
         }
 
@@ -460,7 +460,7 @@ Function Export-TickleDatabase {
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Exporting database to $Path "
         Try {
-            _InvokeSqlQuery @invokeParams | Export-clixml -Path $Path
+            _InvokeSqlQuery @invokeParams | Export-Clixml -Path $Path
         }
         Catch {
             throw $_
@@ -480,7 +480,7 @@ Function Import-TickleDatabase {
 
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "The path and filename for the export xml file.")]
-        [ValidateScript( {Test-Path $_})]
+        [ValidateScript( { Test-Path $_ })]
         [String]$Path,
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
@@ -502,13 +502,13 @@ Function Import-TickleDatabase {
 
         #turn off identity_insert
         $invokeParams.query = "Set identity_insert EventData On"
-        _InvokeSqlQuery @invokeParams | out-null
+        _InvokeSqlQuery @invokeParams | Out-Null
     } #begin
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Importing database data from $Path "
         Try {
-            Import-clixml -Path $path | foreach-object {
+            Import-Clixml -Path $path | ForEach-Object {
                 $query = @"
 Set identity_insert EventData On
 INSERT INTO EventData (EventID,EventDate,EventName,EventComment,Archived) VALUES ('$($_.EventID)','$($_.EventDate)','$(($_.EventName).replace("'",""))','$($_.EventComment)','$($_.Archived)')
@@ -522,7 +522,6 @@ Set identity_insert EventData Off
                     _InvokeSqlQuery @invokeParams | Out-Null
                 }
             }
-
         }
         Catch {
             throw $_
@@ -542,7 +541,7 @@ Function Show-TickleEvent {
     [Alias("shte")]
 
     Param(
-        [ValidateScript( {$_ -ge 1})]
+        [ValidateScript( { $_ -ge 1 })]
         #the next number of days to get
         [int]$Days = $TickleDefaultDays,
 
@@ -557,7 +556,7 @@ Function Show-TickleEvent {
         [Parameter(ParameterSetName = "offline")]
         #Enter the path to an offline CSV file
         [ValidatePattern('\.csv$')]
-        [ValidateScript( {Test-Path $_})]
+        [ValidateScript( { Test-Path $_ })]
         [string]$Offline
     )
 
@@ -574,16 +573,51 @@ Function Show-TickleEvent {
             }
         }
         else {
-            $invokeParams = @{Offline = $Offline}
+            $invokeParams = @{Offline = $Offline }
+        }
+
+        #define ANSI color escapes
+        #keep the lengths the same
+        $red = "$([char]0x1b)[38;5;196m"
+        $yellow = "$([char]0x1b)[38;5;228m"
+        $green = "$([char]0x1b)[38;5;120m"
+        $cyan = "$([char]0x1b)[36m"
+        $cyanRev = "$([char]0x1b)[1;7;36m"
+        $close = "$([char]0x1b)[0m"
+
+        if ($host.name -eq "ConsoleHost" ) {
+            Write-Information "Detected console host"
+            [string]$topleft = [char]0x250c
+            [string]$horizontal = [char]0x2500
+            [string]$topright = [char]0x2510
+            [string]$vertical = [char]0x2502
+            [string]$bottomleft = [char]0x2514
+            [string]$bottomright = [char]0x2518
+        }
+        else {
+            #use a simple character for VSCode and the ISE
+            Write-Information "Detected something other than console host"
+            [string]$topleft = "*"
+            [string]$horizontal = "*"
+            [string]$topright = "*"
+            [string]$vertical = "*"
+            [string]$bottomleft = "*"
+            [string]$bottomright = "*"
         }
     } #begin
 
     Process {
+        #do not run in the PowerShell ISE
+        if ($host.name -match 'ISE Host') {
+            Write-Warning "This command will not display properly in the Windows PowerShell ISE"
+            #bail out
+            Return
+        }
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Getting events for the next $Days days."
 
         if ($offline) {
             $target = (Get-Date).Date.AddDays($Days)
-            $upcoming = Get-TickleEvent @invokeParams | Where-Object {$_.Date -le $Target}
+            $upcoming = Get-TickleEvent @invokeParams | Where-Object { $_.Date -le $Target }
         }
         else {
             Try {
@@ -602,72 +636,74 @@ Function Show-TickleEvent {
                 $count = $item.countdown.ToString()
                 $time = $count.Substring(0, $count.lastindexof("."))
                 #add the time as a new property
-                $item | Add-Member -MemberType Noteproperty -name Time -Value $time
+                $item | Add-Member -MemberType Noteproperty -Name Time -Value $time
                 $a = "$($item.event) $($item.Date) [$time]".length
-                if ($a -gt $l) {$l = $a}
+                if ($a -gt $l) { $l = $a }
                 $b = $item.comment.Length
 
-                if ($b -gt $l) {$l = $b}
+                if ($b -gt $l) { $l = $b }
             }
 
-            [int]$width = $l + 5
+            #need to take ANSI escape sequence into account
+            [int]$width = $l + 10
+            Write-Information "L = $l"
+            Write-Information "width = $width"
 
-            $header = "* Reminders $((Get-Date).ToShortDateString()) "
+            $header = " Reminders $((Get-Date).ToShortDateString()) "
+            Write-Information "Header length = $($header.length)"
 
-            #display events
-            Write-Host "`r"
-            Write-host "$($header.padright($width,"*"))" -ForegroundColor Cyan
-            Write-Host "*$(' '*($width-2))*" -ForegroundColor Cyan
+            "`r"
+
+            $headerdisplay = "{0}{1}{2} {3}{4}{5} {6}{7}{8}{9}" -f $cyan, $topleft, $close, $cyanrev, $header, $close, $cyan, $($horizontal * ($width - 31)), $topright, $close
+            Write-Information "Headerdisplay length = $($headerdisplay.length)"
+            $headerdisplay
+            #blank line
+            #account for ANSI sequences
+            $blank = "$cyan$vertical$(' '*($headerdisplay.length-33))$vertical$close"
+            $blank
 
             foreach ($event in $upcoming) {
 
                 if ($event.countdown.totalhours -le 24) {
-                    $color = "Red"
+                    $color = $red
                 }
                 elseif ($event.countdown.totalhours -le 48) {
-                    $color = "Yellow"
+                    $color = $yellow
                 }
                 else {
-                    $color = "Green"
+                    $color = $green
                 }
 
-                #define the message string
-                $line1 = "* $($event.event) $($event.Date) [$($event.time)]"
+                $line1 = "$cyan$vertical$close $color$($event.event) $($event.Date) [$($event.time)]$close"
+                Write-Information "line 1: $line1 length = $($line1.Length)"
+                #pad to account for length of ANSI escape plus spaces
+                "$($line1.padRight($headerDisplay.length-9,' ')) $cyan$vertical$close"
                 if ($event.comment -match "\w+") {
-                    $line2 = "* $($event.Comment)"
-                    $line3 = "*"
+                    $line2 = "$cyan$vertical$close $color$($event.Comment)$close"
+                    "$($line2.padright($headerDisplay.length-9, ' ')) $cyan$vertical$close"
                 }
-                else {
-                    $line2 = "*"
-                    $line3 = $null
-                }
+                $blank
 
-                $msg = @"
-$($line1.padRight($width-1))*
-$($line2.padright($width-1))*
-"@
-
-                if ($line3) {
-                    #if there was a comment add a third line that is blank
-                    $msg += "`n$($line3.padright($width-1))*"
-                }
-
-                Write-Host $msg -ForegroundColor $color
+                Write-Information "line 2: $line2 length = $($line2.length)"
+                Write-Information "line 3: $line3 length = $($line3.length)"
 
             } #foreach
 
-            Write-Host ("*" * $width) -ForegroundColor Cyan
-            Write-Host "`r"
+            "$cyan$bottomleft$($horizontal*($width-7))$bottomright$close"
+            "`r"
         } #if upcoming events found
         else {
+            $t = "No event reminders in the next $days days"
+            $len = $t.length + 2
+
             $msg = @"
 
-    **********************
-    * No event reminders *
-    **********************
+    $cyan$topleft$($horizontal*$len)$topright$close
+    $cyan$vertical$close $yellow$t$close $cyan$vertical$close
+    $cyan$bottomleft$($horizontal*$len)$bottomright$close
 
 "@
-            Write-Host $msg -foregroundcolor Green
+            $msg
         }
 
     } #process
@@ -681,137 +717,3 @@ $($line2.padright($width-1))*
 
 #endregion
 
-#region private functions
-
-function _NewMyTickle {
-    [cmdletbinding()]
-    [OutputType("MyTickle")]
-
-    Param(
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [alias("ID")]
-        [int32]$EventID,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [alias("Event", "Name")]
-        [string]$EventName,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [alias("Date")]
-        [datetime]$EventDate,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [Alias("Comment")]
-        [string]$EventComment
-    )
-    Process {
-        New-Object -TypeName mytickle -ArgumentList @($eventID, $Eventname, $EventDate, $EventComment)
-    }
-} #close _NewMyTickle
-
-Function _InvokeSqlQuery {
-    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = "Default")]
-    [OutputType([PSObject])]
-
-    Param(
-        [Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
-        [ValidateNotNullorEmpty()]
-        [string]$Query,
-        [Parameter(Mandatory, HelpMessage = "The name of the database")]
-        [ValidateNotNullorEmpty()]
-        [string]$Database,
-        [Parameter(Mandatory, ParameterSetName = 'credential')]
-        [pscredential]$Credential,
-        #The server instance name
-        [ValidateNotNullorEmpty()]
-        [string]$ServerInstance = "$(hostname)\SqlExpress"
-    )
-
-    Begin {
-        Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"
-
-        if ($PSCmdlet.ParameterSetName -eq 'credential') {
-            $username = $Credential.UserName
-            $password = $Credential.GetNetworkCredential().Password
-        }
-
-        Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
-        $connection = New-Object system.data.sqlclient.sqlconnection
-
-        Write-Verbose "[BEGIN  ] Creating the SQL Command object"
-        $cmd = New-Object system.Data.SqlClient.SqlCommand
-
-    } #begin
-
-    Process {
-        Write-Verbose "[PROCESS] Opening the connection to $ServerInstance"
-        Write-Verbose "[PROCESS] Using database $Database"
-        if ($Username -AND $password) {
-            Write-Verbose "[PROCESS] Using credential"
-            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
-        }
-        else {
-            Write-Verbose "[PROCESS] Using Windows authentication"
-            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
-        }
-        Write-Verbose "[PROCESS] Opening Connection"
-        Write-Verbose "[PROCESS] $($connection.ConnectionString)"
-        Try {
-            $connection.open()
-        }
-        Catch {
-            Throw $_
-            #bail out
-            Return
-        }
-
-        #join the connection to the command object
-        $cmd.connection = $connection
-        $cmd.CommandText = $query
-
-        Write-Verbose "[PROCESS] Invoking $query"
-        if ($PSCmdlet.ShouldProcess($Query)) {
-
-            #determine what method to invoke based on the query
-            Switch -regex ($query) {
-                "^Select (\w+|\*)|(@@\w+ AS)" {
-                    Write-Verbose "ExecuteReader"
-                    $reader = $cmd.executereader()
-                    $out = @()
-                    #convert datarows to a custom object
-                    while ($reader.read()) {
-
-                        $h = [ordered]@{}
-                        for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-                            $col = $reader.getname($i)
-
-                            $h.add($col, $reader.getvalue($i))
-                        } #for
-                        $out += new-object -TypeName psobject -Property $h
-                    } #while
-
-                    $out
-                    $reader.close()
-                    Break
-                }
-                "@@" {
-                    Write-Verbose "ExecuteScalar"
-                    $cmd.ExecuteScalar()
-                    Break
-                }
-                Default {
-                    Write-Verbose "ExecuteNonQuery"
-                    $cmd.ExecuteNonQuery()
-                }
-            }
-        } #should process
-
-    }
-
-    End {
-        Write-Verbose "[END    ] Closing the connection"
-        $connection.close()
-
-        Write-Verbose "[END    ] Ending: $($MyInvocation.Mycommand)"
-    } #end
-
-} #close _InvokeSqlQuery
-
-#endregion

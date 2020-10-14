@@ -145,12 +145,12 @@ is essentially read-only mode.
 The offline mode will only display events that have not expired and will use
 the value of `$TickleDefaultDays`.
 
-There are no provisions for adding or modifying event from an offline state.
-Although you can always pipe a data source to `Add-TickleEvent`.
+There are no provisions for adding or modifying the event from an offline state.
+Although, you can always pipe a data source to `Add-TickleEvent`.
 
 ## NOTE
 
-Limited testing of this module has been done on PowerShell Core running on
+Limited testing of this module has been done on PowerShell 7.x running on
 non-Windows platforms.
 
 ## TROUBLESHOOTING NOTE

@@ -1,7 +1,8 @@
 ﻿
 
 #dot source module functions
-. $PSScriptRoot\myTickleFunctions.ps1
+. $PSScriptRoot\functions\private.ps1
+. $PSScriptRoot\functions\public.ps1
 
 #region Define module variables
 
@@ -37,31 +38,21 @@ Class myTickle {
         }
         $ts = $this.Date - (Get-Date)
         if ($ts.totalminutes -lt 0) {
-            $ts = New-Timespan -Minutes 0
+            $ts = New-TimeSpan -Minutes 0
         }
         $this.Countdown = $ts
     }
 } #close class
 
-Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID, Date, Event, Comment -force
-
-#endregion
-
-#region Define module aliases
-
-Set-Alias -Name gte -Value Get-TickleEvent
-Set-Alias -name ate -Value Add-TickleEvent
-Set-Alias -name rte -Value Remove-TickleEvent
-Set-Alias -name ste -Value Set-TickleEvent
-Set-Alias -name shte -Value Show-TickleEvent
+Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID, Date, Event, Comment -Force
 
 #endregion
 
 $export = @{
     Variable = 'TickleDefaultDays', 'TickleDB', 'TickleTable', 'TickleServerInstance'
     Alias    = 'gte', 'ate', 'rte', 'shte', 'ste'
-    function = 'Get-TickleEvent', 'Set-TickleEvent', 'Add-TickleEvent',
-    'Remove-TickleEvent', 'Show-TickleEvent', 'Initialize-TickleDatabase',
-    'Export-TickleDatabase', 'Import-TickleDatabase'
+    Function = 'Get-TickleEvent', 'Set-TickleEvent', 'Add-TickleEvent',
+    'Remove-TickleEvent', 'Initialize-TickleDatabase',
+    'Export-TickleDatabase', 'Import-TickleDatabase','Show-TickleEvent'
 }
 Export-ModuleMember @export

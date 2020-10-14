@@ -1,14 +1,14 @@
 # MyTickle
 
-This PowerShell module is designed as a tickle or reminder system. You can add and edit reminders of upcoming events. Use the module commands to display upcoming events. If you are interested, the core object of the module is based on a PowerShell class.
+This PowerShell module is designed as a tickle or reminder system. You can add and edit reminders of upcoming events. Use the module commands to display upcoming events. If you are interested, the core objective of the module is based on a PowerShell class.
 
 You can install the latest version from the PowerShell Gallery.
 
 ```powershell
-Install-Module MyTickle
+Install-Module MyTickle [-scope currentuser]
 ```
 
-This module requires a SQL Server installation but it should work cross platform and in PowerShell Core.
+This module requires a SQL Server installation but it should work cross-platform and in PowerShell 7.x.
 
 This module stores event information in a SQL database. Ideally, you will be running a version of SQL Server Express on your desktop. You can use the `Initialize-TickleDatabase` command to create the database and table. It is possible to store the database on a separate server (not tested). The module includes T-SQL files you can give to a database administrator to run and create the database for you.
 
@@ -44,4 +44,11 @@ Events due in the next 24 hours will be displayed in red. Events due in 48 hours
 
 For more information, please read the [About](docs/about_MyTickle.md) help topic.
 
-_last updated 9 January 2019_
+## Related Modules
+
+You might also be interested in these PowerShell modules:
+
++ Manage tasks and To-Do's with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
++ Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.
+
+Last Updated 2020-10-14 18:17:33Z
