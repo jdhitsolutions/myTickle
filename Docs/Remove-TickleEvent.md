@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: myTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Remove-TickleEvent.md
 schema: 2.0.0
 ---
 
@@ -14,8 +14,7 @@ Delete a tickle event from the database.
 ## SYNTAX
 
 ```yaml
-Remove-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCredential>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCredential>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,7 +37,7 @@ Removed the event with an ID of 100.
 PS C:\> Get-TickleEvent -name Dentist | Remove-TickleEvent
 ```
 
-Remove all events with a name of Dentist. Note that this will only remove un-expired and un-archived entries.
+Remove all tickle events with a name of Dentist. This will only remove un-expired and un-archived entries.
 
 ## PARAMETERS
 
@@ -124,7 +123,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

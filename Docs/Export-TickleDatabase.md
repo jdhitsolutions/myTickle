@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: myTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Export-TickleDatabase.md
 schema: 2.0.0
 ---
 
@@ -20,7 +20,7 @@ Export-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <
 
 ## DESCRIPTION
 
-Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XNL file is created with Export-CliXML.
+Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XML file is created with Export-CliXML.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path and filename for the export xml file.
+The path and filename for the export XML file.
 
 ```yaml
 Type: String
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

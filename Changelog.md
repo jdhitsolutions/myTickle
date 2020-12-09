@@ -1,5 +1,13 @@
 # Change Log for MyTickle
 
+## v3.1.0
+
++ Modified `Get-TickleEvent` to not accept multiple ID numbers. Instead, the parameter will accept pipeline input. (Issue #11)
++ Modified `Get-TickleEvent` to accept `Name` parameter values from the pipeline.
++ Renamed `Event` parameter in `Set-TickleEvent` and `Add-TickleEvent` to `EventName`.
++ Renamed `Name` parameter in `Get-TickleEvent` to `EventName`. Added `Name` as a parameter alias for backward compatibility.
++ Help updates.
+
 ## v3.0.0
 
 + Modified `Show-TickleEvent` to use ANSI escape sequences in place of `Write-Host`. (Issue #12) *Breaking Change*
@@ -88,7 +96,7 @@
 
 + Modified module so that tickle data is stored in a SQL database.
 + Added functions to create database and table.
-+ Moved functions to separate file.
++ Moved functions to a separate file.
 + Added class definition.
 + Updated documentation.
 + Set required PowerShell version to 5.0.

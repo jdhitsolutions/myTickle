@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
 Module Name: MyTickle
-online version:
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Get-TickleEvent.md
 schema: 2.0.0
 ---
 
@@ -22,13 +22,14 @@ Get-TickleEvent [-Next <Int32>] [-ServerInstance <String>] [-Credential <PSCrede
 ### ID
 
 ```yaml
-Get-TickleEvent [-Id <Int32[]>] [-ServerInstance <String>] [-Credential <PSCredential>] [<CommonParameters>]
+Get-TickleEvent [-Id <Int32>] [-ServerInstance <String>] [-Credential <PSCredential>] [<CommonParameters>]
 ```
 
 ### Name
 
 ```yaml
-Get-TickleEvent [-Name <String>] [-ServerInstance <String>] [-Credential <PSCredential>] [<CommonParameters>]
+Get-TickleEvent [-EventName <String>] [-ServerInstance <String>] [-Credential <PSCredential>]
+ [<CommonParameters>]
 ```
 
 ### All
@@ -90,11 +91,11 @@ Display all non-expired from an offline source. By default, offline mode will di
 ### Example 4
 
 ```powershell
-PS C:\> Get-TickleEvent -name 'mvp summit'
+PS C:\> Get-TickleEvent -eventname 'Company Mtg'
 
-ID   Event                     Comment            Date                       Countdown
---   -----                     -------            ----                       ---------
-282  MVP Summit                through 3/22       3/17/2020 12:00:00 AM    66.11:35:09
+ID   Event                  Comment            Date                       Countdown
+--   -----                  -------            ----                       ---------
+282  Company Mtg            through 3/22       3/17/2021 12:00:00 AM    66.11:35:09
 ```
 
 Get an event by its name.
@@ -170,31 +171,15 @@ Accept wildcard characters: False
 Display an event by its ID number.
 
 ```yaml
-Type: Int32[]
+Type: Int32
 Parameter Sets: ID
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
-```
-
-### -Name
-
-Display an event by its name. You can use wildcards.
-
-```yaml
-Type: String
-Parameter Sets: Name
-Aliases: event
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: True
 ```
 
 ### -Next
@@ -249,10 +234,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EventName
+
+The name of the event.
+
+```yaml
+Type: String
+Parameter Sets: Name
+Aliases: Name
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -268,7 +268,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Set-TickleEvent]()
+[Set-TickleEvent](Set-TickleEvent.md)
 
-[Add-TickleEvent]()
-
+[Add-TickleEvent](Add-TickleEvent.md)

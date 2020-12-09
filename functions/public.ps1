@@ -104,7 +104,7 @@ Function Add-TickleEvent {
     Param(
         [Parameter(Position = 0, ValueFromPipelineByPropertyName, Mandatory, HelpMessage = "Enter the name of the event")]
         [Alias("Name")]
-        [string]$Event,
+        [string]$EventName,
         [Parameter(Position = 1, ValueFromPipelineByPropertyName, Mandatory, HelpMessage = "Enter the datetime for the event")]
         [ValidateScript( {
                 If ($_ -gt (Get-Date)) {
@@ -120,6 +120,7 @@ Function Add-TickleEvent {
         #Enter the name of the SQL Server instance
         [ValidateNotNullOrEmpty()]
         [string]$ServerInstance = $TickleServerInstance,
+        [ValidateNotNullOrEmpty()]
         [pscredential]$Credential,
         [switch]$Passthru
     )
@@ -137,9 +138,9 @@ Function Add-TickleEvent {
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Adding event '$event'"
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Adding event '$EventName'"
         #events with apostrophes will have them stripped off
-        $theEvent = $Event.replace("'", '')
+        $theEvent = $EventName.replace("'", '')
         $InvokeParams.query = "INSERT INTO EventData (EventDate,EventName,EventComment) VALUES ('$Date','$theEvent','$Comment')"
 
         $short = "[$Date] $Event"
@@ -158,12 +159,10 @@ Function Add-TickleEvent {
                 _InvokeSqlQuery @invokeParams | _NewMyTickle
             } #if passthru
         } #if should process
-
     } #process
 
     End {
         Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
-
     } #end
 
 } #close Add-TickleEvent
@@ -175,11 +174,11 @@ Function Get-TickleEvent {
     [Alias("gte")]
 
     Param(
-        [Parameter(ParameterSetName = "ID")]
-        [int[]]$Id,
-        [Parameter(ParameterSetName = "Name")]
-        [Alias("event")]
-        [string]$Name,
+        [Parameter(ParameterSetName = "ID", ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int32]$Id,
+        [Parameter(ParameterSetName = "Name", ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Alias("Name")]
+        [string]$EventName,
         [Parameter(ParameterSetName = "All")]
         [switch]$All,
         [Parameter(ParameterSetName = "Expired")]
@@ -214,93 +213,97 @@ Function Get-TickleEvent {
         [string]$Offline
     )
 
-    Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
+    Begin {
 
-    $invokeParams = @{
-        Query          = $null
-        Database       = $TickleDB
-        ServerInstance = $ServerInstance
-        ErrorAction    = "Stop"
-    }
-    if ($PSBoundParameters.ContainsKey('credential')) {
-        $invokeParams.Add("credential", $Credential)
-    }
+        Write-Verbose "[$((Get-Date).TimeofDay)] Starting $($myinvocation.mycommand)"
 
-    Switch ($pscmdlet.ParameterSetName) {
-        "ID" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] by ID"
-            $filter = "Select * from EventData where EventID='$ID'"
+        $invokeParams = @{
+            Query          = $null
+            Database       = $TickleDB
+            ServerInstance = $ServerInstance
+            ErrorAction    = "Stop"
         }
-        "Name" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
-            #get events that haven't expired or been archived by name
-            if ($name -match "\*") {
-                $name = $name.replace("*", "%")
+        if ($PSBoundParameters.ContainsKey('credential')) {
+            $invokeParams.Add("credential", $Credential)
+        }
+    } #begin
+    Process {
+
+        Switch ($pscmdlet.ParameterSetName) {
+            "ID" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] by ID"
+                $filter = "Select * from EventData where EventID='$ID'"
             }
-            $filter = "Select * from EventData where EventName LIKE '$Name' AND Archived='False' AND EventDate>'$(Get-Date)'"
-        }
-        "Days" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] for the next $next days"
-            $target = (Get-Date).Date.AddDays($next).toString()
-            $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' AND eventdate > '$((Get-Date).ToString())' ORDER by EventDate Asc"
-        }
-        "Expired" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
-            #get expired events that have not been archived
-            $filter = "Select * from EventData where Archived='False' AND EventDate<'$(Get-Date)' ORDER by EventDate Asc"
-        }
-        "Archived" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] by Archive"
-            $filter = "Select * from EventData where Archived='True' ORDER by EventDate Asc"
-        }
-        "All" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] All"
-            #get all non archived events
-            $filter = "Select * from EventData where Archived='False' ORDER by EventDate Asc"
-        }
-        "Offline" {
-            Write-Verbose "[$((Get-Date).TimeofDay)] Offline"
-            Write-Verbose "[$((Get-Date).TimeOfDay)] Getting offline data from $Offline"
-            #skip any expired entries when working offline
-            $data = Import-Csv -Path $Offline | Where-Object { [datetime]$_.Date -ge (Get-Date).Date } | _NewMyTickle
-        }
-        Default {
-            #this should never get called
-            Write-Verbose "[$((Get-Date).TimeofDay)] Default"
-            #get events that haven't been archived
-            $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"
-        }
-    } #switch
+            "Name" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
+                #get events that haven't expired or been archived by name
+                if ($EventName -match "\*") {
+                    $EventName = $EventName.replace("*", "%")
+                }
+                $filter = "Select * from EventData where EventName LIKE '$EventName' AND Archived='False' AND EventDate>'$(Get-Date)'"
+            }
+            "Days" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] for the next $next days"
+                $target = (Get-Date).Date.AddDays($next).toString()
+                $filter = "Select * from EventData where Archived='False' AND EventDate<='$target' AND eventdate > '$((Get-Date).ToString())' ORDER by EventDate Asc"
+            }
+            "Expired" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] by Expiration"
+                #get expired events that have not been archived
+                $filter = "Select * from EventData where Archived='False' AND EventDate<'$(Get-Date)' ORDER by EventDate Asc"
+            }
+            "Archived" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] by Archive"
+                $filter = "Select * from EventData where Archived='True' ORDER by EventDate Asc"
+            }
+            "All" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] All"
+                #get all non archived events
+                $filter = "Select * from EventData where Archived='False' ORDER by EventDate Asc"
+            }
+            "Offline" {
+                Write-Verbose "[$((Get-Date).TimeofDay)] Offline"
+                Write-Verbose "[$((Get-Date).TimeOfDay)] Getting offline data from $Offline"
+                #skip any expired entries when working offline
+                $data = Import-Csv -Path $Offline | Where-Object { [datetime]$_.Date -ge (Get-Date).Date } | _NewMyTickle
+            }
+            Default {
+                #this should never get called
+                Write-Verbose "[$((Get-Date).TimeofDay)] Default"
+                #get events that haven't been archived
+                $filter = "Select * from EventData where Archived='False' AND EventDate>='$(Get-Date)' ORDER by EventDate Asc"
+            }
+        } #switch
 
-    #if using offline data, display the results
-    if ($Offline -AND $data) {
-        Write-Verbose "[$((Get-Date).TimeofDay)] Getting events for the next $Next days."
-        $Data | Where-Object { $_.Date -le (Get-Date).Date.addDays($Next) }
-    }
-    else {
-        Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
-        #Query database for matching events
-        Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
-        $invokeParams.query = $filter
-
-        Try {
-            $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
-            #convert the data into mytickle objects
-            $data = $events | _NewMyTickle
-
+        #if using offline data, display the results
+        if ($Offline -AND $data) {
+            Write-Verbose "[$((Get-Date).TimeofDay)] Getting events for the next $Next days."
+            $Data | Where-Object { $_.Date -le (Get-Date).Date.addDays($Next) }
         }
-        Catch {
-            Throw $_
-        }
+        else {
+            Write-Verbose "[$((Get-Date).TimeofDay)] Importing events from $TickleDB on $ServerInstance"
+            #Query database for matching events
+            Write-Verbose "[$((Get-Date).TimeofDay)] $filter"
+            $invokeParams.query = $filter
 
-        Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
-        #write event data to the pipeline
-        $data
+            Try {
+                $events = _InvokeSqlQuery @invokeParams # Invoke-SqlCmd @invokeParams
+                #convert the data into mytickle objects
+                $data = $events | _NewMyTickle
+            }
+            Catch {
+                Throw $_
+            }
 
-    } #else query for data
+            Write-Verbose "[$((Get-Date).TimeofDay)] Found $($events.count) matching events"
+            #write event data to the pipeline
+            $data
 
-    Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
-
+        } #else query for data
+    } #process
+    End {
+        Write-Verbose "[$((Get-Date).TimeofDay)] Ending $($myinvocation.mycommand)"
+    } #end
 } #Get-TickleEvent
 
 Function Set-TickleEvent {
@@ -313,7 +316,7 @@ Function Set-TickleEvent {
         [int32]$ID,
         [Parameter(ParameterSetName = "column")]
         [alias("Name")]
-        [string]$Event,
+        [string]$EventName,
         [Parameter(ParameterSetName = "column")]
         [datetime]$Date,
         [Parameter(ParameterSetName = "column")]
@@ -351,7 +354,7 @@ SET {0} Where EventID='{1}'
         $cols = @()
         if ($pscmdlet.ParameterSetName -eq 'column') {
             if ($Event) {
-                $cols += "EventName='$Event'"
+                $cols += "EventName='$EventName'"
             }
             if ($Comment) {
                 $cols += "EventComment='$Comment'"
@@ -379,7 +382,6 @@ SET {0} Where EventID='{1}'
 
     End {
         Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
-
     } #end
 
 } #close Update-MyTickleEvent
@@ -645,7 +647,7 @@ Function Show-TickleEvent {
             }
 
             #need to take ANSI escape sequence into account
-            [int]$width = $l + 10
+            [int]$width = $l + 11
             Write-Information "L = $l"
             Write-Information "width = $width"
 
@@ -689,7 +691,7 @@ Function Show-TickleEvent {
 
             } #foreach
 
-            "$cyan$bottomleft$($horizontal*($width-7))$bottomright$close"
+            "$cyan$bottomleft$($horizontal*($width-8))$bottomright$close"
             "`r"
         } #if upcoming events found
         else {

@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: MyTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Set-TickleEvent.md
 schema: 2.0.0
 ---
 
@@ -16,15 +16,14 @@ Modify a tickle event.
 ### column (Default)
 
 ```yaml
-Set-TickleEvent [-ID] <Int32> [-Event <String>] [-Date <DateTime>] [-Comment <String>]
+Set-TickleEvent [-ID] <Int32> [-EventName <String>] [-Date <DateTime>] [-Comment <String>]
  [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### archive
 
 ```yaml
-Set-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-Archive]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-Archive]  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,7 +35,7 @@ Use this command to update or modify an existing tickle event. This command will
 ### Example 1
 
 ```powershell
-PS C:\> Set-TickleEvent -id 100 -date "8/1/2020 5:00PM"
+PS C:\> Set-TickleEvent -id 100 -date "8/1/2021 5:00PM"
 ```
 
 Set a new date for tickle event ID 100.
@@ -131,22 +130,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Event
-
-Update the event name.
-
-```yaml
-Type: String
-Parameter Sets: column
-Aliases: Name
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ID
 
 Select an event by its ID.
@@ -211,9 +194,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EventName
+
+The name of the event.
+
+```yaml
+Type: String
+Parameter Sets: column
+Aliases: Name
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

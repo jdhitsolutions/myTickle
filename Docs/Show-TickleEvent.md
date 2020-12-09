@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: myTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Show-TickleEvent.md
 schema: 2.0.0
 ---
 
@@ -36,16 +36,16 @@ This is a specialized version of Get-TickleEvent that uses ANSI-escape sequences
 ```powershell
 PS C:\> Show-TickleEvent
 
-* Reminders 9/23/2020 *********************************
+* Reminders 9/23/2021 *********************************
 *                                                     *
-* Project Review 09/25/2020 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2021 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2020 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2021 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************
 ```
 
-The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk chartacters.
+The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk characters.
 
 ## PARAMETERS
 
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

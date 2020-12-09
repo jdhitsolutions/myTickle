@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: MyTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Add-TickleEvent.md
 schema: 2.0.0
 ---
 
@@ -14,20 +14,20 @@ Add an entry to the tickle database.
 ## SYNTAX
 
 ```yaml
-Add-TickleEvent [-Event] <String> [-Date] <DateTime> [[-Comment] <String>] [-ServerInstance <String>]
+Add-TickleEvent [-EventName] <String> [-Date] <DateTime> [[-Comment] <String>] [-ServerInstance <String>]
  [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Add a tickle event to the database. The command will use the Tickle variables for, although you can override the server instance parameter. It is strongly recommended that you avoid using special characters, especially apostrophes, in your event name.
+Add a tickle event to the database. The command will use the global Tickle variables, although you can override the server instance parameter. It is strongly recommended that you avoid using special characters, especially apostrophes and commas, in your event name.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> Add-TickleEvent -event "company picnic" -date "7/1/2020 12:00PM"
+PS C:\> Add-TickleEvent -event "company picnic" -date "7/1/2021 12:00PM"
 ```
 
 Add an event to the database.
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 
 ### -Date
 
-Enter the date and time for the event
+Enter the date and time for the event.
 
 ```yaml
 Type: DateTime
@@ -93,22 +93,6 @@ Aliases:
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Event
-
-Enter the name of the event or reminder.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: Name
-
-Required: True
-Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -162,9 +146,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EventName
+
+Enter the name of the event.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Name
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

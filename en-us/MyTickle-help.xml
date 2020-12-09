@@ -10,15 +10,15 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Add a tickle event to the database. The command will use the Tickle variables for, although you can override the server instance parameter. It is strongly recommended that you avoid using special characters, especially apostrophes, in your event name.</maml:para>
+      <maml:para>Add a tickle event to the database. The command will use the global Tickle variables, although you can override the server instance parameter. It is strongly recommended that you avoid using special characters, especially apostrophes and commas, in your event name.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Add-TickleEvent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
-          <maml:name>Event</maml:name>
+          <maml:name>EventName</maml:name>
           <maml:Description>
-            <maml:para>Enter the name of the event or reminder.</maml:para>
+            <maml:para>Enter the name of the event.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -30,7 +30,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Date</maml:name>
           <maml:Description>
-            <maml:para>Enter the date and time for the event</maml:para>
+            <maml:para>Enter the date and time for the event.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
@@ -150,23 +150,11 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Date</maml:name>
         <maml:Description>
-          <maml:para>Enter the date and time for the event</maml:para>
+          <maml:para>Enter the date and time for the event.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
-        <maml:name>Event</maml:name>
-        <maml:Description>
-          <maml:para>Enter the name of the event or reminder.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -206,6 +194,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
+        <maml:name>EventName</maml:name>
+        <maml:Description>
+          <maml:para>Enter the name of the event.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
@@ -252,13 +252,17 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2020 12:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2021 12:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Add an event to the database.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Add-TickleEvent.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-TickleEvent</maml:linkText>
         <maml:uri></maml:uri>
@@ -279,7 +283,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XNL file is created with Export-CliXML.</maml:para>
+      <maml:para>Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XML file is created with Export-CliXML.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -287,7 +291,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Path</maml:name>
           <maml:Description>
-            <maml:para>The path and filename for the export xml file.</maml:para>
+            <maml:para>The path and filename for the export XML file.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -338,7 +342,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Path</maml:name>
         <maml:Description>
-          <maml:para>The path and filename for the export xml file.</maml:para>
+          <maml:para>The path and filename for the export XML file.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -395,6 +399,10 @@
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Export-TickleDatabase.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Import-TickleDatabase</maml:linkText>
         <maml:uri></maml:uri>
@@ -544,14 +552,14 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="none">
           <maml:name>Id</maml:name>
           <maml:Description>
             <maml:para>Display an event by its ID number.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
-            <maml:name>Int32[]</maml:name>
+            <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -583,18 +591,6 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="event">
-          <maml:name>Name</maml:name>
-          <maml:Description>
-            <maml:para>Display an event by its name. You can use wildcards.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
           <maml:Description>
@@ -606,6 +602,18 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>$TickleServerInstance</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="Name">
+          <maml:name>EventName</maml:name>
+          <maml:Description>
+            <maml:para>The name of the event.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
       <command:syntaxItem>
@@ -725,26 +733,14 @@
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="none">
         <maml:name>Id</maml:name>
         <maml:Description>
           <maml:para>Display an event by its ID number.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
-          <maml:name>Int32[]</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="event">
-        <maml:name>Name</maml:name>
-        <maml:Description>
-          <maml:para>Display an event by its name. You can use wildcards.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -786,6 +782,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>$TickleServerInstance</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="Name">
+        <maml:name>EventName</maml:name>
+        <maml:Description>
+          <maml:para>The name of the event.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
@@ -837,17 +845,21 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 4 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-TickleEvent -name 'mvp summit'
+        <dev:code>PS C:\&gt; Get-TickleEvent -eventname 'Company Mtg'
 
-ID   Event                     Comment            Date                       Countdown
---   -----                     -------            ----                       ---------
-282  MVP Summit                through 3/22       3/17/2020 12:00:00 AM    66.11:35:09</dev:code>
+ID   Event                  Comment            Date                       Countdown
+--   -----                  -------            ----                       ---------
+282  Company Mtg            through 3/22       3/17/2021 12:00:00 AM    66.11:35:09</dev:code>
         <dev:remarks>
           <maml:para>Get an event by its name.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Get-TickleEvent.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-TickleEvent</maml:linkText>
         <maml:uri></maml:uri>
@@ -1217,6 +1229,10 @@ ID   Event                     Comment            Date                       Cou
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Import-TickleDatabase</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -1396,11 +1412,15 @@ ID   Event                     Comment            Date                       Cou
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-TickleEvent -name Dentist | Remove-TickleEvent</dev:code>
         <dev:remarks>
-          <maml:para>Remove all events with a name of Dentist. Note that this will only remove un-expired and un-archived entries.</maml:para>
+          <maml:para>Remove all tickle events with a name of Dentist. This will only remove un-expired and un-archived entries.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Remove-TickleEvent.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-TickleEvent</maml:linkText>
         <maml:uri></maml:uri>
@@ -1568,18 +1588,6 @@ ID   Event                     Comment            Date                       Cou
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
-          <maml:name>Event</maml:name>
-          <maml:Description>
-            <maml:para>Update the event name.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Passthru</maml:name>
           <maml:Description>
@@ -1613,6 +1621,18 @@ ID   Event                     Comment            Date                       Cou
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
+          <maml:name>EventName</maml:name>
+          <maml:Description>
+            <maml:para>The name of the event.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -1677,18 +1697,6 @@ ID   Event                     Comment            Date                       Cou
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
-        <maml:name>Event</maml:name>
-        <maml:Description>
-          <maml:para>Update the event name.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>ID</maml:name>
         <maml:Description>
@@ -1737,6 +1745,18 @@ ID   Event                     Comment            Date                       Cou
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
+        <maml:name>EventName</maml:name>
+        <maml:Description>
+          <maml:para>The name of the event.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
@@ -1774,7 +1794,7 @@ ID   Event                     Comment            Date                       Cou
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2020 5:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2021 5:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Set a new date for tickle event ID 100.</maml:para>
         </dev:remarks>
@@ -1788,6 +1808,10 @@ ID   Event                     Comment            Date                       Cou
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Set-TickleEvent.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Add-TickleEvent</maml:linkText>
         <maml:uri></maml:uri>
@@ -1958,19 +1982,23 @@ ID   Event                     Comment            Date                       Cou
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Show-TickleEvent
 
-* Reminders 9/23/2020 *********************************
+* Reminders 9/23/2021 *********************************
 *                                                     *
-* Project Review 09/25/2020 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2021 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2020 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2021 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************</dev:code>
         <dev:remarks>
-          <maml:para>The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk chartacters.</maml:para>
+          <maml:para>The actual console output will be colorized. If your PowerShell console supports it, you may also see a lined box instead of the asterisk characters.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Show-TickleEvent.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-TickleEvent</maml:linkText>
         <maml:uri></maml:uri>

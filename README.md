@@ -18,15 +18,16 @@ The module uses a set of global variables to define the SQL connection. The defa
 
 ```powershell
 PS C:\> Get-Variable Tickle*
+
 Name                           Value
 ----                           -----
 TickleDB                       TickleEventDB
 TickleDefaultDays              7
-TickleServerInstance           <computername>\SqlExpress
+TickleServerInstance           .\SqlExpress
 TickleTable                    EventData
 ```
 
-If you use a remote server or some other named instance, you will need to change the value of $TickleServerInstance after you import the module. This is something you would most likely do in your PowerShell profile script.
+If you use a remote server or some other named instance, you will need to change the value of `$TickleServerInstance` after you import the module. This is something you would most likely do in your PowerShell profile script.
 
 ```powershell
 $TickleServerInstance = 'chi-sql01'
@@ -53,4 +54,4 @@ You might also be interested in these PowerShell modules:
 + Manage tasks and To-Do's with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
 + Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.
 
-Last Updated 2020-10-14 18:17:33Z
+Last Updated 2020-12-09 13:54:24Z
