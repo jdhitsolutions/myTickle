@@ -86,7 +86,7 @@ Display all non-expired and non-archived events scheduled for the next 14 days.
 PS C:\> Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv
 ```
 
-Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.
+Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number of days specified by $TickleDefaultDays or the value of the -Next parameter.
 
 ### Example 4
 

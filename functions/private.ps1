@@ -88,7 +88,7 @@ Function _InvokeSqlQuery {
 
             #determine what method to invoke based on the query
             Switch -regex ($query) {
-                "^Select (\w+|\*)|(@@\w+ AS)" {
+                "^Select (\w+|\*)|(@@\w+ AS)|(exec)" {
                     Write-Verbose "ExecuteReader"
                     $reader = $cmd.executereader()
                     $out = @()

@@ -64,5 +64,162 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <!--Created 12/14/2020 10:23:04 by PROSPERO\Jeff-->
+      <Name>date</Name>
+      <ViewSelectedBy>
+        <TypeName>myTickle</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <!--
+            You can also use a scriptblock to define a custom property name.
+            You must have a Label tag.
+            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
+            <Label>Computername</Label>
+
+            Use <Label> to set the displayed value.
+-->
+        <ScriptBlock>"{0:MMM yyyy}" -f $_.date</ScriptBlock>
+        <Label>Month</Label>
+      </GroupBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.
+        <AutoSize />-->
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ID</Label>
+            <Width>6</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Event</Label>
+            <Width>25</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Comment</Label>
+            <Width>14</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Date</Label>
+            <Width>23</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Event</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Comment</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Date</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <!--Created 12/14/2020 14:45:00 by PROSPERO\Jeff-->
+      <Name>default</Name>
+      <ViewSelectedBy>
+        <TypeName>myTickleDBInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <ListItem>
+                <Label>Name</Label>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Path</Label>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SizeMB</Label>
+                <ScriptBlock>$_.Size/1mb</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>UsedMB</Label>
+                <ScriptBlock>$_.UsedSpace/1mb</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>AvailableMB</Label>
+                <ScriptBlock>$_.AvailableSpace/1mb</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>LastFullbackup</Label>
+                <PropertyName>LastFullBackup</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
+      <!--Created 12/14/2020 15:05:49 by PROSPERO\Jeff-->
+      <Name>backup</Name>
+      <ViewSelectedBy>
+        <TypeName>myTickleDBInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <ListItem>
+                <Label>Name</Label>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastFullBackup</Label>
+                <PropertyName>LastFullBackup</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastFullBackupLocation</Label>
+                <PropertyName>LastFullBackupLocation</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastDifferentialBackup</Label>
+                <PropertyName>LastDifferentialBackup</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastDifferentialBackupLocation</Label>
+                <PropertyName>LastDifferentialBackupLocation</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastLogBackup</Label>
+                <PropertyName>LastLogBackup</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>LastLogBackupLocation</Label>
+                <PropertyName>LastLogBackupLocation</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
   </ViewDefinitions>
 </Configuration>

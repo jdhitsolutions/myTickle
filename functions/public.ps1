@@ -228,14 +228,14 @@ Function Get-TickleEvent {
         }
     } #begin
     Process {
-
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using parameter set $($pscmdlet.ParameterSetName)"
         Switch ($pscmdlet.ParameterSetName) {
             "ID" {
-                Write-Verbose "[$((Get-Date).TimeofDay)] by ID"
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] by ID"
                 $filter = "Select * from EventData where EventID='$ID'"
             }
             "Name" {
-                Write-Verbose "[$((Get-Date).TimeofDay)] by Name"
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] by Name"
                 #get events that haven't expired or been archived by name
                 if ($EventName -match "\*") {
                     $EventName = $EventName.replace("*", "%")
@@ -352,8 +352,9 @@ SET {0} Where EventID='{1}'
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Updating Event ID $ID "
         $cols = @()
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using parameter set $($pscmdlet.ParameterSetName)"
         if ($pscmdlet.ParameterSetName -eq 'column') {
-            if ($Event) {
+            if ($EventName) {
                 $cols += "EventName='$EventName'"
             }
             if ($Comment) {
@@ -584,7 +585,7 @@ Function Show-TickleEvent {
         $yellow = "$([char]0x1b)[38;5;228m"
         $green = "$([char]0x1b)[38;5;120m"
         $cyan = "$([char]0x1b)[36m"
-        $cyanRev = "$([char]0x1b)[1;7;36m"
+        $reminderBox = "$([char]0x1b)[1;7;36m"
         $close = "$([char]0x1b)[0m"
 
         if ($host.name -eq "ConsoleHost" ) {
@@ -656,7 +657,7 @@ Function Show-TickleEvent {
 
             "`r"
 
-            $headerdisplay = "{0}{1}{2} {3}{4}{5} {6}{7}{8}{9}" -f $cyan, $topleft, $close, $cyanrev, $header, $close, $cyan, $($horizontal * ($width - 31)), $topright, $close
+            $headerdisplay = "{0}{1}{2} {3}{4}{5} {6}{7}{8}{9}" -f $cyan, $topleft, $close, $reminderBox, $header, $close, $cyan, $($horizontal * ($width - 31)), $topright, $close
             Write-Information "Headerdisplay length = $($headerdisplay.length)"
             $headerdisplay
             #blank line
@@ -691,7 +692,8 @@ Function Show-TickleEvent {
 
             } #foreach
 
-            "$cyan$bottomleft$($horizontal*($width-8))$bottomright$close"
+            #adjusted width to better draw the outline box 12/14/2020 JDH
+            "$cyan$bottomleft$($horizontal*($width-7))$bottomright$close"
             "`r"
         } #if upcoming events found
         else {
@@ -716,6 +718,86 @@ Function Show-TickleEvent {
     } #end
 
 } #close Show-TickleEvent
+
+Function Get-TickleDBInformation {
+    [cmdletbinding()]
+    [outputtype("myTickleDBInfo")]
+    Param(
+        [Parameter(HelpMessage = "Display backup information only.")]
+        [switch]$BackupInformation,
+        [ValidateNotNullOrEmpty()]
+        [string]$ServerInstance = $TickleServerInstance,
+        [ValidateNotNullOrEmpty()]
+        [pscredential]$Credential
+    )
+
+    #remove BackupInformation from PSBoundparamters
+    if ($PSBoundParameters.ContainsKey("BackupInformation")) {
+        [void]($PSBoundParameters.remove("BackupInformation"))
+    }
+
+    $query = @"
+SELECT f.[name] AS [FileName], f.physical_name AS [Path], size,
+FILEPROPERTY(f.name, 'SpaceUsed') AS Used,
+f.size - FILEPROPERTY(f.name, 'SpaceUsed') AS [Available]
+FROM sys.database_files AS f WITH (NOLOCK)
+LEFT OUTER JOIN sys.filegroups AS fg WITH (NOLOCK)
+ON f.data_space_id = fg.data_space_id
+where f.[name] = 'TickleEvents'
+ORDER BY f.[type], f.[file_id] OPTION (RECOMPILE);
+"@
+
+    $PSBoundParameters.Add("Query", $query)
+    $PSBoundParameters.Add("Database", "TickleEventDB")
+    $r = _InvokeSqlQuery @PSBoundParameters
+    if ($r) {
+
+        #get backup information. The query returns more information than I am using now.
+        $q = @"
+Select ISNULL(d.[name], bs.[database_name]) AS [Database], d.recovery_model_desc AS [RecoveryModel],
+MAX(CASE WHEN [type] = 'D' THEN bs.backup_finish_date ELSE NULL END) AS [LastFullBackup],
+MAX(CASE WHEN [type] = 'D' THEN bmf.physical_device_name ELSE NULL END) AS [LastFullBackupLocation],
+MAX(CASE WHEN [type] = 'I' THEN bs.backup_finish_date ELSE NULL END) AS [LastDifferentialBackup],
+MAX(CASE WHEN [type] = 'I' THEN bmf.physical_device_name ELSE NULL END) AS [LastDifferentialBackupLocation],
+MAX(CASE WHEN [type] = 'L' THEN bs.backup_finish_date ELSE NULL END) AS [LastLogBackup],
+MAX(CASE WHEN [type] = 'L' THEN bmf.physical_device_name ELSE NULL END) AS [LastLogBackupLocation]
+FROM sys.databases  AS d WITH (NOLOCK)
+LEFT OUTER JOIN msdb.dbo.backupset AS bs WITH (NOLOCK)
+ON bs.[database_name] = d.[name]
+LEFT OUTER JOIN msdb.dbo.backupmediafamily AS bmf WITH (NOLOCK)
+ON bs.media_set_id = bmf.media_set_id
+AND bs.backup_finish_date > GETDATE()- 30
+Where d.name = N'TickleEventDB'
+Group BY ISNULL(d.[name], bs.[database_name]), d.recovery_model_desc, d.log_reuse_wait_desc, d.[name]
+ORDER BY d.recovery_model_desc, d.[name] OPTION (RECOMPILE);
+"@
+        $PSBoundParameters.query = $q
+        $PSBoundParameters.database = "master"
+        $backupinfo = _InvokeSqlQuery @PSBoundParameters
+        #create a composite custom object
+        $obj = [pscustomobject]@{
+            PSTypename                     = "myTickleDBInfo"
+            Name                           = "TickleEventDB"
+            Path                           = $r.path
+            Size                           = $r.Size * 8KB
+            UsedSpace                      = $r.used * 8KB
+            AvailableSpace                 = $r.available * 8KB
+            LastFullBackup                 = $BackupInfo.LastFullBackup
+            LastFullBackupLocation         = $backupinfo.LastFullBackupLocation
+            LastDifferentialBackup         = $backupinfo.LastDifferentialBackup
+            LastDifferentialBackupLocation = $backupinfo.LastDifferentialBackupLocation
+            LastLogBackup                  = $backupinfo.LastLogBackup
+            LastLogBackupLocation          = $backupinfo.LastLogBackupLocation
+            Date                           = Get-Date
+        }
+        if ($backupinformation) {
+            $obj | Select-Object -Property Name,Path,Last*
+        }
+        else {
+            $obj
+        }
+    } #if $r
+} #close function
 
 #endregion
 

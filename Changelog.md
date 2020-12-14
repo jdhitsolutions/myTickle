@@ -1,5 +1,16 @@
 # Change Log for MyTickle
 
+## v3.2.0
+
++ Fixed bug in `Set-TickleEvent` that was failing to rename an event. (Issue #12)
++ Updated `Show-TickleEvent` to adjust line widths to better display the outline box.
++ Added a new formatted table view called `date`.
++ Updates to the about Help topic.
++ Added missing online help link for `Import-TickleDatabase`.
++ Updated the private function `_InvokeSQLQuery` to be able to run stored procedures.
++ Added `Get-TickleDBInformation` to display database information with custom views in `mytickle.format.ps1xml`.
++ Updated `README.md`
+
 ## v3.1.0
 
 + Modified `Get-TickleEvent` to not accept multiple ID numbers. Instead, the parameter will accept pipeline input. (Issue #11)

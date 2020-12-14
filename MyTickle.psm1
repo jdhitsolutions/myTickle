@@ -53,6 +53,6 @@ $export = @{
     Alias    = 'gte', 'ate', 'rte', 'shte', 'ste'
     Function = 'Get-TickleEvent', 'Set-TickleEvent', 'Add-TickleEvent',
     'Remove-TickleEvent', 'Initialize-TickleDatabase',
-    'Export-TickleDatabase', 'Import-TickleDatabase','Show-TickleEvent'
+    'Export-TickleDatabase', 'Import-TickleDatabase','Show-TickleEvent','Get-TickleDBInformation'
 }
 Export-ModuleMember @export

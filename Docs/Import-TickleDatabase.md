@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
-Module Name: mytickle
-online version:
+Module Name: myTickle
+online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md
 schema: 2.0.0
 ---
 
@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Import event data from a Clixml file
+Import event data from a Clixml file.
 
 ## SYNTAX
 

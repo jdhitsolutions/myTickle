@@ -33,7 +33,7 @@ To initialize your tickle database all you need to do is specify a location for 
     Initialize-TickleDatabase -databasepath D:\db\myTickle
 ```
 
-The command will default to a server instance of .\SQLExpress so if you have a different instance name, or using a remote computer you will need to include a value for the  ServerInstance parameter. You might also want to change the global variable, `$TickleServerInstance`.
+The command will default to a server instance of .\SQLExpress so if you have a different instance name, or using a remote computer you will need to include a value for the ServerInstance parameter. You might also want to change the global variable, `$TickleServerInstance`.
 
 The module includes `.sql` files that you or a database administrator can use to set up the database.
 
@@ -64,9 +64,9 @@ You also have the option of adding a comment.
 
 ## Displaying Events
 
-To display events you can either use `Get-TickleEvent` or `Show-TickleEvent`. The former provides a number of options for limiting what is displayed. The default behavior of `Get-TickleEvent` is to display all future events that have not been archived.
+To display events you can either use `Get-TickleEvent` or `Show-TickleEvent`. The former provides several options for limiting what is displayed. The default behavior of `Get-TickleEvent` is to display all future events that have not been archived.
 
-`Show-TickleEvent` will use `Write-Host` to display a code coded list of events set to occur within the next number of days specified by the `$TickleDefaultDays` variable, although you can certainly specify a different number of days. Events due in 24 hours or less will displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise, the event is displayed in green.
+`Show-TickleEvent` will use `Write-Host` to display a code coded list of events set to occur within the next number of days specified by the `$TickleDefaultDays` variable, although you can certainly specify a different number of days. Events due in 24 hours or less will be displayed in red. Events due in 48 hours or less will be displayed in yellow. Otherwise, the event is displayed in green.
 
 ## Managing Events
 
@@ -96,7 +96,7 @@ You could then import the database file:
 
 ## Offline Use
 
-The module commands are intended to be used with a SQL Server instance. However, a few commands have the ability to act in an offline-mode by reading events from a CSV file. You might want to do this if you want to access your tickle database on a laptop that doesn't have a copy of the database. You will need to export the database to a CSV file.
+The module commands are intended to be used with a SQL Server instance. However, a few commands can act in an offline-mode by reading events from a CSV file. You might want to do this if you want to access your tickle database on a laptop that doesn't have a copy of the database. You will need to export the database to a CSV file.
 
 ```powershell
     Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv

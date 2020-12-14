@@ -36,7 +36,7 @@ Add an event to the database.
 
 ### -Comment
 
-Enter an option comment or description.
+Enter an optional comment or description.
 
 ```yaml
 Type: String

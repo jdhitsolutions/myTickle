@@ -65,16 +65,16 @@ Adding Events
 
 Displaying Events
     To display events you can either use Get-TickleEvent or
-    Show-TickleEvent. The former provides a number of options for limiting
+    Show-TickleEvent. The former provides several options for limiting
     what is displayed. The default behavior of Get-TickleEvent is to display
     all future events that have not been archived.
 
     Show-TickleEvent will use Write-Host to display a code coded list of
     events set to occur within the next number of days specified by the
     $TickleDefaultDays variable, although you can certainly specify a
-    different number of days. Events due in 24 hours or less will displayed in
-    red. Events due in 48 hours or less will be displayed in yellow. Otherwise,
-    the event is displayed in green.
+    different number of days. Events due in 24 hours or less will be displayed
+    in red. Events due in 48 hours or less will be displayed in yellow.
+    Otherwise, the event is displayed in green.
 
 Managing Events
     When an event's datetime has passed, it will be marked as expired. Expired
@@ -102,10 +102,10 @@ Managing Events
 
 Offline Use
     The module commands are intended to be used with a SQL Server instance.
-    However, a few commands have the ability to act in an offline-mode by
-    reading events from a CSV file. You might want to do this if you want to
-    access your tickle database on a laptop that doesn't have a copy of the
-    database. You will need to export the database to a CSV file.
+    However, a few commands can act in an offline-mode by reading events from
+    a CSV file. You might want to do this if you want to access your tickle
+    database on a laptop that doesn't have a copy of the database. You will
+    need to export the database to a CSV file.
 
     Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
 

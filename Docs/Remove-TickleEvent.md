@@ -19,7 +19,7 @@ Remove-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCred
 
 ## DESCRIPTION
 
-Events in the tickle database remain, even though they may not be displayed by default. Normally you can archive expired events. But you can also delete entries with this command.
+Events in the tickle database remain, even though they may not be displayed by default. Normally, you can archive expired events. However, you can also delete entries with this command.
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ Removed the event with an ID of 100.
 PS C:\> Get-TickleEvent -name Dentist | Remove-TickleEvent
 ```
 
-Remove all tickle events with a name of Dentist. This will only remove un-expired and un-archived entries.
+Remove all tickle events with the name "Dentist". This will only remove un-expired and un-archived entries.
 
 ## PARAMETERS
 

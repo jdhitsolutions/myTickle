@@ -42,7 +42,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Comment</maml:name>
           <maml:Description>
-            <maml:para>Enter an option comment or description.</maml:para>
+            <maml:para>Enter an optional comment or description.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -114,7 +114,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>Comment</maml:name>
         <maml:Description>
-          <maml:para>Enter an option comment or description.</maml:para>
+          <maml:para>Enter an optional comment or description.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -279,7 +279,7 @@
       <command:verb>Export</command:verb>
       <command:noun>TickleDatabase</command:noun>
       <maml:description>
-        <maml:para>Export a tickle database to a Clixml file</maml:para>
+        <maml:para>Export a tickle database to a Clixml file.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -408,6 +408,161 @@
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-TickleDBInformation</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>TickleDBInformation</command:noun>
+      <maml:description>
+        <maml:para>Get information about the TickleEventDB database.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This command will display information about the tickle database.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-TickleDBInformation</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>ServerInstance</maml:name>
+          <maml:Description>
+            <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>BackupInformation</maml:name>
+          <maml:Description>
+            <maml:para>Display backup information only.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>BackupInformation</maml:name>
+        <maml:Description>
+          <maml:para>Display backup information only.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>ServerInstance</maml:name>
+        <maml:Description>
+          <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>myTickleDBInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-TickleDBInformation
+
+Name           : TickleEventDB
+Path           : C:\Program Files\Microsoft SQL
+                 Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+SizeMB         : 100
+UsedMB         : 3.375
+AvailableMB    : 96.625
+LastFullbackup : 12/11/2020 9:00:07 PM</dev:code>
+        <dev:remarks>
+          <maml:para>This is the default, formatted result for this command.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-TickleDBInformation | Select *
+
+Name                           : TickleEventDB
+Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.S
+                                 QLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+Size                           : 104857600
+UsedSpace                      : 3538944
+AvailableSpace                 : 101318656
+LastFullBackup                 : 12/11/2020 9:00:07 PM
+LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20201211.bak
+LastDifferentialBackup         :
+LastDifferentialBackupLocation :
+LastLogBackup                  :
+LastLogBackupLocation          :
+Date                           : 12/14/2020 3:30:40 PM</dev:code>
+        <dev:remarks>
+          <maml:para>The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -Backup or Get-TickleDBInformation | format-list -view backup.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -840,7 +995,7 @@
         <maml:title>-------------------------- Example 3 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-TickleEvent -offline c:\users\jeff\dropbox\tickledb.csv</dev:code>
         <dev:remarks>
-          <maml:para>Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number days specified by $TickleDefaultDays or the value of the -Next parameter.</maml:para>
+          <maml:para>Display all non-expired from an offline source. By default, offline mode will display events scheduled for the next number of days specified by $TickleDefaultDays or the value of the -Next parameter.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -876,7 +1031,7 @@ ID   Event                  Comment            Date                       Countd
       <command:verb>Import</command:verb>
       <command:noun>TickleDatabase</command:noun>
       <maml:description>
-        <maml:para>Import event data from a Clixml file</maml:para>
+        <maml:para>Import event data from a Clixml file.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -1050,6 +1205,10 @@ ID   Event                  Comment            Date                       Countd
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Export-TickleDatabase</maml:linkText>
         <maml:uri></maml:uri>
@@ -1248,7 +1407,7 @@ ID   Event                  Comment            Date                       Countd
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Events in the tickle database remain, even though they may not be displayed by default. Normally you can archive expired events. But you can also delete entries with this command.</maml:para>
+      <maml:para>Events in the tickle database remain, even though they may not be displayed by default. Normally, you can archive expired events. However, you can also delete entries with this command.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1412,7 +1571,7 @@ ID   Event                  Comment            Date                       Countd
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-TickleEvent -name Dentist | Remove-TickleEvent</dev:code>
         <dev:remarks>
-          <maml:para>Remove all tickle events with a name of Dentist. This will only remove un-expired and un-archived entries.</maml:para>
+          <maml:para>Remove all tickle events with the name "Dentist". This will only remove un-expired and un-archived entries.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1804,6 +1963,17 @@ ID   Event                  Comment            Date                       Countd
         <dev:code>PS C:\&gt; Get-TickleEvent -expired | Set-TickleEvent -archived</dev:code>
         <dev:remarks>
           <maml:para>Get all expired events and mark them as archived.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-TickleEvent -name "birday party" | Set-TickleEvent -EventName "Birthday Party" -passthru
+
+ID   Event                 Comment          Date                    Countdown
+--   -----                 -------          ----                    ---------
+642  Birthday Party                        2/12/2021 12:00:00 PM  34.21:07:32</dev:code>
+        <dev:remarks>
+          <maml:para>Rename an existing event.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

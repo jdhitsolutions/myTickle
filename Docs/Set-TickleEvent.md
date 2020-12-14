@@ -48,6 +48,18 @@ PS C:\> Get-TickleEvent -expired | Set-TickleEvent -archived
 
 Get all expired events and mark them as archived.
 
+### Example 3
+
+```powershell
+PS C:\> Get-TickleEvent -name "birday party" | Set-TickleEvent -EventName "Birthday Party" -passthru
+
+ID   Event                 Comment          Date                    Countdown
+--   -----                 -------          ----                    ---------
+642  Birthday Party                        2/12/2021 12:00:00 PM  34.21:07:32
+```
+
+Rename an existing event.
+
 ## PARAMETERS
 
 ### -Archive
