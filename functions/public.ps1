@@ -544,7 +544,7 @@ Function Show-TickleEvent {
     [Alias("shte")]
 
     Param(
-        [ValidateScript( { $_ -ge 1 })]
+        [ValidateScript({ $_ -ge 1 })]
         #the next number of days to get
         [int]$Days = $TickleDefaultDays,
 
@@ -576,7 +576,10 @@ Function Show-TickleEvent {
             }
         }
         else {
-            $invokeParams = @{Offline = $Offline }
+            $invokeParams = @{
+                Days = $Days
+                Offline = $Offline
+            }
         }
 
         #define ANSI color escapes
@@ -692,8 +695,8 @@ Function Show-TickleEvent {
 
             } #foreach
 
-            #adjusted width to better draw the outline box 12/14/2020 JDH
-            "$cyan$bottomleft$($horizontal*($width-7))$bottomright$close"
+            #adjusted width to better draw the outline box 1/20/2021 JDH
+            "$cyan$bottomleft$($horizontal*($width-8))$bottomright$close"
             "`r"
         } #if upcoming events found
         else {

@@ -1,6 +1,4 @@
-﻿
-
-#dot source module functions
+﻿#dot source module functions
 . $PSScriptRoot\functions\private.ps1
 . $PSScriptRoot\functions\public.ps1
 

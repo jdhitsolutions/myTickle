@@ -6,7 +6,7 @@
     RootModule           = 'MyTickle.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '3.2.0'
+    ModuleVersion        = '3.2.1'
 
     # ID used to uniquely identify this module
     GUID                 = 'e9534710-29f8-4291-be97-5c2b2df324c1'
@@ -20,7 +20,7 @@
     CompatiblePSEditions = "Desktop", "Core"
 
     # Copyright statement for this module
-    Copyright            = '(c) 2017-2020 JDH Information Technology Solutions, Inc.'
+    Copyright            = '(c) 2017-2021 JDH Information Technology Solutions, Inc.'
 
     # Description of the functionality provided by this module
     Description          = 'A PowerShell module with commands for a simple event tickler system using a SQL Server instance as the backend storage.'
@@ -118,7 +118,7 @@
             ProjectUri   = 'https://github.com/jdhitsolutions/myTickle'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/jdhitsolutions/myTickle/blob/master/assets/db.png'
+            IconUri      = 'https://raw.githubusercontent.com/jdhitsolutions/myTickle/master/assets/db.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/jdhitsolutions/myTickle/blob/master/README.md'

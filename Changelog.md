@@ -1,9 +1,15 @@
 # Change Log for MyTickle
 
+## v3.2.1
+
++ Working on the box outline dimensions in the `Show-TickleEvent` function.
++ Fixed bug in `Show-TickleEvent` that wasn't passing `Days` value when using `-Offline`. ([Issue #14](https://github.com/jdhitsolutions/myTickle/issues/14))
++ Updated license year
+
 ## v3.2.0
 
-+ Fixed bug in `Set-TickleEvent` that was failing to rename an event. (Issue #12)
-+ Updated `Show-TickleEvent` to adjust line widths to better display the outline box.
++ Fixed bug in `Set-TickleEvent` that was failing to rename an event. ([Issue #12](https://github.com/jdhitsolutions/myTickle/issues/12))
++ Updated `Show-TickleEvent` to adjust line widths for the box outline.
 + Added a new formatted table view called `date`.
 + Updates to the about Help topic.
 + Added missing online help link for `Import-TickleDatabase`.
@@ -13,7 +19,7 @@
 
 ## v3.1.0
 
-+ Modified `Get-TickleEvent` to not accept multiple ID numbers. Instead, the parameter will accept pipeline input. (Issue #11)
++ Modified `Get-TickleEvent` to not accept multiple ID numbers. Instead, the function will take pipeline input. ([Issue #11](https://github.com/jdhitsolutions/myTickle/issues/11))
 + Modified `Get-TickleEvent` to accept `Name` parameter values from the pipeline.
 + Renamed `Event` parameter in `Set-TickleEvent` and `Add-TickleEvent` to `EventName`.
 + Renamed `Name` parameter in `Get-TickleEvent` to `EventName`. Added `Name` as a parameter alias for backward compatibility.
@@ -21,7 +27,7 @@
 
 ## v3.0.0
 
-+ Modified `Show-TickleEvent` to use ANSI escape sequences in place of `Write-Host`. (Issue #12) *Breaking Change*
++ Modified `Show-TickleEvent` to use ANSI escape sequences in place of `Write-Host`. ([Issue #12](https://github.com/jdhitsolutions/myTickle/issues/12)) *Breaking Change*
 + Modified `Show-TickleEvent` to display a warning and not run in the PowerShell ISE.
 + `Show-TickleEvent` now uses special characters for the border if the console will support them. Otherwise, it will default to standard characters like "*".
 + Restructured the module layout.
@@ -45,7 +51,7 @@
 
 ## v2.6.0
 
-+ Updated the offline process to not import past events and to default to using the `$TickleDefaultDays`.
++ Updated the offline process to not import past events and default to using the `$TickleDefaultDays`.
 
 ## v2.5.0
 
