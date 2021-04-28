@@ -1,4 +1,12 @@
-# Change Log for MyTickle
+# ChangeLog for MyTickle
+
+## 3.3.0
+
++ Module manifest cleanup.
++ Added an alias property of `Name` for `Event` on the `myTickle` object.
++ Help updates.
++ Updated default formatting to use ANSI color schemes to highlight upcoming events.
++ Updated `README.md`.
 
 ## v3.2.1
 

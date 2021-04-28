@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
 Module Name: myTickle
-online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Remove-TickleEvent.md
+online version: https://bit.ly/2R33je0
 schema: 2.0.0
 ---
 

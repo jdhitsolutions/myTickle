@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
 Module Name: myTickle
-online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md
+online version: https://bit.ly/3gKEKx7
 schema: 2.0.0
 ---
 
@@ -135,3 +135,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 ## RELATED LINKS
 
 [Export-TickleDatabase](Export-TickleDatabase.md)
+
+[Get-TickleDBInformation](Get-TickleDBInformation.md)

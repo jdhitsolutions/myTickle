@@ -17,9 +17,9 @@
         <maml:name>Add-TickleEvent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
           <maml:name>EventName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Enter the name of the event.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -29,9 +29,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Date</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Enter the date and time for the event.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -41,9 +41,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Comment</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Enter an optional comment or description.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -53,9 +53,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -64,9 +64,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -76,9 +76,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Passthru</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Write the new event object to the pipeline.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -87,9 +87,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -99,9 +99,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -113,9 +113,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>Comment</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Enter an optional comment or description.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -125,9 +125,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -137,9 +137,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -149,9 +149,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Date</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Enter the date and time for the event.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -161,9 +161,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Passthru</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Write the new event object to the pipeline.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -173,9 +173,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -185,9 +185,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -197,9 +197,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Name">
         <maml:name>EventName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Enter the name of the event.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -261,7 +261,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Add-TickleEvent.md</maml:uri>
+        <maml:uri>https://bit.ly/3gYgCHN</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-TickleEvent</maml:linkText>
@@ -290,9 +290,9 @@
         <maml:name>Export-TickleDatabase</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The path and filename for the export XML file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -302,9 +302,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -314,9 +314,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -329,9 +329,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -341,9 +341,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The path and filename for the export XML file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -353,9 +353,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -401,10 +401,14 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Export-TickleDatabase.md</maml:uri>
+        <maml:uri>https://bit.ly/3sXrQOL</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Import-TickleDatabase</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Get-TickleDBInformation</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -426,9 +430,9 @@
         <maml:name>Get-TickleDBInformation</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -438,9 +442,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -450,9 +454,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>BackupInformation</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Display backup information only.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -464,9 +468,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>BackupInformation</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Display backup information only.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -476,9 +480,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -488,9 +492,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -530,39 +534,50 @@
         <dev:code>PS C:\&gt; Get-TickleDBInformation
 
 Name           : TickleEventDB
-Path           : C:\Program Files\Microsoft SQL
-                 Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullbackup : 12/11/2020 9:00:07 PM</dev:code>
+LastFullbackup : 4/23/2021 9:00:05 PM</dev:code>
         <dev:remarks>
           <maml:para>This is the default, formatted result for this command.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-TickleDBInformation | Select *
+        <dev:code>PS C:\&gt;  Get-TickleDBInformation | Select-Object *
 
 Name                           : TickleEventDB
-Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.S
-                                 QLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
 Size                           : 104857600
 UsedSpace                      : 3538944
 AvailableSpace                 : 101318656
-LastFullBackup                 : 12/11/2020 9:00:07 PM
-LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20201211.bak
+LastFullBackup                 : 4/23/2021 9:00:05 PM
+LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20210423.bak
 LastDifferentialBackup         :
 LastDifferentialBackupLocation :
 LastLogBackup                  :
 LastLogBackupLocation          :
-Date                           : 12/14/2020 3:30:40 PM</dev:code>
+Date                           : 4/28/2021 8:41:29 AM</dev:code>
         <dev:remarks>
-          <maml:para>The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -Backup or Get-TickleDBInformation | format-list -view backup.</maml:para>
+          <maml:para>The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -BackupInformation or Get-TickleDBInformation | format-list -view backup.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3sUUH6l</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Export-TickleDatabase</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Import-TickleDatabase</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -582,9 +597,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>All</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>List all entries in the tickle event database table.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -593,9 +608,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -605,9 +620,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -620,9 +635,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Archived</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>List entries that have been marked as Archived.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -631,9 +646,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -643,9 +658,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -658,9 +673,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -670,9 +685,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="days">
           <maml:name>Next</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Get events in the next number of days.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -682,9 +697,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -697,9 +712,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -709,9 +724,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="none">
           <maml:name>Id</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Display an event by its ID number.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -721,9 +736,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -736,9 +751,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -748,9 +763,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -760,9 +775,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="Name">
           <maml:name>EventName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of the event.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -775,9 +790,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -787,9 +802,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Expired</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Display events that have expired.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -798,9 +813,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -813,9 +828,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         <maml:name>Get-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="days">
           <maml:name>Next</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Get events in the next number of days.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -825,11 +840,11 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Offline</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like:</maml:para>
             <maml:para>Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
             <maml:para>Offline mode will not include any past events.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -842,9 +857,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>All</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>List all entries in the tickle event database table.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -854,9 +869,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Archived</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>List entries that have been marked as Archived.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -866,9 +881,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -878,9 +893,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Expired</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Display events that have expired.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -890,9 +905,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="none">
         <maml:name>Id</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Display an event by its ID number.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -902,9 +917,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="days">
         <maml:name>Next</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Get events in the next number of days.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -914,11 +929,11 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Offline</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Access an offline, CSV version. It is assumed you have previously run a command like:</maml:para>
           <maml:para>Get-TickleEvent | Export-CSV tickleexport.csv</maml:para>
           <maml:para>Offline mode will not include any past events.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -928,9 +943,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -940,9 +955,9 @@ Date                           : 12/14/2020 3:30:40 PM</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="Name">
         <maml:name>EventName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of the event.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1013,7 +1028,7 @@ ID   Event                  Comment            Date                       Countd
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Get-TickleEvent.md</maml:uri>
+        <maml:uri>https://bit.ly/2PxKdMM</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-TickleEvent</maml:linkText>
@@ -1042,9 +1057,9 @@ ID   Event                  Comment            Date                       Countd
         <maml:name>Import-TickleDatabase</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The path and filename for the export xml file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1054,9 +1069,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1065,9 +1080,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -1077,9 +1092,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1089,9 +1104,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1103,9 +1118,9 @@ ID   Event                  Comment            Date                       Countd
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1115,9 +1130,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -1127,9 +1142,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The path and filename for the export xml file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1139,9 +1154,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1151,9 +1166,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1207,10 +1222,14 @@ ID   Event                  Comment            Date                       Countd
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md</maml:uri>
+        <maml:uri>https://bit.ly/3gKEKx7</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Export-TickleDatabase</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Get-TickleDBInformation</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -1232,9 +1251,9 @@ ID   Event                  Comment            Date                       Countd
         <maml:name>Initialize-TickleDatabase</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>DatabasePath</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The folder for the database to be created.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1244,9 +1263,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1255,9 +1274,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -1267,9 +1286,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1279,9 +1298,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1293,9 +1312,9 @@ ID   Event                  Comment            Date                       Countd
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1305,9 +1324,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -1317,9 +1336,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>DatabasePath</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The folder for the database to be created.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1329,9 +1348,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1341,9 +1360,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1389,7 +1408,7 @@ ID   Event                  Comment            Date                       Countd
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Import-TickleDatabase.md</maml:uri>
+        <maml:uri>https://bit.ly/3vikqr8</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Import-TickleDatabase</maml:linkText>
@@ -1414,9 +1433,9 @@ ID   Event                  Comment            Date                       Countd
         <maml:name>Remove-TickleEvent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>ID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>A tickle event ID.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1426,9 +1445,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1437,9 +1456,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -1449,9 +1468,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1461,9 +1480,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1475,9 +1494,9 @@ ID   Event                  Comment            Date                       Countd
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1487,9 +1506,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -1499,9 +1518,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>ID</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>A tickle event ID.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1511,9 +1530,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1523,9 +1542,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1578,7 +1597,7 @@ ID   Event                  Comment            Date                       Countd
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Remove-TickleEvent.md</maml:uri>
+        <maml:uri>https://bit.ly/2R33je0</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-TickleEvent</maml:linkText>
@@ -1607,9 +1626,9 @@ ID   Event                  Comment            Date                       Countd
         <maml:name>Set-TickleEvent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>ID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Select an event by its ID.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1619,9 +1638,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Archive</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Mark an entry as archived. The current version of the module retains all events in a single database table.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1630,9 +1649,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1641,9 +1660,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -1653,9 +1672,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Passthru</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Write the updated event back to the pipeline.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1664,9 +1683,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1676,9 +1695,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1690,9 +1709,9 @@ ID   Event                  Comment            Date                       Countd
         <maml:name>Set-TickleEvent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>ID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Select an event by its ID.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1702,9 +1721,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Comment</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Update the event comment field.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1714,9 +1733,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1725,9 +1744,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -1737,9 +1756,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Date</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Update the event's date field.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -1749,9 +1768,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Passthru</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Write the updated event back to the pipeline.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1760,9 +1779,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1772,9 +1791,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1783,9 +1802,9 @@ ID   Event                  Comment            Date                       Countd
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
           <maml:name>EventName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of the event.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1798,9 +1817,9 @@ ID   Event                  Comment            Date                       Countd
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Archive</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Mark an entry as archived. The current version of the module retains all events in a single database table.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1810,9 +1829,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Comment</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Update the event comment field.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1822,9 +1841,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1834,9 +1853,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -1846,9 +1865,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Date</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Update the event's date field.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -1858,9 +1877,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>ID</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Select an event by its ID.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1870,9 +1889,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Passthru</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Write the updated event back to the pipeline.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1882,9 +1901,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1894,9 +1913,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1906,9 +1925,9 @@ ID   Event                  Comment            Date                       Countd
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name">
         <maml:name>EventName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of the event.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1980,7 +1999,7 @@ ID   Event                 Comment          Date                    Countdown
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Set-TickleEvent.md</maml:uri>
+        <maml:uri>https://bit.ly/3xtsEhT</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Add-TickleEvent</maml:linkText>
@@ -2009,9 +2028,9 @@ ID   Event                 Comment          Date                    Countdown
         <maml:name>Show-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Credential</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
             <maml:name>PSCredential</maml:name>
@@ -2021,9 +2040,9 @@ ID   Event                 Comment          Date                    Countdown
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Days</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify the next number of days to display.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -2033,9 +2052,9 @@ ID   Event                 Comment          Date                    Countdown
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2048,9 +2067,9 @@ ID   Event                 Comment          Date                    Countdown
         <maml:name>Show-TickleEvent</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Days</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specify the next number of days to display.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -2060,9 +2079,9 @@ ID   Event                 Comment          Date                    Countdown
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Offline</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Use an offline version of the tickle event database. Specify the path to the CSV file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2075,9 +2094,9 @@ ID   Event                 Comment          Date                    Countdown
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Credential</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify a credential to authenticate to the SQL Server instance. This should normally not be required.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
           <maml:name>PSCredential</maml:name>
@@ -2087,9 +2106,9 @@ ID   Event                 Comment          Date                    Countdown
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Days</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specify the next number of days to display.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -2099,9 +2118,9 @@ ID   Event                 Comment          Date                    Countdown
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Offline</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Use an offline version of the tickle event database. Specify the path to the CSV file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2111,9 +2130,9 @@ ID   Event                 Comment          Date                    Countdown
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2167,7 +2186,7 @@ ID   Event                 Comment          Date                    Countdown
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Show-TickleEvent.md</maml:uri>
+        <maml:uri>https://bit.ly/3eGyrbg</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-TickleEvent</maml:linkText>

@@ -15,12 +15,12 @@
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Event</Label>
-            <Width>25</Width>
+            <Width>35</Width>
             <Alignment>Left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Comment</Label>
-            <Width>18</Width>
+            <Width>20</Width>
             <Alignment>Left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
@@ -41,22 +41,82 @@
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Event</PropertyName>
+                <ScriptBlock>
+                If ($host.name -match "console|code") {
+                  if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
+                       "$([char]27)[91m$($_.Event)$([char]27)[0m"
+                  }
+                  elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
+                        "$([char]27)[93m$($_.Event)$([char]27)[0m"
+                  }
+                  else {
+                    $_.Event
+                  }
+                }
+                else {
+                 $_.Event
+                }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Comment</PropertyName>
+                <ScriptBlock>
+                If ($host.name -match "console|code") {
+                  if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1 )) {
+                       "$([char]27)[91m$($_.Comment)$([char]27)[0m"
+                  }
+                  elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
+                        "$([char]27)[93m$($_.Comment)$([char]27)[0m"
+                  }
+                  else {
+                    $_.Comment
+                  }
+                }
+                else {
+                 $_.Comment
+                }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>date</PropertyName>
+                <ScriptBlock>
+                If ($host.name -match "console|code") {
+                  if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
+                       "$([char]27)[91m$($_.Date)$([char]27)[0m"
+                  }
+                  elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
+                        "$([char]27)[93m$($_.Date)$([char]27)[0m"
+                  }
+                  else {
+                    $_.Date
+                  }
+                }
+                else {
+                 $_.Date
+                }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <Scriptblock> $count= $_.countdown.toString()
                   if ($count.lastIndexOf('.') -gt 0) {
-                $count.substring(0,$count.lastIndexOf('.'))
-                }
-                else {
-                  $count
-                }
+                    $value = $count.substring(0,$count.lastIndexOf('.'))
+                  }
+                  else {
+                    $value = $count
+                  }
+                  If ($host.name -match "console|code") {
+                  if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
+                       "$([char]27)[91m$($value)$([char]27)[0m"
+                  }
+                  elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
+                        "$([char]27)[93m$($value)$([char]27)[0m"
+                  }
+                  else {
+                   $value
+                    }
+                  }
+                  else {
+                  $value
+                  }
+
                 </Scriptblock>
               </TableColumnItem>
             </TableColumnItems>
@@ -71,14 +131,6 @@
         <TypeName>myTickle</TypeName>
       </ViewSelectedBy>
       <GroupBy>
-        <!--
-            You can also use a scriptblock to define a custom property name.
-            You must have a Label tag.
-            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
-            <Label>Computername</Label>
-
-            Use <Label> to set the displayed value.
--->
         <ScriptBlock>"{0:MMM yyyy}" -f $_.date</ScriptBlock>
         <Label>Month</Label>
       </GroupBy>
@@ -110,10 +162,6 @@
         <TableRowEntries>
           <TableRowEntry>
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
@@ -141,10 +189,6 @@
         <ListEntries>
           <ListEntry>
             <ListItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <ListItem>
                 <Label>Name</Label>
                 <PropertyName>Name</PropertyName>
@@ -184,10 +228,6 @@
         <ListEntries>
           <ListEntry>
             <ListItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <ListItem>
                 <Label>Name</Label>
                 <PropertyName>Name</PropertyName>

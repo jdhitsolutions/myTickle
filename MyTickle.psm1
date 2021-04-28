@@ -43,6 +43,7 @@ Class myTickle {
 } #close class
 
 Update-TypeData -TypeName myTickle -DefaultDisplayPropertySet ID, Date, Event, Comment -Force
+Update-TypeData -TypeName myTickle -MemberType AliasProperty -MemberName Name -Value Event -force
 
 #endregion
 

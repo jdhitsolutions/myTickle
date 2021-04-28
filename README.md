@@ -66,6 +66,8 @@ Once initialized and with entries added, you can view upcoming events.
 
 ![get-tickleevent](assets/get-tickleevent.png)
 
+Starting with version 3.3.0, if you are running `Get-TickleEvent` in a console or VSCode host, events happening in less than 1 day will be displayed in red using ANSI escape sequences. Events in less than 2 days will be displayed in yellow.
+
 As an alternative, the `myTickle` object has a format view definition file with an alternate view.
 
 ```PowerShell
@@ -87,7 +89,7 @@ For more information, please read the [About](docs/about_MyTickle.md) help topic
 
 You might also be interested in these PowerShell modules:
 
-+ Manage tasks and To-Do's with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
-+ Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.
+- Manage tasks and To-Do's with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
+- Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.
 
-Last Updated 2021-03-10 16:47:00Z
+Last Updated 2021-04-28 13:50:23Z

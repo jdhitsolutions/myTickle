@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
 Module Name: MyTickle
-online version:
+online version: https://bit.ly/3sUUH6l
 schema: 2.0.0
 ---
 
@@ -30,12 +30,11 @@ This command will display information about the tickle database.
 PS C:\> Get-TickleDBInformation
 
 Name           : TickleEventDB
-Path           : C:\Program Files\Microsoft SQL
-                 Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullbackup : 12/11/2020 9:00:07 PM
+LastFullbackup : 4/23/2021 9:00:05 PM
 ```
 
 This is the default, formatted result for this command.
@@ -43,24 +42,23 @@ This is the default, formatted result for this command.
 ### Example 2
 
 ```powershell
-PS C:\> Get-TickleDBInformation | Select *
+PS C:\>  Get-TickleDBInformation | Select-Object *
 
 Name                           : TickleEventDB
-Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.S
-                                 QLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
+Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TickleEventDB.mdf
 Size                           : 104857600
 UsedSpace                      : 3538944
 AvailableSpace                 : 101318656
-LastFullBackup                 : 12/11/2020 9:00:07 PM
-LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20201211.bak
+LastFullBackup                 : 4/23/2021 9:00:05 PM
+LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20210423.bak
 LastDifferentialBackup         :
 LastDifferentialBackupLocation :
 LastLogBackup                  :
 LastLogBackupLocation          :
-Date                           : 12/14/2020 3:30:40 PM
+Date                           : 4/28/2021 8:41:29 AM
 ```
 
-The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -Backup or Get-TickleDBInformation | format-list -view backup.
+The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -BackupInformation or Get-TickleDBInformation | format-list -view backup.
 
 ## PARAMETERS
 
@@ -129,3 +127,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
+
+[Export-TickleDatabase](Export-TickleDatabasae.md)
+
+[Import-TickleDatabase](Import-TickleDatabasae.md)

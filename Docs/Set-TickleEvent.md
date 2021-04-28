@@ -1,7 +1,7 @@
 ---
 external help file: MyTickle-help.xml
 Module Name: MyTickle
-online version: https://github.com/jdhitsolutions/myTickle/blob/master/Docs/Set-TickleEvent.md
+online version: https://bit.ly/3xtsEhT
 schema: 2.0.0
 ---
 
