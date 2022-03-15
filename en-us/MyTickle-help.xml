@@ -284,6 +284,7 @@
     </command:details>
     <maml:description>
       <maml:para>Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XML file is created with Export-CliXML.</maml:para>
+      <maml:para>As an alternative you could also run Get-TickleEvent and pipe to Export-CSV.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1050,7 +1051,7 @@ ID   Event                  Comment            Date                       Countd
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>If you export a tickle database with the Export-TickleDatabase command, you can re-import it into a new or different SQL Srrver instance with this command.</maml:para>
+      <maml:para>If you export a tickle database with the Export-TickleDatabase command, you can re-import it into a new or different SQL Server instance with this command.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1393,15 +1394,15 @@ ID   Event                  Comment            Date                       Countd
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Initialize-TickleDatabase -databasepath c:\db\mytickle</dev:code>
+        <dev:code>PS C:\&gt; Initialize-TickleDatabase -databasepath C:\db\mytickle</dev:code>
         <dev:remarks>
-          <maml:para>Initialize an empty database and create the files at c:\db\mytickle. The folder must exist before running this command.</maml:para>
+          <maml:para>Initialize an empty database and create the files at C:\db\mytickle. The folder must exist before running this command.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1469,7 +1470,7 @@ ID   Event                  Comment            Date                       Countd
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ServerInstance</maml:name>
           <maml:description>
-            <maml:para>The name of your SQL Server instance. The parameter will default to the module variable</maml:para>
+            <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1531,7 +1532,7 @@ ID   Event                  Comment            Date                       Countd
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ServerInstance</maml:name>
         <maml:description>
-          <maml:para>The name of your SQL Server instance. The parameter will default to the module variable</maml:para>
+          <maml:para>The name of your SQL Server instance. The parameter will default to the module variable.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>

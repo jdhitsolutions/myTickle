@@ -14,13 +14,12 @@ Import event data from a Clixml file.
 ## SYNTAX
 
 ```yaml
-Import-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <PSCredential>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Import-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <PSCredential>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-If you export a tickle database with the Export-TickleDatabase command, you can re-import it into a new or different SQL Srrver instance with this command.
+If you export a tickle database with the Export-TickleDatabase command, you can re-import it into a new or different SQL Server instance with this command.
 
 ## EXAMPLES
 

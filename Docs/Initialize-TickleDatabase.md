@@ -16,15 +16,13 @@ Initialize a new tickle event database.
 ### default (Default)
 
 ```yaml
-Initialize-TickleDatabase [-DatabasePath] <String> [-ServerInstance <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Initialize-TickleDatabase [-DatabasePath] <String> [-ServerInstance <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### credential
 
 ```yaml
-Initialize-TickleDatabase [-DatabasePath] <String> [-ServerInstance <String>] -Credential <PSCredential>
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Initialize-TickleDatabase [-DatabasePath] <String> [-ServerInstance <String>] -Credential <PSCredential> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,10 +34,10 @@ Use this command to initialize a new tickle event database and table. You need t
 ### Example 1
 
 ```powershell
-PS C:\> Initialize-TickleDatabase -databasepath c:\db\mytickle
+PS C:\> Initialize-TickleDatabase -databasepath C:\db\mytickle
 ```
 
-Initialize an empty database and create the files at c:\db\mytickle. The folder must exist before running this command.
+Initialize an empty database and create the files at C:\db\mytickle. The folder must exist before running this command.
 
 ## PARAMETERS
 
@@ -137,6 +135,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.Object
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

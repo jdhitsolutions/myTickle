@@ -1,5 +1,12 @@
 # ChangeLog for MyTickle
 
+## 3.3.1
+
++ Fixed minor typos in help documentation.
++ Updated `about_MyTickle.md`.
++ Cleaned up module manifest.
++ Updated README.md.
+
 ## 3.3.0
 
 + Module manifest cleanup.

@@ -16,14 +16,14 @@ Modify a tickle event.
 ### column (Default)
 
 ```yaml
-Set-TickleEvent [-ID] <Int32> [-EventName <String>] [-Date <DateTime>] [-Comment <String>]
- [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-TickleEvent [-ID] <Int32> [-EventName <String>] [-Date <DateTime>] [-Comment <String>] [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### archive
 
 ```yaml
-Set-TickleEvent [-ID] <Int32> [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-Archive]  [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-TickleEvent [-ID] <Int32> [-ServerInstance <String>]
+[-Credential <PSCredential>] [-Passthru] [-Archive]  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

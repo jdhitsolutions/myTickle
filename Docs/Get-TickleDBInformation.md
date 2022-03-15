@@ -14,8 +14,8 @@ Get information about the TickleEventDB database.
 ## SYNTAX
 
 ```yaml
-Get-TickleDBInformation [-BackupInformation] [[-ServerInstance] <String>] [[-Credential] <PSCredential>]
- [<CommonParameters>]
+Get-TickleDBInformation [-BackupInformation] [[-ServerInstance] <String>]
+[[-Credential] <PSCredential>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

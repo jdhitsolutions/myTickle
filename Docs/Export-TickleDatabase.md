@@ -14,13 +14,14 @@ Export a tickle database to a Clixml file.
 ## SYNTAX
 
 ```yaml
-Export-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <PSCredential>]
- [<CommonParameters>]
+Export-TickleDatabase [-Path] <String> [-ServerInstance <String>] [-Credential <PSCredential>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
 Use this command to export the entire tickle database to an XML file. This can be in addition to whatever SQL Server backup procedures you may follow. The XML file is created with Export-CliXML.
+
+As an alternative you could also run Get-TickleEvent and pipe to Export-CSV.
 
 ## EXAMPLES
 

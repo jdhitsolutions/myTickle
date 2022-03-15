@@ -14,8 +14,7 @@ Add an entry to the tickle database.
 ## SYNTAX
 
 ```yaml
-Add-TickleEvent [-EventName] <String> [-Date] <DateTime> [[-Comment] <String>] [-ServerInstance <String>]
- [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-TickleEvent [-EventName] <String> [-Date] <DateTime> [[-Comment] <String>] [-ServerInstance <String>] [-Credential <PSCredential>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

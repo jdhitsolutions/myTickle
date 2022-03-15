@@ -91,7 +91,7 @@ Accept wildcard characters: False
 
 ### -ServerInstance
 
-The name of your SQL Server instance. The parameter will default to the module variable
+The name of your SQL Server instance. The parameter will default to the module variable.
 
 ```yaml
 Type: String

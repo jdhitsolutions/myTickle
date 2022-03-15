@@ -88,7 +88,7 @@ The module does not include any SQL-related management tasks like backing up a d
     Export-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
 ```
 
-You could then import the database file:
+You could then import the database file later to recover or install on a different system:
 
 ```powershell
     Import-TickleDatabase -path c:\users\jeff\dropbox\backups\tickledb.xml
@@ -99,13 +99,19 @@ You could then import the database file:
 The module commands are intended to be used with a SQL Server instance. However, a few commands can act in an offline-mode by reading events from a CSV file. You might want to do this if you want to access your tickle database on a laptop that doesn't have a copy of the database. You will need to export the database to a CSV file.
 
 ```powershell
-    Get-TickleEvent | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
+    Get-TickleEvent -Next 50 | Export-CSV -path c:\users\jeff\dropbox\work\tickledb.csv
 ```
 
 On the "disconnected" system, you can still access the tickle events in what is essentially read-only mode.
 
 ```powershell
     Get-TickleEvent -Offline C:\users\jeff\dropbox\work\tickledb.csv
+```
+
+It is suggested that you define a PSDefault parameter value on the remote computer.
+
+```powershell
+   $PSDefaultParameterValues.Add("*-TickleEvent:Offline"," C:\Users\Jeff\dropbox\work\tickle.csv")
 ```
 
 The offline mode will only display events that have not expired and will use the value of `$TickleDefaultDays`.
@@ -120,7 +126,7 @@ Limited testing of this module has been done on PowerShell 7.x running on non-Wi
 
 Avoid using any special characters, especially apostrophes, in event names.
 
-Please report any bugs, problems, questions, or feature requests to the module's GitHub repository a:
+Please report any bugs, problems, questions, or feature requests to the module's GitHub repository at:
 
 https://github.com/jdhitsolutions/myTickle/issues.
 

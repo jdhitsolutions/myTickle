@@ -28,8 +28,7 @@ Get-TickleEvent [-Id <Int32>] [-ServerInstance <String>] [-Credential <PSCredent
 ### Name
 
 ```yaml
-Get-TickleEvent [-EventName <String>] [-ServerInstance <String>] [-Credential <PSCredential>]
- [<CommonParameters>]
+Get-TickleEvent [-EventName <String>] [-ServerInstance <String>] [-Credential <PSCredential>] [<CommonParameters>]
 ```
 
 ### All
