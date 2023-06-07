@@ -35,7 +35,7 @@ Use this command to update or modify an existing tickle event. This command will
 ### Example 1
 
 ```powershell
-PS C:\> Set-TickleEvent -id 100 -date "8/1/2021 5:00PM"
+PS C:\> Set-TickleEvent -id 100 -date "8/1/2023 5:00PM"
 ```
 
 Set a new date for tickle event ID 100.
@@ -43,7 +43,7 @@ Set a new date for tickle event ID 100.
 ### Example 2
 
 ```powershell
-PS C:\> Get-TickleEvent -expired | Set-TickleEvent -archived
+PS C:\> Get-TickleEvent -expired | Set-TickleEvent -archive
 ```
 
 Get all expired events and mark them as archived.
@@ -55,7 +55,7 @@ PS C:\> Get-TickleEvent -name "birday party" | Set-TickleEvent -EventName "Birth
 
 ID   Event                 Comment          Date                    Countdown
 --   -----                 -------          ----                    ---------
-642  Birthday Party                        2/12/2021 12:00:00 PM  34.21:07:32
+642  Birthday Party                        2/12/2023 12:00:00 PM  34.21:07:32
 ```
 
 Rename an existing event.

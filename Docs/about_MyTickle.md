@@ -30,7 +30,7 @@ You will need access to a SQL Server instance. A local installation of SQL Serve
 To initialize your tickle database all you need to do is specify a location for the database file. The location must already exist.
 
 ```powershell
-    Initialize-TickleDatabase -databasepath D:\db\myTickle
+    Initialize-TickleDatabase -DatabasePath D:\db\myTickle
 ```
 
 The command will default to a server instance of .\SQLExpress so if you have a different instance name, or using a remote computer you will need to include a value for the ServerInstance parameter. You might also want to change the global variable, `$TickleServerInstance`.
@@ -57,7 +57,7 @@ It is recommended that you leave the TickleTable variable alone unless you have 
 To add an event all you need to do is specify an event name and a datetime.
 
 ```powershell
-    Add-TickleEvent "Azure exam" -date "2/3/2021 9:00AM"
+    Add-TickleEvent "Azure exam" -date "2/3/2023 9:00AM"
 ```
 
 You also have the option of adding a comment.

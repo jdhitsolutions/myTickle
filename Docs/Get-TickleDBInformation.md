@@ -34,7 +34,7 @@ Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullbackup : 4/23/2021 9:00:05 PM
+LastFullBackup : 4/23/2023 9:00:05 PM
 ```
 
 This is the default, formatted result for this command.
@@ -49,13 +49,13 @@ Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.S
 Size                           : 104857600
 UsedSpace                      : 3538944
 AvailableSpace                 : 101318656
-LastFullBackup                 : 4/23/2021 9:00:05 PM
+LastFullBackup                 : 4/23/2023 9:00:05 PM
 LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20210423.bak
 LastDifferentialBackup         :
 LastDifferentialBackupLocation :
 LastLogBackup                  :
 LastLogBackupLocation          :
-Date                           : 4/28/2021 8:41:29 AM
+Date                           : 4/28/2023 8:41:29 AM
 ```
 
 The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -BackupInformation or Get-TickleDBInformation | format-list -view backup.

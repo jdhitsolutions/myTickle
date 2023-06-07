@@ -44,7 +44,7 @@
                 <ScriptBlock>
                 If ($host.name -match "console|code") {
                   if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
-                       "$([char]27)[91m$($_.Event)$([char]27)[0m"
+                      "$([char]27)[91m$($_.Event)$([char]27)[0m"
                   }
                   elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
                         "$([char]27)[93m$($_.Event)$([char]27)[0m"
@@ -54,7 +54,7 @@
                   }
                 }
                 else {
-                 $_.Event
+                  $_.Event
                 }
                 </ScriptBlock>
               </TableColumnItem>
@@ -62,7 +62,7 @@
                 <ScriptBlock>
                 If ($host.name -match "console|code") {
                   if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1 )) {
-                       "$([char]27)[91m$($_.Comment)$([char]27)[0m"
+                      "$([char]27)[91m$($_.Comment)$([char]27)[0m"
                   }
                   elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
                         "$([char]27)[93m$($_.Comment)$([char]27)[0m"
@@ -72,7 +72,7 @@
                   }
                 }
                 else {
-                 $_.Comment
+                  $_.Comment
                 }
                 </ScriptBlock>
               </TableColumnItem>
@@ -80,7 +80,7 @@
                 <ScriptBlock>
                 If ($host.name -match "console|code") {
                   if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
-                       "$([char]27)[91m$($_.Date)$([char]27)[0m"
+                      "$([char]27)[91m$($_.Date)$([char]27)[0m"
                   }
                   elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
                         "$([char]27)[93m$($_.Date)$([char]27)[0m"
@@ -90,7 +90,7 @@
                   }
                 }
                 else {
-                 $_.Date
+                  $_.Date
                 }
                 </ScriptBlock>
               </TableColumnItem>
@@ -104,13 +104,13 @@
                   }
                   If ($host.name -match "console|code") {
                   if ((-Not $_.Expired) -AND ($_.countdown.totaldays -le 1)) {
-                       "$([char]27)[91m$($value)$([char]27)[0m"
+                      "$([char]27)[91m$($value)$([char]27)[0m"
                   }
                   elseif ((-Not $_.Expired) -AND ($_.countdown.totaldays -lt 2)) {
                         "$([char]27)[93m$($value)$([char]27)[0m"
                   }
                   else {
-                   $value
+                    $value
                     }
                   }
                   else {
@@ -210,7 +210,7 @@
                 <ScriptBlock>$_.AvailableSpace/1mb</ScriptBlock>
               </ListItem>
               <ListItem>
-                <Label>LastFullbackup</Label>
+                <Label>LastFullBackup</Label>
                 <PropertyName>LastFullBackup</PropertyName>
               </ListItem>
             </ListItems>

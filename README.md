@@ -9,7 +9,7 @@ This PowerShell module is designed as a tickle or reminder system. You can add a
 Install the latest version from the PowerShell Gallery.
 
 ```PowerShell
-Install-Module MyTickle [-scope currentuser]
+Install-Module MyTickle [-scope CurrentUser]
 ```
 
 ## Setup
@@ -32,7 +32,7 @@ Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullbackup : 12/11/2020 9:00:07 PM
+LastFullBackup : 12/11/2020 9:00:07 PM
 ```
 
 The module uses a set of global variables to define the SQL connection. The default installation assumes a local SQL Server Express instance.
@@ -95,4 +95,3 @@ You might also be interested in these PowerShell modules:
 
 - Manage tasks and To-Do items with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
 - Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.
-

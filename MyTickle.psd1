@@ -1,11 +1,11 @@
 ﻿@{
     RootModule           = 'MyTickle.psm1'
-    ModuleVersion        = '3.3.1'
+    ModuleVersion        = '3.3.2'
     GUID                 = 'e9534710-29f8-4291-be97-5c2b2df324c1'
     Author               = 'Jeff Hicks'
     CompanyName          = 'JDH Information Technology Solutions, Inc.'
     CompatiblePSEditions = "Desktop", "Core"
-    Copyright            = '(c) 2017-2022 JDH Information Technology Solutions, Inc.'
+    Copyright            = '(c) 2017-2023 JDH Information Technology Solutions, Inc.'
     Description          = 'A PowerShell module with commands for a simple event tickler system using a SQL Server instance as the backend storage.'
     PowerShellVersion    = '5.1'
     # TypesToProcess = @()

@@ -1,7 +1,7 @@
 # private module functions
 
 function _NewMyTickle {
-    [cmdletbinding()]
+    [CmdletBinding()]
     [OutputType("MyTickle")]
 
     Param(
@@ -10,39 +10,39 @@ function _NewMyTickle {
         [int32]$EventID,
         [Parameter(ValueFromPipelineByPropertyName)]
         [alias("Event", "Name")]
-        [string]$EventName,
+        [String]$EventName,
         [Parameter(ValueFromPipelineByPropertyName)]
         [alias("Date")]
-        [datetime]$EventDate,
+        [DateTime]$EventDate,
         [Parameter(ValueFromPipelineByPropertyName)]
         [Alias("Comment")]
-        [string]$EventComment
+        [String]$EventComment
     )
     Process {
-        New-Object -TypeName mytickle -ArgumentList @($eventID, $Eventname, $EventDate, $EventComment)
+        New-Object -TypeName mytickle -ArgumentList @($eventID, $EventName, $EventDate, $EventComment)
     }
 } #close _NewMyTickle
 
 Function _InvokeSqlQuery {
-    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = "Default")]
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = "Default")]
     [OutputType([PSObject])]
 
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "The T-SQL query to execute")]
-        [ValidateNotNullorEmpty()]
-        [string]$Query,
+        [ValidateNotNullOrEmpty()]
+        [String]$Query,
         [Parameter(Mandatory, HelpMessage = "The name of the database")]
-        [ValidateNotNullorEmpty()]
-        [string]$Database,
+        [ValidateNotNullOrEmpty()]
+        [String]$Database,
         [Parameter(Mandatory, ParameterSetName = 'credential')]
-        [pscredential]$Credential,
+        [PSCredential]$Credential,
         #The server instance name
-        [ValidateNotNullorEmpty()]
-        [string]$ServerInstance = "$(hostname)\SqlExpress"
+        [ValidateNotNullOrEmpty()]
+        [String]$ServerInstance = "$(hostname)\SqlExpress"
     )
 
     Begin {
-        Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"
+        Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.MyCommand)"
 
         if ($PSCmdlet.ParameterSetName -eq 'credential') {
             $username = $Credential.UserName
@@ -62,11 +62,11 @@ Function _InvokeSqlQuery {
         Write-Verbose "[PROCESS] Using database $Database"
         if ($Username -AND $password) {
             Write-Verbose "[PROCESS] Using credential"
-            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
+            $connection.ConnectionString = "Data Source=$ServerInstance;Initial Catalog=$Database;User ID=$Username;Password=$Password;"
         }
         else {
             Write-Verbose "[PROCESS] Using Windows authentication"
-            $connection.connectionstring = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
+            $connection.ConnectionString = "Data Source=$ServerInstance;Initial Catalog=$Database;Integrated Security=SSPI;"
         }
         Write-Verbose "[PROCESS] Opening Connection"
         Write-Verbose "[PROCESS] $($connection.ConnectionString)"
@@ -90,18 +90,18 @@ Function _InvokeSqlQuery {
             Switch -regex ($query) {
                 "^Select (\w+|\*)|(@@\w+ AS)|(exec)" {
                     Write-Verbose "ExecuteReader"
-                    $reader = $cmd.executereader()
+                    $reader = $cmd.ExecuteReader()
                     $out = @()
                     #convert datarows to a custom object
                     while ($reader.read()) {
 
                         $h = [ordered]@{}
                         for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-                            $col = $reader.getname($i)
+                            $col = $reader.GetName($i)
 
-                            $h.add($col, $reader.getvalue($i))
+                            $h.add($col, $reader.GetValue($i))
                         } #for
-                        $out += New-Object -TypeName psobject -Property $h
+                        $out += New-Object -TypeName PSObject -Property $h
                     } #while
 
                     $out
@@ -126,7 +126,7 @@ Function _InvokeSqlQuery {
         Write-Verbose "[END    ] Closing the connection"
         $connection.close()
 
-        Write-Verbose "[END    ] Ending: $($MyInvocation.Mycommand)"
+        Write-Verbose "[END    ] Ending: $($MyInvocation.MyCommand)"
     } #end
 
 } #close _InvokeSqlQuery

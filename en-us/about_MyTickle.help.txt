@@ -32,7 +32,7 @@ Initialization
     To initialize your tickle database all you need to do is specify a location
     for the database file. The location must already exist.
 
-    Initialize-TickleDatabase -databasepath D:\db\myTickle
+    Initialize-TickleDatabase -DatabasePath D:\db\myTickle
 
     The command will default to a server instance of .\SQLExpress so if you have
     a different instance name, or using a remote computer you will need to
@@ -59,7 +59,7 @@ Variables
 Adding Events
     To add an event all you need to do is specify an event name and a datetime.
 
-    Add-TickleEvent "Azure exam" -date "2/3/2021 9:00AM"
+    Add-TickleEvent "Azure exam" -date "2/3/2023 9:00AM"
 
     You also have the option of adding a comment.
 
@@ -69,7 +69,7 @@ Displaying Events
     what is displayed. The default behavior of Get-TickleEvent is to display
     all future events that have not been archived.
 
-    Show-TickleEvent will use Write-Host to display a code coded list of
+    Show-TickleEvent will use Write-Host to display a coded list of
     events set to occur within the next number of days specified by the
     $TickleDefaultDays variable, although you can certainly specify a
     different number of days. Events due in 24 hours or less will be displayed

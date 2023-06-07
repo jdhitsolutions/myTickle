@@ -90,7 +90,7 @@ Display all non-expired from an offline source. By default, offline mode will di
 ### Example 4
 
 ```powershell
-PS C:\> Get-TickleEvent -eventname 'Company Mtg'
+PS C:\> Get-TickleEvent -EventName 'Company Mtg'
 
 ID   Event                  Comment            Date                       Countdown
 --   -----                  -------            ----                       ---------

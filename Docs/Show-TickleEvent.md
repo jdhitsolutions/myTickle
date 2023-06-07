@@ -36,11 +36,11 @@ This is a specialized version of Get-TickleEvent that uses ANSI-escape sequences
 ```powershell
 PS C:\> Show-TickleEvent
 
-* Reminders 9/23/2021 *********************************
+* Reminders 9/23/2023 *********************************
 *                                                     *
-* Project Review 09/25/2021 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2023 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2021 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2023 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************
 ```

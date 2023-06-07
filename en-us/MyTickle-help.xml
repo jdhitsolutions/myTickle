@@ -252,7 +252,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2021 12:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Add-TickleEvent -event "company picnic" -date "7/1/2023 12:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Add an event to the database.</maml:para>
         </dev:remarks>
@@ -539,7 +539,7 @@ Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullbackup : 4/23/2021 9:00:05 PM</dev:code>
+LastFullBackup : 4/23/2023 9:00:05 PM</dev:code>
         <dev:remarks>
           <maml:para>This is the default, formatted result for this command.</maml:para>
         </dev:remarks>
@@ -553,13 +553,13 @@ Path                           : C:\Program Files\Microsoft SQL Server\MSSQL15.S
 Size                           : 104857600
 UsedSpace                      : 3538944
 AvailableSpace                 : 101318656
-LastFullBackup                 : 4/23/2021 9:00:05 PM
+LastFullBackup                 : 4/23/2023 9:00:05 PM
 LastFullBackupLocation         : D:\OneDrive\Backup\TickleEventDB_20210423.bak
 LastDifferentialBackup         :
 LastDifferentialBackupLocation :
 LastLogBackup                  :
 LastLogBackupLocation          :
-Date                           : 4/28/2021 8:41:29 AM</dev:code>
+Date                           : 4/28/2023 8:41:29 AM</dev:code>
         <dev:remarks>
           <maml:para>The information object includes backup information. You can view backup information alone by running Get-TickleDBInformation -BackupInformation or Get-TickleDBInformation | format-list -view backup.</maml:para>
         </dev:remarks>
@@ -1016,7 +1016,7 @@ Date                           : 4/28/2021 8:41:29 AM</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 4 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-TickleEvent -eventname 'Company Mtg'
+        <dev:code>PS C:\&gt; Get-TickleEvent -EventName 'Company Mtg'
 
 ID   Event                  Comment            Date                       Countdown
 --   -----                  -------            ----                       ---------
@@ -1973,14 +1973,14 @@ ID   Event                  Comment            Date                       Countd
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2021 5:00PM"</dev:code>
+        <dev:code>PS C:\&gt; Set-TickleEvent -id 100 -date "8/1/2023 5:00PM"</dev:code>
         <dev:remarks>
           <maml:para>Set a new date for tickle event ID 100.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-TickleEvent -expired | Set-TickleEvent -archived</dev:code>
+        <dev:code>PS C:\&gt; Get-TickleEvent -expired | Set-TickleEvent -archive</dev:code>
         <dev:remarks>
           <maml:para>Get all expired events and mark them as archived.</maml:para>
         </dev:remarks>
@@ -1991,7 +1991,7 @@ ID   Event                  Comment            Date                       Countd
 
 ID   Event                 Comment          Date                    Countdown
 --   -----                 -------          ----                    ---------
-642  Birthday Party                        2/12/2021 12:00:00 PM  34.21:07:32</dev:code>
+642  Birthday Party                        2/12/2023 12:00:00 PM  34.21:07:32</dev:code>
         <dev:remarks>
           <maml:para>Rename an existing event.</maml:para>
         </dev:remarks>
@@ -2172,11 +2172,11 @@ ID   Event                 Comment          Date                    Countdown
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Show-TickleEvent
 
-* Reminders 9/23/2021 *********************************
+* Reminders 9/23/2023 *********************************
 *                                                     *
-* Project Review 09/25/2021 00:00:00 [1.02:25:46]     *
+* Project Review 09/25/2023 00:00:00 [1.02:25:46]     *
 *                                                     *
-* Haircut 09/27/2021 16:00:00 [3.18:29:02]            *
+* Haircut 09/27/2023 16:00:00 [3.18:29:02]            *
 *                                                     *
 *******************************************************</dev:code>
         <dev:remarks>
