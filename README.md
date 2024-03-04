@@ -14,7 +14,7 @@ Install-Module MyTickle [-scope CurrentUser]
 
 ## Setup
 
-This module requires a SQL Server installation but, it should work cross-platform and in PowerShell 7.x. You can read the about help topic for more information.
+This module requires a SQL Server installation but, it should work cross-platform and in PowerShell 7. You can read the about help topic for more information.
 
 ```powershell
 Help about_mytickle
@@ -24,7 +24,7 @@ The module stores event information in a SQL Server database. Ideally, you will 
 
 Once you've been using the database, use `Get-TickleDBInformation` to view usage.
 
-```PowerShell
+```shell
 PS C:\> Get-TickleDBInformation
 
 Name           : TickleEventDB
@@ -32,12 +32,12 @@ Path           : C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\
 SizeMB         : 100
 UsedMB         : 3.375
 AvailableMB    : 96.625
-LastFullBackup : 12/11/2020 9:00:07 PM
+LastFullBackup : 10/20/2023 9:00:15 PM
 ```
 
 The module uses a set of global variables to define the SQL connection. The default installation assumes a local SQL Server Express instance.
 
-```PowerShell
+```shell
 PS C:\> Get-Variable Tickle*
 
 Name                           Value
@@ -54,7 +54,7 @@ If you use a remote server or some other named instance, you will need to change
 $TickleServerInstance = 'chi-sql01'
 ```
 
-The module should work cross-platform, even on Linux. Although in that situation, you will need to specify a username and password. It is also assumed that the SQL Server is configured to use both SQL and Windows authentication.
+The module should work cross-platform, even on Linux. However, in that situation, you will need to specify a username and password. It is also assumed that the SQL Server is configured to use both SQL and Windows authentication.
 
 ## Add Events
 
@@ -68,7 +68,7 @@ Add-TickleEvent -event "company picnic" -date "7/1/2021 12:00PM"
 
 Once initialized and with entries added, you can view upcoming events.
 
-![get-tickleevent](assets/get-tickleevent.png)
+![Get-TickleEvent](assets/get-tickleevent.png)
 
 Starting with version 3.3.0, if you are running `Get-TickleEvent` in a console or VSCode host, events happening in less than 1 day will be displayed in red using ANSI escape sequences. Events in less than 2 days will be displayed in yellow.
 
@@ -82,7 +82,7 @@ Get-TickleEvent -days 60 | Format-Table -view date
 
 The module has a command to display upcoming events in a color-coded format using ANSI escape sequences. The default is events in the next seven days, but you can specify a different value.
 
-![show-tickleevent](assets/show-tickleevent.png)
+![Show-TickleEvent](assets/show-tickleevent.png)
 
 - Events due in the next twenty-four hours will be displayed in red.
 - Events due in forty-eight hours or less will be shown in yellow.
@@ -93,5 +93,5 @@ For more information, please read the [About](docs/about_MyTickle.md) help topic
 
 You might also be interested in these PowerShell modules:
 
-- Manage tasks and To-Do items with the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module.
+- Manage tasks and To-Do items with the [PSWorkItem](https://github.com/jdhitsolutions/PSWorkItem) module.
 - Display a calendar in the PowerShell console with the [PSCalendar](https://github.com/jdhitsolutions/PSCalendar) module.

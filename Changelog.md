@@ -1,5 +1,13 @@
 # ChangeLog for MyTickle
 
+## 3.4.0
+
+### Changed
+
+- Modified `Show-MyTickleEvent` to fix a display bug when the countdown property is 0.
+- Exported public functions to separate files.
+- Updated `README.md`.
+
 ## 3.3.2
 
 ### Changed

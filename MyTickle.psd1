@@ -1,6 +1,6 @@
 ﻿@{
     RootModule           = 'MyTickle.psm1'
-    ModuleVersion        = '3.3.2'
+    ModuleVersion        = '3.4.0'
     GUID                 = 'e9534710-29f8-4291-be97-5c2b2df324c1'
     Author               = 'Jeff Hicks'
     CompanyName          = 'JDH Information Technology Solutions, Inc.'

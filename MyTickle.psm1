@@ -1,6 +1,5 @@
 ﻿#dot source module functions
-. $PSScriptRoot\functions\private.ps1
-. $PSScriptRoot\functions\public.ps1
+Get-ChildItem -Path $PSScriptRoot\functions\*.ps1 | ForEach-Object { . $_.FullName }
 
 #region Define module variables
 
@@ -18,15 +17,15 @@ $TickleServerInstance = ".\SqlExpress"
 
 Class myTickle {
 
-    [string]$Event
-    [datetime]$Date
-    [string]$Comment
+    [String]$Event
+    [DateTime]$Date
+    [String]$Comment
     [int32]$ID
     [boolean]$Expired = $False
-    hidden [timespan]$Countdown
+    hidden [TimeSpan]$Countdown
 
     #constructor
-    myTickle([int32]$ID, [string]$Event, [datetime]$Date, [string]$Comment) {
+    myTickle([int32]$ID, [String]$Event, [DateTime]$Date, [String]$Comment) {
         $this.ID = $ID
         $this.Event = $Event
         $this.Date = $Date
@@ -35,7 +34,7 @@ Class myTickle {
             $this.Expired = $True
         }
         $ts = $this.Date - (Get-Date)
-        if ($ts.totalminutes -lt 0) {
+        if ($ts.TotalMinutes -lt 0) {
             $ts = New-TimeSpan -Minutes 0
         }
         $this.Countdown = $ts

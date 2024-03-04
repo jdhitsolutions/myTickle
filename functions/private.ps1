@@ -50,7 +50,7 @@ Function _InvokeSqlQuery {
         }
 
         Write-Verbose "[BEGIN  ] Creating the SQL Connection object"
-        $connection = New-Object system.data.sqlclient.sqlconnection
+        $connection = New-Object System.Data.SQLClient.SQLConnection
 
         Write-Verbose "[BEGIN  ] Creating the SQL Command object"
         $cmd = New-Object system.Data.SqlClient.SqlCommand
@@ -92,7 +92,7 @@ Function _InvokeSqlQuery {
                     Write-Verbose "ExecuteReader"
                     $reader = $cmd.ExecuteReader()
                     $out = @()
-                    #convert datarows to a custom object
+                    #convert data rows to a custom object
                     while ($reader.read()) {
 
                         $h = [ordered]@{}
@@ -119,13 +119,11 @@ Function _InvokeSqlQuery {
                 }
             }
         } #should process
-
     }
 
     End {
         Write-Verbose "[END    ] Closing the connection"
         $connection.close()
-
         Write-Verbose "[END    ] Ending: $($MyInvocation.MyCommand)"
     } #end
 
