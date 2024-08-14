@@ -4,6 +4,10 @@
 
 ![database-server](assets/db.png)
 
+> **This module is now considered deprecated and is no longer being maintained. The module's functionality has been replaced with the [PSReminderLite](https://github.com/jdhitsolutions/PSReminderLite) module. This module uses a SQLite database and is cross-platform. The module is available from the PowerShell Gallery. If you are using this module and would like to migrate to the new module, read the PSReminderLite README file for [instructions](https://github.com/jdhitsolutions/PSReminderLite?tab=readme-ov-file#truck-migrating-from-mytickle).**
+
+## Introduction
+
 This PowerShell module is designed as a tickle or reminder system. You can add and edit reminders of upcoming events. Use the module commands to display upcoming events. If you are interested, the core object of the module is built with a PowerShell class.
 
 Install the latest version from the PowerShell Gallery.
