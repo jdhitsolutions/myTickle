@@ -1,16 +1,14 @@
 # ChangeLog for MyTickle
 
-## 3.4.0
+## DEPRECATED August 14, 2024
 
-### Changed
+## 3.4.0
 
 - Modified `Show-MyTickleEvent` to fix a display bug when the countdown property is 0.
 - Exported public functions to separate files.
 - Updated `README.md`.
 
 ## 3.3.2
-
-### Changed
 
 - Code clean-up.
 - Help revisions.
